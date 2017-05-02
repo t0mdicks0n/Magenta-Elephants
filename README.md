@@ -1,13 +1,13 @@
-# Project Name
+# 4.um
 
-> Pithy project description
+> Personalized, interactive forum for software developers.
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Ali Elgiadi
+  - He Liu
+  - Michael Sermersheim
+  - Oliver Ullman
 
 ## Table of Contents
 
@@ -21,15 +21,15 @@
 
 ## Usage
 
-> Some usage instructions
+> Where software developers of all skill levels and specialties can come together for trustworthy guidance and positive contributions to their community's growth.
 
 ## Requirements
 
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- React
+- Redux
+- Express
+- MySql
+- Socket
 
 ## Development
 
@@ -38,14 +38,12 @@
 From within the root directory:
 
 ```sh
-npm install -g bower
-npm install
-bower install
+TBD...
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](https://docs.google.com/spreadsheets/d/11bYC2KRd66zInBLLcNDz3N_pXp-PYVqoKgE5KwQhAaE/edit#gid=0)
 
 
 ## Contributing
