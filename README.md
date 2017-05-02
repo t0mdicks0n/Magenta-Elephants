@@ -37,9 +37,7 @@
 
 From within the root directory:
 
-```sh
-TBD...
-```
+- Npm install
 
 ### Roadmap
 
