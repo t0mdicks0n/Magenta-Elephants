@@ -4,9 +4,14 @@ const Ask = props => (
   <section className="ask">
     <h1 className="headline" >Ask a Question</h1>
     <form>
-      <input type="text" defaultValue="Insert Question Here"></input> <br/>
-      <input type="text" defaultValue="Paste Code Here"></input> <br/>
+      <div className="askTitle">
+        <label>Title:</label>
+        <input className="titleInput" type="text" placeholder="Insert Question Here"></input> <br/>
+      </div>
+      <div className="askBody">
+      <textarea className="questionDescription"  placeholder="Paste Code Here"></textarea>
       <button type="submit">Ask</button>
+      </div>
     </form>
   </section>
 );

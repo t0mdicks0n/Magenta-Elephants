@@ -3,11 +3,9 @@ import React from 'react';
 const QuestionListItem = props => (
   <li>
     <div>
-      <div>
-        <h3>This is a question</h3>
-        <h4>username</h4>
-      </div>
-      <button>I can Answer</button>
+      <h3 className="username">Oliver Ullman</h3>
+      <h4 className="questionTitle">How often do you brush your teeth?</h4>
+      <button className="answerQuestion">Answer</button>
     </div>
   </li>
 );

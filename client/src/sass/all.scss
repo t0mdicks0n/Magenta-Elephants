@@ -1,12 +1,22 @@
+$titleInputHeight: 2.5rem;
+
 html {
   font-size: 10px;
+}
+
+*  {
+  list-style: none;
 }
 
 main {
   display: flex;
   width: 100%;
+  section {
+    border: 1px solid black;
+    padding: 0rem 4rem 2rem 2rem;
+  }
   .nav {
-    flex-grow: .18;
+    flex: .18;
     text-align: center;
     .logo {
       font-size: 2rem;
@@ -15,10 +25,57 @@ main {
     }
   }
   .recentQuestions {
-    flex-grow: .44;
+    flex: .44;
+    .questionsList {
+      padding-left: 0;
+      li {
+        border: 1px solid black;
+        padding: 1rem;
+        margin-bottom: 1rem; 
+        div {
+          position: relative;
+          .username {
+            margin-top: 0;
+          }
+          .answerQuestion {
+            position: absolute;
+            right: 0%;
+            top: 0%;
+          }
+        }
+      }
+    }
+
   }
   .ask {
-    flex-grow: .38;
+    flex: .38;
+    form {
+      .askTitle {
+        display: flex;
+        margin-bottom: 1.5rem;
+        label {
+          line-height: $titleInputHeight;
+        }
+        input{
+          flex: 2;
+          margin-left: 1rem;
+        }
+        .titleInput {
+          height: $titleInputHeight;
+        }
+      }
+      .askBody {
+        textarea {
+          width: 100%;
+          height: 150px;
+          margin-bottom: 1.5rem;
+          resize: vertical;
+        }
+        button {
+          width: 25%;
+        }
+      }
+    }
   }
 }
 
