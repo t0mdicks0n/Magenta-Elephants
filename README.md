@@ -37,7 +37,11 @@
 
 From within the root directory:
 
-- Npm install
+- NPM install
+
+### Getting Started 
+
+- NPM run react-dev
 
 ### Roadmap
 
