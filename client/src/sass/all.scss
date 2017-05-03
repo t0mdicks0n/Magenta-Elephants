@@ -1,0 +1,27 @@
+html {
+  font-size: 10px;
+}
+
+main {
+  display: flex;
+  width: 100%;
+  .nav {
+    flex-grow: .18;
+    text-align: center;
+    .logo {
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: 800;
+    }
+  }
+  .recentQuestions {
+    flex-grow: .44;
+  }
+  .ask {
+    flex-grow: .38;
+  }
+}
+
+.headline {
+  font-size: 3rem;
+}
