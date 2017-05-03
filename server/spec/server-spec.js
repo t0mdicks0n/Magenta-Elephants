@@ -8,7 +8,7 @@ describe('Persistent 4.um Server', function() {
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
       user: 'root',
-      password: '',
+      password: 'plantlife',
       database: '4um'
     });
     dbConnection.connect();

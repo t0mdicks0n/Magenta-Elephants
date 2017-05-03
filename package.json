@@ -21,6 +21,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "sass-loader": "^6.0.3",
+    "request": "^2.81.0",
     "sequelize": "^3.30.4",
     "style-loader": "^0.17.0",
     "webpack": "^2.4.1"
