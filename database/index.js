@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 module.exports = mysql.createConnection({
-	user : 'root',
+	user: 'root',
 	password: '',
-	database: 'meforum'
+	database: '4um'
 });
