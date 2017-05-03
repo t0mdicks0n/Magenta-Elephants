@@ -37,9 +37,11 @@
 
 From within the root directory:
 
-```sh
-TBD...
-```
+- NPM install
+
+### Getting Started 
+
+- NPM run react-dev
 
 ### Roadmap
 
