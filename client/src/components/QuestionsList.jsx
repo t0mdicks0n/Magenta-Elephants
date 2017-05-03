@@ -6,6 +6,9 @@ const QuestionsList = props => (
     <QuestionsListItem />
     <QuestionsListItem />
     <QuestionsListItem />
+    <QuestionsListItem />
+    <QuestionsListItem />
+    <QuestionsListItem />
   </ul>
 );
 
