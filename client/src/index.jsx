@@ -17,7 +17,6 @@ class App extends React.Component {
   }
 
   changeRight() {
-    console.log(1234);
     if (this.state.answerDisplayClass === 'invisible') {
       this.setState({
         answerDisplayClass: 'block',
