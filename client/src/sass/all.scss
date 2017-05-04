@@ -1,4 +1,6 @@
 $titleInputHeight: 2.5rem;
+$generalPadding: 1rem;
+$generalMargin: 1rem;
 
 html {
   font-size: 10px;
@@ -27,39 +29,58 @@ main {
   .recentQuestions {
     flex: .44;
     .questionsList {
+      height: 83vh;
+      overflow-y: scroll;
       padding-left: 0;
       li {
         border: 1px solid black;
-        padding: 1rem;
-        margin-bottom: 1rem; 
+        padding: $generalMargin;
+        margin-bottom: $generalMargin; 
         div {
-          position: relative;
-          .username {
-            margin-top: 0;
+          display: flex;
+          img{
+            float: left;
+            margin-right: $generalMargin;
           }
-          .answerQuestion {
-            position: absolute;
-            right: 0%;
-            top: 0%;
+          div{
+            flex: 2;
+            position: relative;
+            .username {
+              margin: 0 0 $generalMargin 0;
+              font-size: 1.75rem;
+              font-weight: 700;
+            }
+            .questionTitle {
+              margin-top: $generalMargin;
+              position: absolute;
+              top: 20%; 
+              font-size: 2rem;
+              font-weight: 400;
+
+            }
+            .answerQuestion {
+              position: absolute;
+              right: 0%;
+              top: 0%;
+              font-size: 1.5rem;
+            }
           }
         }
       }
     }
-
   }
   .ask {
     flex: .38;
     form {
       .askTitle {
         display: flex;
-        margin-bottom: 1.5rem;
+        margin-bottom: $generalMargin;
         label {
           line-height: $titleInputHeight;
         }
         input{
           flex: 2;
-          margin-left: 1rem;
-        }
+          margin-left: $generalMargin;}
         .titleInput {
           height: $titleInputHeight;
         }
@@ -68,7 +89,7 @@ main {
         textarea {
           width: 100%;
           height: 150px;
-          margin-bottom: 1.5rem;
+          margin-bottom: $generalMargin;
           resize: vertical;
         }
         button {
