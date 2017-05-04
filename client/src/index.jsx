@@ -12,9 +12,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       answerDisplayClass: 'invisible',
-      askDisplayClass: 'block'
+      askDisplayClass: 'block',
+      askTitle: '',
+      askBody: ''
     }
     this.changeRight = this.changeRight.bind(this);
+    this.createQuestion = this.createQuestion.bind(this);
+    this.changeProp = this.changeProp.bind(this);
+  }
+
+  changeProp(key, val) {
+    this.setState({
+      [key]: val
+    });
   }
 
   changeRight() {
@@ -29,6 +39,28 @@ class App extends React.Component {
         askDisplayClass: 'block'
       });
     }
+  }
+
+  createQuestion(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var obj = {
+      username: 'heliu',
+      title: this.state.askTitle,
+      body: this.state.askBody 
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: '/questions',
+      data: obj,
+      success: (data) => {
+        console.log('success!', data)
+      },
+      error: (err) => {
+        console.log('error with submitting answer', err)
+      }
+    })
   }
   
   submitAnswer() {
@@ -49,9 +81,20 @@ class App extends React.Component {
     return (
       <main>
         <Nav />
-        <RecentQuestions changeRight={this.changeRight} />
-        <Ask askDisplayClass={this.state.askDisplayClass} />
-        <Answer answerDisplayClass={this.state.answerDisplayClass} submitAnswer={this.submitAnswer}/>
+        <RecentQuestions 
+          changeRight={this.changeRight} 
+        />
+        <Ask 
+          askDisplayClass={this.state.askDisplayClass} 
+          createQuestion={this.createQuestion} 
+          askTitle={this.state.askTitle}
+          askBody={this.state.askBody}
+          changeProp={this.changeProp}
+        />
+        <Answer 
+          answerDisplayClass={this.state.answerDisplayClass} 
+          submitAnswer={this.submitAnswer}
+        />
       </main>
     )
   }
