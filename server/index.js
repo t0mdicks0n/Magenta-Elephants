@@ -7,7 +7,7 @@ app.use(cors());
 
 process.env.PWD = process.cwd();
 app.get('/', function(req, res) {
-  res.sendfile(__dirname + '/../client/index.html');
+  res.sendFile(__dirname + '/../client/index.html');
 });
 // app.use(express.static(process.env.PWD + '/../client'));
 // app.use(express.static(__dirname + '/../client'));
