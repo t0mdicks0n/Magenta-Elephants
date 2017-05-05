@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var app = express();
 // var db = require('../database/orm.js');
 
-app.use(express.static(__dirname + '../client'));
+app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
