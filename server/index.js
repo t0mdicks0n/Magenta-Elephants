@@ -3,11 +3,6 @@ var bodyParser = require('body-parser');
 var app = express();
 // var db = require('../database/orm.js');
 
-app.get('/', function (req, res) {
-  console.log('is anything happening?');
-  res.send('Hello World!');
-  res.end();
-});
 app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.urlencoded({
   extended: false
@@ -17,6 +12,15 @@ app.listen(8888, function() {
   console.log('Listening on port 8888');
 });
 
+app.use(function() {
+  console.log('work????????');
+})
+
+app.get('/', function (req, res) {
+  console.log('is');
+  res.send('Hello World!');
+  res.end();
+});
 
 // EXAMPLE DATA SENT FOR A PUT TO /QUESTIONS
 /* {
