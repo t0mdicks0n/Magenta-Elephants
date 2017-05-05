@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var db = require('../database/orm.js');
+// var db = require('../database/orm.js');
 
 app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.urlencoded({
@@ -25,7 +25,7 @@ app.get('/', function (req, res) {
 */
 
 app.put('/questions', function(req, res) {
-  db.updateQuestion(req.body.questionId, req.body.expertId, req.body.answer, res);
+  // db.updateQuestion(req.body.questionId, req.body.expertId, req.body.answer, res);
 });
 
 // EXAMPLE DATA SENT FOR A POST TO /QUESTIONS
@@ -37,7 +37,7 @@ app.put('/questions', function(req, res) {
 */
 
 app.post('/questions', function(req, res) {
-  db.createNewQuestion(req.body.username, req.body.title, req.body.body);
+  // db.createNewQuestion(req.body.username, req.body.title, req.body.body);
   res.end();
 });
 
