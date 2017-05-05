@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
-  console.log('Listening on port 3000 the dirname is', __dirname + '/../client');
+  console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
 });
 
 // EXAMPLE DATA SENT FOR A PUT TO /QUESTIONS
