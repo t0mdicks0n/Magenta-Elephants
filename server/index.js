@@ -8,19 +8,17 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+// app.listen(8888, function() {
+//   console.log('Listening on port 8888');
+// });
+
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('Listening on port 8888');
-});
-
-app.use(function() {
-  console.log('work????????');
-})
-
-app.get('/', function (req, res) {
-  console.log('is');
-  res.send('Hello World!');
-  res.end();
 });
 
 // EXAMPLE DATA SENT FOR A PUT TO /QUESTIONS
