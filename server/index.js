@@ -4,6 +4,7 @@ var app = express();
 // var db = require('../database/orm.js');
 
 app.get('/', function (req, res) {
+  console.log('is anything happening?');
   res.send('Hello World!');
   res.end();
 });
