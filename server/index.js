@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var cors = require('cors');
+app.use(cors());
 // var db = require('../database/orm.js');
 
 process.env.PWD = process.cwd();
