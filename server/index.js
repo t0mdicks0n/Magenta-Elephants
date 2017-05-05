@@ -8,7 +8,8 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.listen(8888, function() {
+var port = process.env.PORT || 3000;
+app.listen(port, function() {
   console.log('Listening on port 8888');
 });
 
