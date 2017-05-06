@@ -57,7 +57,7 @@ module.exports.createNewQuestion = function(username, title, body) {
       })
     })
     .then((result) => {
-      db.close();
+      // db.close();
     })
     .catch((err) => {
       // I have not added actual error catching yet
@@ -69,34 +69,34 @@ module.exports.createNewQuestion = function(username, title, body) {
 // createNewQuestion('heliu', 'is the sky blue?', 'yes it is blue.');
 
 
-// User.sync()
-//   .then(function() {
-//     User.create({
-//       username: "heliu",
-//       currentCurrency: 0,
-//       totalCurrency: 0,
-//       noviceRating: 0,
-//       expertRating:0
-//     });
-//     User.create({
-//       username: "john",
-//       currentCurrency: 0,
-//       totalCurrency: 0,
-//       noviceRating: 0,
-//       expertRating:0
-//     })
-//   })
-//   .then(function() {
-//     return User.findAll({where: {username: "heliu"}});
-//   })
-//   .then(function(user) {
-//     // console.log('the user', user);
-//     user.forEach(function(user) {
-//       console.log(user.username + ' exists');
-//     });
-//     db.close();
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//     db.close();
-//   });
+User.sync()
+  .then(function() {
+    User.create({
+      username: "heliu",
+      currentCurrency: 0,
+      totalCurrency: 0,
+      noviceRating: 0,
+      expertRating:0
+    });
+    User.create({
+      username: "john",
+      currentCurrency: 0,
+      totalCurrency: 0,
+      noviceRating: 0,
+      expertRating:0
+    })
+  })
+  .then(function() {
+    return User.findAll({where: {username: "heliu"}});
+  })
+  .then(function(user) {
+    // console.log('the user', user);
+    user.forEach(function(user) {
+      console.log(user.username + ' exists');
+    });
+    db.close();
+  })
+  .catch(function(err) {
+    console.log(err);
+    db.close();
+  });
