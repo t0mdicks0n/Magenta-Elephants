@@ -6,15 +6,15 @@ app.use(cors());
 // var db = require('../database/orm.js');
 
 process.env.PWD = process.cwd();
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/../client/index.html');
-});
-// app.use(express.static(process.env.PWD + '/../client'));
+
+app.use(express.static(process.env.PWD + '/client'));
 // app.use(express.static(__dirname + '/../client'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+console.log('first dir', process.env.PWD + '/client');
+console.log('second dir', __dirname + '/../client');
 
 // app.get('/', function (req, res) {
 //   res.send('Hello World!');
