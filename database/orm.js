@@ -100,3 +100,33 @@ module.exports.createNewQuestion = function(username, title, body) {
 //     console.log(err);
 //     db.close();
 //   });
+
+module.exports.retrieveAll = function (res) {
+  Question.findAll()
+    .then(questions => { 
+      var response = [];
+      questions.forEach(question => {
+
+        var questionObj = {  
+          id: question.id,
+          username: User.findById(question.Qid_User).username || 'Anonymous',
+          avatar: User.findById(question.Qid_User).avatar || 'https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100',
+          title: question.questionTitle,
+          body: question.questionBody,
+          answer: question.answer || null
+        }
+
+        response.push(questionObj);
+      });
+      return response;
+    })
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      // need to improve this error handling
+      console.error('There was an error!', err)
+      db.close();
+    })
+}
+
