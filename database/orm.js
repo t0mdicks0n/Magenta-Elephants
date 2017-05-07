@@ -35,7 +35,6 @@ module.exports.updateQuestion = function(questionId, expertId, answer, res) {
       })
     })
     .then((data) => {
-      db.close();
       res.end('success!');
     });
 }
@@ -55,9 +54,6 @@ module.exports.createNewQuestion = function(username, title, body) {
         questionTitle: title,
         questionBody: body
       })
-    })
-    .then((result) => {
-      db.close();
     })
     .catch((err) => {
       // I have not added actual error catching yet
