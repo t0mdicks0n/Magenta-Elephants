@@ -12,8 +12,8 @@ app.listen(3000, function() {
   console.log('Listening on port 3000');
 });
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
+app.get('/questions', function (req, res) {
+  db.retrieveAll(res)
 });
 
 // EXAMPLE DATA SENT FOR A PUT TO /QUESTIONS
