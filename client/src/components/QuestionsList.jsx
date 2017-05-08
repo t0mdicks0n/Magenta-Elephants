@@ -3,12 +3,9 @@ import QuestionsListItem from './QuestionsListItem.jsx';
 
 const QuestionsList = props => (
   <ul className="questionsList">
-    <QuestionsListItem changeRight={props.changeRight} />
-    <QuestionsListItem changeRight={props.changeRight} />
-    <QuestionsListItem changeRight={props.changeRight} />
-    <QuestionsListItem changeRight={props.changeRight} />
-    <QuestionsListItem changeRight={props.changeRight} />
-    <QuestionsListItem changeRight={props.changeRight} />
+    { props.questions.map( question =>
+      <QuestionsListItem changeRight={props.changeRight} question={question} />
+    )}
   </ul>
 );
 

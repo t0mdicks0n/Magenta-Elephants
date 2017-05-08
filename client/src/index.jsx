@@ -11,6 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      questions: [],
       answerDisplayClass: 'invisible',
       askDisplayClass: 'block',
       askTitle: '',
@@ -19,12 +20,33 @@ class App extends React.Component {
     this.createQuestion = this.createQuestion.bind(this);
     this.changeRight = this.changeRight.bind(this);
     this.changeProp = this.changeProp.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount() {
+    setInterval(this.getQuestions, 5000);
+  }
+
+  componentWillMount() {
+    this.getQuestions();
   }
 
   changeProp(key, val) {
     this.setState({
       [key]: val
     });
+  }
+
+  getQuestions() {
+    $.get('/questions', (req, res) => {})
+    .then(results => {
+      results.reverse();
+      this.changeProp('questions', results)
+    })
+    .catch(err => {
+      console.log('there was an error with get ', err)
+    })
   }
 
   changeRight() {
@@ -83,6 +105,7 @@ class App extends React.Component {
         <Nav />
         <RecentQuestions 
           changeRight={this.changeRight} 
+          questions={this.state.questions}
         />
         <Ask 
           askDisplayClass={this.state.askDisplayClass} 
