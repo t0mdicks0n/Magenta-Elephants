@@ -27,3 +27,4 @@ CREATE TABLE `Questions` (
   `Aid_User` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
+

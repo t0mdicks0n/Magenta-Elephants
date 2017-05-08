@@ -1,0 +1,18 @@
+{
+  "name": "Magenta-Elephants",
+  "scripts": {
+  },
+  "env": {
+    "CLEARDB_DATABASE_URL": "mysql://b12eb2bede6b4d:ad517216@us-cdbr-iron-east-03.cleardb.net/heroku_689621e8f649711?reconnect=true"
+  },
+  "formation": {
+  },
+  "addons": [
+    "cleardb"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
