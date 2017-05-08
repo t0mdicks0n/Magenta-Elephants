@@ -40,13 +40,12 @@ class App extends React.Component {
 
   getQuestions() {
     $.get('/questions', (req, res) => {})
-    .then(results => {
-      results.reverse();
-      this.changeProp('questions', results)
-    })
-    .catch(err => {
-      console.log('there was an error with get ', err)
-    })
+      .then(results => {
+        this.changeProp('questions', results)
+      })
+      .catch(err => {
+        console.log('there was an error with get ', err)
+      })
   }
 
   changeRight() {
@@ -67,7 +66,7 @@ class App extends React.Component {
     e.preventDefault();
     e.stopPropagation();
     var obj = {
-      username: 'heliu',
+      username: 'Aelgiadi',
       title: this.state.askTitle,
       body: this.state.askBody 
     };
