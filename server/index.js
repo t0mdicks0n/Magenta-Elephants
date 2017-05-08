@@ -16,6 +16,10 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+app.get('/questions', function (req, res) {
+  db.Question.retrieveAll(res, arr => {res.send(arr)})
+});
+
 
 app.get('/', function(req, res, next) {
   var redirectURL = `https://github.com/login/oauth/authorize?client_id=${config.clientID}&state=xUbA6qeu6HvPGPvsOjuZRILAU0Bolgpv&scope=user,repo,gist`;

@@ -17,7 +17,7 @@ module.exports.updateQuestion = function(questionId, expertId, answer, res) {
       })
     })
     .then((data) => {
-      db.close();
+      // db.close();
       res.end('success!');
     });
 }
@@ -42,6 +42,37 @@ module.exports.createNewQuestion = function(username, title, body) {
     .catch((err) => {
       // I have not added actual error catching yet
       console.log(err);
-      db.close();
+      // db.close();
     });
 };
+
+module.exports.retrieveAll = function (res, cb) {
+  db.Question.findAll()
+    .then(questions => { 
+      var response = [];
+      questions.forEach(question => {
+        var questionObj;
+
+        db.User.findById(question.Qid_User)
+          .then(userInfo => {
+            questionObj = {  
+              id: question.id,
+              username: userInfo.username || 'Anonymous',
+              avatar: userInfo.avatar_url,
+              title: question.questionTitle,
+              body: question.questionBody,
+              answer: question.answer || null
+            }
+            response.push(questionObj);
+            if (response.length === questions.length){
+              response.reverse()
+              cb(response);  
+            }  
+          });
+      });
+
+    })
+    .catch(err => {
+      console.error('There was an error!', err)
+    })
+}
