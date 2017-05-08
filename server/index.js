@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 app.get('/', function(req, res, next) {
   var redirectURL = `https://github.com/login/oauth/authorize?client_id=${config.clientID}&state=xUbA6qeu6HvPGPvsOjuZRILAU0Bolgpv&scope=user,repo,gist`;
   if (req.cookies.forum) {
-    db.Session.checkIfSessionIsValid(req.cookies.forum, req.headers['user-agent'])
+    db.Session.checkIfSessionIsValid(req.cookies.forum, req.headers['user-agent'], res)
       .then((boolean) => {
         if (boolean) {
           next()

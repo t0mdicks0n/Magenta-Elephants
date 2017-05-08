@@ -10,7 +10,7 @@ const directDb = require('../database/index');
 const mysql = require('mysql');
 
 chai.use(chaiHttp);
-
+const agent = chai.request.agent('http://localhost:3000');
 // test table allows unique usernames
 
 var clearDB = function(connection, tablenames, done) {
@@ -35,7 +35,7 @@ describe('authentication', function() {
       });
   })
 
-  it('does not redirect when cookies are attached', function(done) {
+  it('does not redirect when valid cookies are attached', function(done) {
     directDb.Session.sync()
       .then(() => {
         return db.Session.createSession(1, '4um'); 

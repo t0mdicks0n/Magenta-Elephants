@@ -13,7 +13,7 @@ module.exports.createSession = function(id, userAgent) {
     });
 };
 
-module.exports.checkIfSessionIsValid = function(session, reqHeader) {
+module.exports.checkIfSessionIsValid = function(session, reqHeader, res) {
   return db.Session.sync()
     .then(() => {
       return db.Session.findAll({
@@ -31,9 +31,11 @@ module.exports.checkIfSessionIsValid = function(session, reqHeader) {
         if (week > currentDate - storedDate) {
           return data[0].userAgent === reqHeader;
         } else {
+          // res.clearCookie('forum');
           data[0].destroy();
         }
       } else if (data) {
+        // res.clearCookie('forum');
         return false;
       }
     });
