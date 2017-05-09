@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const db = Promise.promisifyAll(require('../models/index'));
 
 
-module.exports.onSuccess = function(req, res, next, body) {
+module.exports = function(req, res, next, body) {
   body = JSON.parse(body);
   db.User.checkIfUserExists(body.login)
     .then((userid) => {
@@ -17,6 +17,6 @@ module.exports.onSuccess = function(req, res, next, body) {
     })
     .then((result) => {
       res.cookie('forum', result.cookieNum, { maxAge: 900000, httpOnly: true });
-      next();
+      res.redirect('/dashboard');
     })
 };

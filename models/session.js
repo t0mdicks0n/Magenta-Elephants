@@ -27,7 +27,6 @@ module.exports.checkIfSessionIsValid = function(session, reqHeader, res) {
         var week = 604800000;
         var currentDate = new Date();
         var storedDate = data[0].expirationDate;
-          console.log('we got here', data[0].userAgent, reqHeader);
         if (week > currentDate - storedDate) {
           return data[0].userAgent === reqHeader;
         } else {
