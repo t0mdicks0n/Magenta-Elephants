@@ -135,28 +135,6 @@ class App extends React.Component {
   }
 }
 
-const theDefault = () => (
-  <div className="main">
-    <h1>This is the default</h1>
-    <Link to='/ade'>ade</Link>
-    <Route exact path="/ade" component={temp} />
-  </div>
-);
-
-const temp = () => (
-  <div className="main">
-    <Link to='/abdddd'>Abc</Link>
-    <h1>test</h1>
-  </div>
-)
-
-const otherTemp = () => (
-  <div className="main">
-    <h1>This is the other one</h1>
-  </div>
-)
-
-
 render(<App/>, document.getElementById('app'));
 
 
