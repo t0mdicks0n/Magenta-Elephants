@@ -51,11 +51,9 @@ module.exports.retrieveAll = function (res, cb) {
     .then(questions => { 
       var response = [];
       questions.forEach(question => {
-        var questionObj;
-
         db.User.findById(question.Qid_User)
           .then(userInfo => {
-            questionObj = {  
+            var questionObj = {  
               id: question.id,
               username: userInfo.username || 'Anonymous',
               avatar: userInfo.avatar_url,
@@ -65,7 +63,7 @@ module.exports.retrieveAll = function (res, cb) {
             }
             response.push(questionObj);
             if (response.length === questions.length){
-              response.reverse()
+              response.reverse();
               cb(response);  
             }  
           });
@@ -73,6 +71,6 @@ module.exports.retrieveAll = function (res, cb) {
 
     })
     .catch(err => {
-      console.error('There was an error!', err)
+      console.error('There was an error!', err);
     })
 }

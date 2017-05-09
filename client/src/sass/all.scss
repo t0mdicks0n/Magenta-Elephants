@@ -1,6 +1,11 @@
 $titleInputHeight: 2.5rem;
 $generalPadding: 1rem;
 $generalMargin: 1rem;
+$navFlexWidth: .18;
+$mainFlexWidth: 1 - $navFlexWidth;
+$recentQuestionsFlexWidth: .55;
+$askFlexWidth: 1 - $recentQuestionsFlexWidth;
+$answerFlexWidth: 1 - $recentQuestionsFlexWidth;
 
 html {
   font-size: 10px;
@@ -8,6 +13,7 @@ html {
 
 *  {
   list-style: none;
+  text-decoration: none !important;
 }
 
 main {
@@ -16,9 +22,10 @@ main {
   section {
     border: 1px solid black;
     padding: 0rem 4rem 2rem 2rem;
+    height: 95vh;
   }
   .nav {
-    flex: .18;
+    flex: $navFlexWidth;
     text-align: center;
     .logo {
       font-size: 2rem;
@@ -27,9 +34,8 @@ main {
     }
   }
   .recentQuestions {
-    flex: .44;
+    flex: $recentQuestionsFlexWidth;
     .questionsList {
-      height: 83vh;
       overflow-y: scroll;
       padding-left: 0;
       li {
@@ -73,7 +79,7 @@ main {
     }
   }
   .ask {
-    flex: .38;
+    flex: $askFlexWidth;
     form {
       .askTitle {
         display: flex;
@@ -96,7 +102,7 @@ main {
     }
   }
   .answer {
-    flex: .45;
+    flex: $answerFlexWidth;
     .askedQuestionDescription {
       font-size: 1.8rem;
     }
@@ -116,6 +122,11 @@ textarea {
   margin-bottom: $generalMargin;
   padding: .7rem;
   resize: vertical;
+}
+
+.main {
+  display: flex;
+  flex: $mainFlexWidth;
 }
 
 .block {

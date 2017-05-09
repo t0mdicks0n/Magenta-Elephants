@@ -3,40 +3,25 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const Promise = require('bluebird');
 const db = Promise.promisifyAll(require('../models/index'));
+const sessionParser = require('../middleware/sessionParser.js');
 const request = require('request');
 const config = require('../config/vars.js');
-const login = require('../middleware/login.js');
+const login = require('../middleware/onLogin.js');
 const port = process.env.PORT || 3000;
 const app = express();
 
 process.env.PWD = process.cwd();
-
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.get('/questions', function (req, res) {
-  db.Question.retrieveAll(res, arr => {res.send(arr)})
+app.get('/', function(req, res, next) {
+  res.redirect('/dashboard');
 });
 
-
-app.get('/', function(req, res, next) {
-  var redirectURL = `https://github.com/login/oauth/authorize?client_id=${config.clientID}&state=xUbA6qeu6HvPGPvsOjuZRILAU0Bolgpv&scope=user,repo,gist`;
-  if (req.cookies.forum) {
-    db.Session.checkIfSessionIsValid(req.cookies.forum, req.headers['user-agent'], res)
-      .then((boolean) => {
-        if (boolean) {
-          next()
-        } else {
-          res.redirect(redirectURL);
-        }
-      });
-  } else {
-    res.redirect(redirectURL);
-  }
-
-
+app.get('/dashboard', sessionParser, function(req, res, next) {
+  res.sendFile(process.env.PWD + '/client/index.html');
 });
 
 // THIS IS A REDIRECT WHEN THE USER SIGNS IN WITH GITHUB
@@ -55,12 +40,34 @@ app.get('/callback', function(req, res, next) {
     };
 
     request.get(options, function(err, httpResponse, body) {
-      login.onSuccess(req, res, next, body);
+      login(req, res, next, body);
     });
   });
-
 });
 
+app.get('/questions', function (req, res) {
+  db.Question.retrieveAll(res, arr => res.send(arr));
+});
+
+app.post('/questions', function(req, res) {
+  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body);
+  res.end();
+});
+
+app.put('/questions', function(req, res) {
+  db.Question.updateQuestion(req.body.questionId, req.body.expertId, req.body.answer, res);
+});
+
+app.use(express.static(process.env.PWD + '/client'));
+
+app.get('*', function(req, res) {
+  res.redirect('/dashboard');
+})
+
+
+app.listen(port, function() {
+  console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
+});
 
 // EXAMPLE DATA SENT FOR A POST TO /QUESTIONS
 /* {
@@ -70,11 +77,6 @@ app.get('/callback', function(req, res, next) {
 *  }
 */
 
-app.post('/questions', function(req, res) {
-  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body);
-  res.end();
-});
-
 // EXAMPLE DATA SENT FOR A PUT TO /QUESTIONS
 /* {
 *    questionId: 2, 
@@ -82,12 +84,3 @@ app.post('/questions', function(req, res) {
 *    answer: 'this is an example answer'
 *  }
 */
-
-app.put('/questions', function(req, res) {
-  db.Question.updateQuestion(req.body.questionId, req.body.expertId, req.body.answer, res);
-});
-
-app.use(express.static(process.env.PWD + '/client'));
-app.listen(port, function() {
-  console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
-});

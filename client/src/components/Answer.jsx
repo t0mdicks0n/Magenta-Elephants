@@ -1,12 +1,8 @@
 import React from 'react';
-import AskedQuestion from './AskedQuestion.jsx';
-import AnswerQuestion from './AnswerQuestion.jsx';
 
 const Answer = props => (
-  <section className={"answer " + props.answerDisplayClass} >
-    <AskedQuestion />
-    <hr />
-    <AnswerQuestion />
+  <section className="main">
+    <h1>This is where the regular (written) answer will go</h1>
   </section>
 );
 
