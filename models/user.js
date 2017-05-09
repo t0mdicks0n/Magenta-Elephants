@@ -6,8 +6,6 @@ module.exports.createUser = function(username, avatar_url) {
       return db.User.create({
         username: username,
         avatar_url: avatar_url,
-        currentCurrency: 100,
-        totalCurrentcy: 100
       })
     });
 };
@@ -29,3 +27,35 @@ module.exports.checkIfUserExists = function(username) {
       }
     });
 };
+
+module.exports.getRating = function(type, userid) {
+  return db.Question.sync()
+    .then(() => {
+      var parameter = (type === 'expert') ? 'E' : 'N';
+      return db.Question.findAll({
+        where: {
+          [parameter + 'id_User']: userid
+        }
+      });
+    })
+    .then((result) => {
+      var totalRatings = 0;
+      var totalScore = 0;
+      for (var i = 0; i < result.length; i++) {
+        if (result[i][type + 'Rating']) {
+          totalRatings++;
+          totalScore += result[i][type + 'Rating'];
+        }
+      }
+      return (totalScore === 0 && totalRatings === 0) ? 0 : totalScore / totalRatings;
+    });
+};
+
+
+// EXAMPLE USAGE OF GET RATING:
+// THE TWO TYPES ARE expert AND novice
+// IT IS CRUCIAL THAT THEY ARE NOT CAPITALIZED
+// getRating('novice', 1)
+//   .then((data) => {
+//     console.log(' the data', data);
+//   })

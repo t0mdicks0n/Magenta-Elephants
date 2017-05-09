@@ -6,6 +6,7 @@ $mainFlexWidth: 1 - $navFlexWidth;
 $recentQuestionsFlexWidth: .55;
 $askFlexWidth: 1 - $recentQuestionsFlexWidth;
 $answerFlexWidth: 1 - $recentQuestionsFlexWidth;
+$dashboardFlexWidth: 1 - $recentQuestionsFlexWidth;
 
 html {
   font-size: 10px;
@@ -109,6 +110,9 @@ main {
     textarea {
       min-height: 150px;
     }
+  }
+  .dashboard {
+    flex: $dashboardFlexWidth;
   }
 }
 

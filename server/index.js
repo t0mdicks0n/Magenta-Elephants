@@ -12,6 +12,8 @@ const app = express();
 
 process.env.PWD = process.cwd();
 app.use(cookieParser());
+
+var jsonParser = bodyParser.json();
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -45,17 +47,31 @@ app.get('/callback', function(req, res, next) {
   });
 });
 
+app.get('/expertRating', function(req, res) {
+  db.User.getRating('expert', req.body.userid)
+    .then((result) => {
+      res.end(result);
+    });
+});
+
+app.get('/noviceRating', function(req, res) {
+  db.User.getRating('novice', req.bod.userid)
+    .then((result) => {
+      res.end(result);
+    })
+});
+
 app.get('/questions', function (req, res) {
   db.Question.retrieveAll(res, arr => res.send(arr));
 });
 
-app.post('/questions', function(req, res) {
-  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body);
+app.post('/questions', jsonParser, function(req, res) {
+  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, req.body.price);
   res.end();
 });
 
 app.put('/questions', function(req, res) {
-  db.Question.updateQuestion(req.body.questionId, req.body.expertId, req.body.answer, res);
+  db.Question.updateQuestion(req.body, res);
 });
 
 app.use(express.static(process.env.PWD + '/client'));
@@ -82,5 +98,11 @@ app.listen(port, function() {
 *    questionId: 2, 
 *    expertId: 1,
 *    answer: 'this is an example answer'
+*  }
+*/
+
+// EXAMPLE DATA SENT TO A GET TO /expertRating
+/* {
+*    userid: 1 
 *  }
 */
