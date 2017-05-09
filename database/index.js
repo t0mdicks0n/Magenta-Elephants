@@ -3,12 +3,11 @@ var db = new Sequelize('4um', 'root', '', {
   logging: false
 });
 
-
 module.exports.User = db.define('User', {
   username: Sequelize.STRING,
   avatar_url: Sequelize.STRING,
-  currentCurrency: Sequelize.INTEGER,
-  totalCurrency: Sequelize.INTEGER
+  currentCurrency: { type: Sequelize.INTEGER, defaultValue: 100 },
+  totalCurrency: { type: Sequelize.INTEGER, defaultValue: 100 }
 }, {
   timestamps: false
 });
@@ -16,9 +15,13 @@ module.exports.User = db.define('User', {
 module.exports.Question = db.define('Question', {
   questionTitle: Sequelize.STRING,
   questionBody: Sequelize.TEXT,
+  price: { type: Sequelize.INTEGER, defaultValue: 20 },
   answer: Sequelize.TEXT,
-  Qid_User: Sequelize.INTEGER,
-  Aid_User: Sequelize.INTEGER
+  Nid_User: Sequelize.INTEGER,
+  Eid_User: Sequelize.INTEGER,
+  expertRating: Sequelize.INTEGER,
+  noviceRating: Sequelize.INTEGER,
+  answered: { type: Sequelize.BOOLEAN, defaultValue: false }
 }, {
   timestamps: false
 });

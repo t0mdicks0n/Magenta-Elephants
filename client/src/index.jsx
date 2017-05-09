@@ -14,7 +14,9 @@ class App extends React.Component {
     this.state = {
       questions: [],
       askTitle: '',
-      askBody: ''
+      askBody: '',
+      username: '',
+      userid: '',
     }
     this.createQuestion = this.createQuestion.bind(this);
     this.changeProp = this.changeProp.bind(this);

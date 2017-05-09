@@ -4,7 +4,7 @@ const db = Promise.promisifyAll(require('../models/index'));
 
 module.exports = function(req, res, next, body) {
   body = JSON.parse(body);
-  db.User.checkIfUserExists(body.login)
+  return db.User.checkIfUserExists(body.login)
     .then((userid) => {
       if (userid) {
         return userid;

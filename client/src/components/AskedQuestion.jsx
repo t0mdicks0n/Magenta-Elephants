@@ -12,8 +12,8 @@ class AskedQuestion extends React.Component {
   render() {
     return (
       <section className="answer">
-        <h1 className="headline">{this.props.question.title}</h1>
-        <p className="askedQuestionDescription">{this.props.question.body}</p> 
+        <h1 className="headline">{this.props.question.questionTitle}</h1>
+        <p className="askedQuestionDescription">{this.props.question.questionBody}</p> 
       </section>
     )
   }

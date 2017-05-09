@@ -30,11 +30,11 @@ module.exports.checkIfSessionIsValid = function(session, reqHeader, res) {
         if (week > currentDate - storedDate) {
           return data[0].userAgent === reqHeader;
         } else {
-          // res.clearCookie('forum');
+          res.clearCookie('forum');
           data[0].destroy();
         }
       } else if (data) {
-        // res.clearCookie('forum');
+        res.clearCookie('forum');
         return false;
       }
     });

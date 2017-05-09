@@ -1,9 +1,15 @@
 const db = require('../database/index.js');
 
-// EXAMPLE USAGE OF UPDATE QUESTION:
-// updateQuestion(3, 1, 'this is another example answer!!!');
+// FOR UPDATE QUESTION TO WORK THE PROPERTIES NEED TO BE SPECIFIED ON THE CLIENT SIDE THE SAME WAY THE DATA IS IN THE DATABASE. THIS MAKES THE FUNCTION MORE FLEXIBLE BECAUSE YOU CAN PASS IN AS FEW OR AS MANY PROPERTIES AS POSSIBLE
 
-module.exports.updateQuestion = function(questionId, expertId, answer, res) {
+// var exampleObj = {
+//   Eid_User: 2,
+//   questionTitle: 'this is an example title',
+//   questionBody: 'this is an example body'
+// };
+// updateQuestion(1, exampleObj, EXAMPLE RESPONSE OBJECT);
+
+module.exports.updateQuestion = function(questionId, updateObj, res) {
   db.Question.sync()
     .then(() => {
       return db.Question.findAll({
@@ -11,33 +17,71 @@ module.exports.updateQuestion = function(questionId, expertId, answer, res) {
       })
     })
     .then((data) => {
-      return data[0].update({
-        answer: answer,
-        Aid_User: expertId
-      })
+      return data[0].update(updateObj);
     })
     .then((data) => {
       // db.close();
       res.end('success!');
     });
+};
+
+// THIS FUNCTION TRANSFERS CURRENCY TO THE EXPERT AND MARKS THE QUESTION AS FINISHED
+// WHEN WE IMPLEMENT LIVE CHAT WE WILL BE ABLE TO UPDATE THE EXPERT'S CURRENCY IN REAL TIME, BUT FOR NOW WE CAN'T
+
+module.exports.finishQuestion = function(questionId) {
+  var questionPrice;
+  db.Question.sync()
+    .then(() => {
+      return db.Question.findById(questionId);
+    })
+    .then((question) => {
+      if (!question.answered) {
+        questionPrice = question.price;
+        question.update({
+          answered: true
+        });
+        return question.Eid_User;
+      } else {
+        throw 'question already answered';
+      }
+    })
+    .then((expertId) => {
+      return db.User.findById(expertId);
+    })
+    .then((expert) => {
+      var currentCurrency = expert.currentCurrency;
+      return expert.update({
+        currentCurrency: currentCurrency + questionPrice
+      });
+    })
+    .catch((err) => {
+      console.log('error!', err);
+    });
 }
+
 
 // EXAMPLE USAGE OF CREATE NEW QUESTION
 // createNewQuestion('heliu', 'is the sky blue?', 'yes it is blue.');
 
-module.exports.createNewQuestion = function(username, title, body) {
+module.exports.createNewQuestion = function(username, title, body, price) {
   db.Question.sync()
     .then(() => {
+      console.log('this is the username', username);
       return db.User.findAll({
         where: { username: username }
       })
     })
     .then((user) => {
-      return db.Question.create({
-        Qid_User: user[0].id,
-        questionTitle: title,
-        questionBody: body
-      })
+      if (user[0]) {
+        return db.Question.create({
+          Nid_User: user[0].id,
+          questionTitle: title,
+          questionBody: body,
+          price: price
+        })
+      } else {
+        throw 'user not found';
+      }
     })
     .catch((err) => {
       // I have not added actual error catching yet
@@ -50,27 +94,26 @@ module.exports.retrieveAll = function (res, cb) {
   db.Question.findAll()
     .then(questions => { 
       var response = [];
-      questions.forEach(question => {
-        db.User.findById(question.Qid_User)
-          .then(userInfo => {
-            var questionObj = {  
-              id: question.id,
-              username: userInfo.username || 'Anonymous',
-              avatar: userInfo.avatar_url,
-              title: question.questionTitle,
-              body: question.questionBody,
-              answer: question.answer || null
-            }
-            response.push(questionObj);
-            if (response.length === questions.length){
-              response.reverse();
-              cb(response);  
-            }  
-          });
-      });
+      if (questions.length === 0) {
+        cb(response);
+      } else {
+        questions.forEach(question => {
+          var questionObj = question.dataValues;
+          db.User.findById(question.Nid_User)
+            .then(userInfo => {
+              questionObj.username = userInfo.username || 'Anonymous';
+              questionObj.avatar = userInfo.avatar_url;
 
+              response.push(questionObj);
+              if (response.length === questions.length){
+                response.reverse();
+                cb(response);  
+              }  
+            });
+        }); 
+      }
     })
     .catch(err => {
       console.error('There was an error!', err);
-    })
+    });
 }
