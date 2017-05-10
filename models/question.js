@@ -7,10 +7,10 @@ const db = require('../database/index.js');
 //   questionTitle: 'this is an example title',
 //   questionBody: 'this is an example body'
 // };
-// updateQuestion(1, exampleObj, EXAMPLE RESPONSE OBJECT);
+// updateQuestion(1, exampleObj);
 
-module.exports.updateQuestion = function(questionId, updateObj, res) {
-  db.Question.sync()
+module.exports.updateQuestion = function(questionId, updateObj) {
+  return db.Question.sync()
     .then(() => {
       return db.Question.findAll({
         where: { id: questionId }
@@ -18,10 +18,6 @@ module.exports.updateQuestion = function(questionId, updateObj, res) {
     })
     .then((data) => {
       return data[0].update(updateObj);
-    })
-    .then((data) => {
-      // db.close();
-      res.end('success!');
     });
 };
 

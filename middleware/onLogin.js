@@ -16,7 +16,8 @@ module.exports = function(req, res, next, body) {
       return db.Session.createSession(userid, req.headers['user-agent']);
     })
     .then((result) => {
-      res.cookie('forum', result.cookieNum, { maxAge: 900000, httpOnly: true });
+      res.cookie('forumNumber', result.cookieNum, { maxAge: 90000, httpOnly: false });
+      res.cookie('forumLogin', body.login, {maxAge: 90000 });
       res.redirect('/dashboard');
     })
 };

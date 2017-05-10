@@ -26,12 +26,21 @@ main {
     height: 95vh;
   }
   .nav {
+    background-color: #5c5f6b;
+    position: relative;
+    color: white;
     flex: $navFlexWidth;
     text-align: center;
     .logo {
       font-size: 2rem;
       font-style: italic;
       font-weight: 800;
+    }
+    .currentPoints {
+      position: absolute;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
   .recentQuestions {

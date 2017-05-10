@@ -13,15 +13,16 @@ class App extends React.Component {
     super(props);
     this.state = {
       questions: [],
-      askTitle: '',
-      askBody: '',
-      username: '',
-      userid: '',
+      userInfo: {},
+      currentQuestion: {},
+      redirect: false
     }
-    this.createQuestion = this.createQuestion.bind(this);
+    this.changeCurrency = this.changeCurrency.bind(this);
     this.changeProp = this.changeProp.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
+    this.getProfileInfo = this.getProfileInfo.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.username = document.cookie.substring(document.cookie.indexOf("forumLogin=") + 11);
   }
 
   componentDidMount() {
@@ -30,12 +31,33 @@ class App extends React.Component {
 
   componentWillMount() {
     this.getQuestions();
+    this.getProfileInfo();
   }
 
   changeProp(key, val) {
     this.setState({
       [key]: val
     });
+  }
+
+  changeCurrency(change) {
+    var newObj = this.state.userInfo;
+    newObj.currentCurrency -= change;
+    this.setState({
+      userInfo: newObj
+    });
+  }
+
+  getProfileInfo() { 
+    $.get('/users/' + this.username, (req, res) => {})
+      .then(results => {
+        this.setState({
+          userInfo: JSON.parse(results)
+        });
+      })
+      .catch(err => {
+        console.log('error in retrieving profile info', err);
+      });
   }
 
   getQuestions() {
@@ -48,92 +70,27 @@ class App extends React.Component {
       });
   }
 
-  createQuestion(e) {
-    console.log('this is e', e);
-    e.preventDefault();
-    e.stopPropagation();
-    var obj = {
-      username: 'oriooctopus',
-      title: this.state.askTitle,
-      body: this.state.askBody 
-    };
-
-    $.ajax({
-      type: 'POST',
-      url: '/questions',
-      data: obj,
-      success: (data) => {
-        console.log('success!', data)
-      },
-      error: (err) => {
-        console.log('error with submitting answer', err)
-      }
-    })
-  }
-
-  submitAnswer() {
-    $.ajax({
-      type: 'POST',
-      url: '/answer',
-      data: JSON.stringify(data),
-      success: (data) => {
-        console.log('success!', data)
-      },
-      error: (err) => {
-        console.log('error with submitting answer', err)
-      }
-    })
-  }
-
   render() {
     return (
       <BrowserRouter>
         <main>
-          <Nav />
+          <Nav currentCurrency={this.state.userInfo.currentCurrency} />
           <Switch>
             <Route exact path="/Answer" component={Answer} />
             <Route exact path="/LiveAnswer" component={LiveAnswer} />
             <Route render={props => (
               <RecentQuestionsLayout
+                changeCurrency={this.changeCurrency}
+                username={this.username}
+                redirect={this.state.redirect}
+                currentQuestion={this.state.currentQuestion}
                 questions={this.state.questions}
-                askDisplayClass={this.state.askDisplayClass} 
-                createQuestion={this.createQuestion} 
-                askTitle={this.state.askTitle}
-                askBody={this.state.askBody}
-                changeProp={this.changeProp}
-                answerDisplayClass={this.state.answerDisplayClass} 
-                submitAnswer={this.submitAnswer}
-                updateQuestion={this.updateQuestion}
               />
             )} />
           </Switch>
         </main>
       </BrowserRouter>
     )
-
-    // FOR REFERENCE SAKE THIS HAS BEEN INCLUDED ALONG WITH SOME OLD COMPONENTS 
-
-    // return (
-    //   <main>
-    //     <Nav />
-    //     <RecentQuestions 
-    //       changeRight={this.changeRight} 
-    //       questions={this.state.questions}
-    //     />
-    //     <Ask 
-    //       askDisplayClass={this.state.askDisplayClass} 
-    //       createQuestion={this.createQuestion} 
-    //       askTitle={this.state.askTitle}
-    //       askBody={this.state.askBody}
-    //       changeProp={this.changeProp}
-    //     />
-    //     <Answer 
-    //       answerDisplayClass={this.state.answerDisplayClass} 
-    //       submitAnswer={this.submitAnswer}
-    //       updateQuestion={this.updateQuestion}
-    //     />
-    //   </main>
-    // )
   }
 }
 

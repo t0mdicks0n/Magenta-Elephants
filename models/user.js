@@ -28,9 +28,62 @@ module.exports.checkIfUserExists = function(username) {
     });
 };
 
-module.exports.getRating = function(type, userid) {
+module.exports.updateCurrency = function(username, change) {
+  return db.User.sync()
+    .then(() => {
+      return db.User.findOne({
+        where: { username: username }
+      });
+    })
+    .then((user) => {
+      if (change > 0) {
+        return user.update({
+          currentCurrency: user.currentCurrency + change,
+          totalCurrency: user.currentCurrency + change
+        });
+      } else {
+        return user.update({
+          currentCurrency: user.currentCurrency + change
+        });
+      }
+    });
+};
+
+module.exports.getUserInfo = function(username) {
+  var user;
+  return db.User.sync()
+    .then(() => {
+      return db.User.findOne({ where: { username: username } });
+    })
+    .then((result) => {
+      if (result) {
+        user = result.dataValues;
+      } else {
+        throw 'user not found';
+      }
+      return module.exports.getRating('novice', username);
+    })
+    .then((noviceRating) => {
+      user.noviceRating = noviceRating;
+      return module.exports.getRating('expert', username);
+    })
+    .then((expertRating) => {
+      user.expertRating = expertRating;
+      return user;
+    })
+    .catch((err) => {
+      console.log('err!', err);
+    });
+};
+
+module.exports.getRating = function(type, username) {
   return db.Question.sync()
     .then(() => {
+      db.User.findOne({
+        where: { username: username }
+      });
+    })
+    .then((userid) => {
       var parameter = (type === 'expert') ? 'E' : 'N';
       return db.Question.findAll({
         where: {
