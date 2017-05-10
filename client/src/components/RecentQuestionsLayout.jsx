@@ -16,6 +16,7 @@ const RecentQuestionsLayout = props => (
         <Ask 
           changeCurrency={props.changeCurrency}
           username={props.username}
+          filter={props.filter}
           redirect={props.redirect}
         />
       )} />

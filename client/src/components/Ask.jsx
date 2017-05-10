@@ -6,6 +6,7 @@ class Ask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      askTags: '',
       askTitle: '',
       askBody: '',
       askPrice: 20,
@@ -20,18 +21,25 @@ class Ask extends React.Component {
     });
   }
 
+  addToProp(e, key, val) {
+    this.setState({
+      [key]: this.state[key] + ',' + val
+    })
+  }
+
   createQuestion(e) {
     e.preventDefault();
-
+    props.filter();
     var currentQuestion = {
       questionTitle: this.state.askTitle,
       questionBody: this.state.askBody
     };
 
     var obj = {
-      username: this.username || 'oriooctopus',
+      username: this.username,
       title: this.state.askTitle,
       body: this.state.askBody,
+      tags: this.state.askTags,
       price: '-' + this.state.askPrice
     };
 

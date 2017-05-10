@@ -22,6 +22,7 @@ class App extends React.Component {
     this.getQuestions = this.getQuestions.bind(this);
     this.getProfileInfo = this.getProfileInfo.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.filter = this.filter.bind(this)
     this.username = document.cookie.substring(document.cookie.indexOf("forumLogin=") + 11);
   }
 
@@ -60,6 +61,25 @@ class App extends React.Component {
       });
   }
 
+  filter(e) {
+    if (e.target.value === 'all') {
+      this.changeProp('filteredQuestions', this.state.questions);
+    } 
+    else {
+      var filtered = [];
+      var questions = this.state.questions;
+      for(var i = 0; i < questions.length; i++){
+        var tags = questions[i].tags.split(',');
+        if(tags.includes(e.target.value)){
+          filtered.push(questions[i]);
+        }
+        if (questions.length - 1 === i){
+          this.changeProp('filteredQuestions', filtered);
+        }
+      }
+    }
+  }
+
   getQuestions() {
     $.get('/questions', (req, res) => {})
       .then(results => {
@@ -85,6 +105,7 @@ class App extends React.Component {
                 redirect={this.state.redirect}
                 currentQuestion={this.state.currentQuestion}
                 questions={this.state.questions}
+                filter={this.filter}
               />
             )} />
           </Switch>
