@@ -5,8 +5,9 @@ class AskedQuestion extends React.Component {
     super(props);
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log('the next stuff', nextProps, nextState);
+    return true;
   }
 
   render() {

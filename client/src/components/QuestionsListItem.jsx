@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const QuestionListItem = props => (
-  <Link to={"/Answered/" + props.index}>
+  <Link to={"/Asked/" + props.index}>
     <li>
       <div>
         <img className="questionImage" src={props.question.avatar} />

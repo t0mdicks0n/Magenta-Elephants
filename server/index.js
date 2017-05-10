@@ -47,14 +47,14 @@ app.get('/callback', function(req, res, next) {
   });
 });
 
-app.get('/expertRating', function(req, res) {
+app.get('/expertRating', sessionParser, function(req, res) {
   db.User.getRating('expert', req.body.userid)
     .then((result) => {
       res.end(result);
     });
 });
 
-app.get('/noviceRating', function(req, res) {
+app.get('/noviceRating', sessionParser, function(req, res) {
   db.User.getRating('novice', req.bod.userid)
     .then((result) => {
       res.end(result);
@@ -66,15 +66,31 @@ app.get('/questions', function (req, res) {
 });
 
 app.post('/questions', jsonParser, function(req, res) {
-  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, req.body.price);
+  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price));
+  db.User.updateCurrency(req.body.username, Number(req.body.price));
   res.end();
 });
 
 app.put('/questions', function(req, res) {
-  db.Question.updateQuestion(req.body, res);
+  var questionId = req.body.questionId;
+  delete req.body.questionId;
+
+  db.Question.updateQuestion(questionId, req.body)
+    .then((result) => {
+      res.end(result);
+    });
 });
 
 app.use(express.static(process.env.PWD + '/client'));
+
+app.get('/users*', function(req, res) {
+  var slashIndex = req.url.lastIndexOf('/') + 1;
+  var user = req.url.substring(slashIndex);
+  db.User.getUserInfo(user)
+    .then((userInfo) => {
+      res.end(JSON.stringify(userInfo));
+    });
+})
 
 app.get('*', function(req, res) {
   res.redirect('/dashboard');

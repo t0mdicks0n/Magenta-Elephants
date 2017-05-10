@@ -9,15 +9,21 @@ import Dashboard from './Dashboard.jsx';
 const RecentQuestionsLayout = props => (
   <div className="main">
     <RecentQuestions 
-      changeRight={props.changeRight} 
       questions={props.questions}
     />
     <Switch>
       <Route exact path="/Ask" render={innerProps => (
-        <Ask createQuestion={props.createQuestion} changeProp={props.changeProp} />
+        <Ask 
+          changeCurrency={props.changeCurrency}
+          username={props.username}
+          redirect={props.redirect}
+        />
       )} />
       <Route exact path="/Dashboard" component={Dashboard} />
-      <Route path="/Answered/:number" render={innerProps => (
+      <Route exact path="/Asked/Recent" render={innerProps => (
+        <AskedQuestion question={props.currentQuestion} />
+      )} />
+      <Route path="/Asked/:number" render={innerProps => (
         <AskedQuestion question={props.questions[innerProps.match.params.number]} />
       )} />
     </Switch>

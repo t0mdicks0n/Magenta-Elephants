@@ -28,6 +28,44 @@ module.exports.checkIfUserExists = function(username) {
     });
 };
 
+module.exports.updateCurrency = function(username, change) {
+  return db.User.sync()
+    .then(() => {
+      return db.User.findOne({
+        where: { username: username }
+      });
+    })
+    .then((user) => {
+      if (change > 0) {
+        return user.update({
+          currentCurrency: user.currentCurrency + change
+        });
+      } else {
+        return user.update({
+          currentCurrency: user.currentCurrency + change,
+          totalCurrency: user.currentCurrency + change
+        });
+      }
+    });
+};
+
+module.exports.getUserInfo = function(username) {
+  return db.User.sync()
+    .then(() => {
+      return db.User.findOne({ where: { username: username } });
+    })
+    .then((result) => {
+      if (result) {
+        return result.dataValues;
+      } else {
+        throw 'user not found';
+      }
+    })
+    .catch((err) => {
+      console.log('err!', err);
+    });
+};
+
 module.exports.getRating = function(type, userid) {
   return db.Question.sync()
     .then(() => {
