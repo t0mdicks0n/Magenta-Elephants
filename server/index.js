@@ -48,14 +48,14 @@ app.get('/callback', function(req, res, next) {
 });
 
 app.get('/expertRating', function(req, res) {
-  db.User.getRating('expert', req.body.userid)
+  db.User.getRating('expert', req.body.username)
     .then((result) => {
       res.end(result);
     });
 });
 
 app.get('/noviceRating', function(req, res) {
-  db.User.getRating('novice', req.bod.userid)
+  db.User.getRating('novice', req.body.username)
     .then((result) => {
       res.end(result);
     })
@@ -66,6 +66,7 @@ app.get('/questions', function (req, res) {
 });
 
 app.post('/questions', jsonParser, function(req, res) {
+  console.log('this is the body', req.body);
   db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price));
   db.User.updateCurrency(req.body.username, Number(req.body.price));
   res.end();
