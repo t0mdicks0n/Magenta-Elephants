@@ -47,14 +47,14 @@ app.get('/callback', function(req, res, next) {
   });
 });
 
-app.get('/expertRating', sessionParser, function(req, res) {
+app.get('/expertRating', function(req, res) {
   db.User.getRating('expert', req.body.userid)
     .then((result) => {
       res.end(result);
     });
 });
 
-app.get('/noviceRating', sessionParser, function(req, res) {
+app.get('/noviceRating', function(req, res) {
   db.User.getRating('novice', req.bod.userid)
     .then((result) => {
       res.end(result);
