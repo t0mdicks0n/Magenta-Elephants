@@ -103,7 +103,9 @@ module.exports.retrieveAll = function (res, cb) {
 
               response.push(questionObj);
               if (response.length === questions.length){
-                response.reverse();
+                response.sort( (a, b) => {
+                  return b.id - a.id;
+                })
                 cb(response);  
               }  
             });
