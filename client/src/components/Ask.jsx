@@ -9,8 +9,9 @@ class Ask extends React.Component {
       askTags: '',
       askTitle: '',
       askBody: '',
-      askPrice: 20,
-      redirect: false
+      askPrice: 0,
+      redirect: false,
+      minExpertRating: 0
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.changeProp = this.changeProp.bind(this);
@@ -51,7 +52,8 @@ class Ask extends React.Component {
       title: this.state.askTitle,
       body: this.state.askBody,
       tags: this.state.askTags,
-      price: '-' + this.state.askPrice
+      price: '-' + this.state.askPrice,
+      minExpertRating: this.state.minExpertRating
     };
 
     $.ajax({
@@ -71,6 +73,7 @@ class Ask extends React.Component {
         console.log('error with submitting answer', err)
       }
     })
+    
   }
 
   render() {
@@ -89,6 +92,17 @@ class Ask extends React.Component {
           </div>
           <div className="askBody">
             <textarea className="questionDescription" placeholder="Paste Code Here" value={this.askBody} onChange={ e => this.changeProp('askBody', e.target.value) } ></textarea>
+            <h2>Choose Amount of Currency to Pay for Expert Answer</h2>
+              <input className="currencyInput" type="number" placeholder="Specify Currency" value={this.askPrice} onChange={ e => this.changeProp('askPrice', e.target.value) } />
+            <h2>Choose Minimum Rating of Expert Answer</h2>
+            <select onChange={ e => this.changeProp('minExpertRating', e.target.value)}>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
             <h2>Choose at Least One Tag</h2>
             <ul>
               {this.props.filters.map( filter => 

@@ -66,7 +66,7 @@ app.get('/questions', function (req, res) {
 });
 
 app.post('/questions', jsonParser, function(req, res) {
-  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags );
+  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags, req.body.minExpertRating );
   console.log('USERNAME IN POST ', req.body.username)
   db.User.updateCurrency(req.body.username, Number(req.body.price));
   res.end();
