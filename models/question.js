@@ -59,7 +59,7 @@ module.exports.finishQuestion = function(questionId) {
 // EXAMPLE USAGE OF CREATE NEW QUESTION
 // createNewQuestion('heliu', 'is the sky blue?', 'yes it is blue.');
 
-module.exports.createNewQuestion = function(username, title, body, price) {
+module.exports.createNewQuestion = function(username, title, body, price, tags) {
   db.Question.sync()
     .then(() => {
       console.log('this is the username', username);
@@ -73,7 +73,8 @@ module.exports.createNewQuestion = function(username, title, body, price) {
           Nid_User: user[0].id,
           questionTitle: title,
           questionBody: body,
-          price: price
+          price: price,
+          tags: tags
         })
       } else {
         throw 'user not found';

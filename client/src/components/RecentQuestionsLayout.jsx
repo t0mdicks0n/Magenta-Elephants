@@ -10,12 +10,17 @@ const RecentQuestionsLayout = props => (
   <div className="main">
     <RecentQuestions 
       questions={props.questions}
+      filters={props.filters}
+      filter={props.filter}
     />
     <Switch>
       <Route exact path="/Ask" render={innerProps => (
         <Ask 
           changeCurrency={props.changeCurrency}
           username={props.username}
+          filter={props.filter}
+          filters={props.filters}
+          questions={props.questions}
           redirect={props.redirect}
         />
       )} />

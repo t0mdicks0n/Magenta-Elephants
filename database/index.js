@@ -13,8 +13,9 @@ module.exports.User = db.define('User', {
 });
 
 module.exports.Question = db.define('Question', {
-  questionTitle: Sequelize.STRING,
+  questionTitle: Sequelize.TEXT,
   questionBody: Sequelize.TEXT,
+  tags: Sequelize.TEXT,
   price: { type: Sequelize.INTEGER, defaultValue: 20 },
   answer: Sequelize.TEXT,
   Nid_User: Sequelize.INTEGER,
