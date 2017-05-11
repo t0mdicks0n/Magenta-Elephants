@@ -14,6 +14,32 @@ chai.use(chaiHttp);
 const agent = chai.request.agent('http://localhost:3000');
 // test table allows unique usernames
 
+var questionArray = [{
+  username: 'exampleUser',
+  title: 'this is an example title',
+  body: 'this is an example body',
+  price: 20
+},
+{
+  username: 'exampleUser',
+  title: 'this is an example title',
+  body: 'this is an example body',
+  price: 20
+},
+{
+  username: 'exampleUser2',
+  title: 'this is an example title',
+  body: 'this is an example body',
+  price: 20
+},
+{
+  username: 'exampleUser2',
+  title: 'this is an example title',
+  body: 'this is an example body',
+  price: 20
+}];
+
+
 var clearDB = function(connection, tablenames, done) {
   var count = 0;
   tablenames.forEach(function(tablename) {
@@ -26,34 +52,6 @@ var clearDB = function(connection, tablenames, done) {
   })
 };
 
-describe('authentication', function() {
-  it('redirects to /callback when no cookies are attached', function(done) {
-    chai.request('http://localhost:3000/dashboard').
-      get('/').
-      end((err, res) => {
-        expect(res).to.redirect;
-        done();
-      });
-  })
-
-  it('does not redirect when valid cookies are attached', function(done) {
-    directDb.Session.sync()
-      .then(() => {
-        return db.Session.createSession(1, '4um'); 
-      })
-      .then((result) => {
-        chai.request('http://localhost:3000/dashboard').
-          get('/').
-          set('Cookie', `forumNumber=${result.cookieNum}`).
-          set('user-agent', '4um').
-          end((err, res) => { 
-            expect(res).to.not.redirect;
-            done();
-          });
-      })
-
-  });
-});
 
 
 describe('Successfully authenticating through github', function() {
@@ -157,6 +155,35 @@ describe('Successfully authenticating through github', function() {
 
 });
 
+describe('authentication', function() {
+  it('redirects to /callback when no cookies are attached', function(done) {
+    chai.request('http://localhost:3000/dashboard').
+      get('/').
+      end((err, res) => {
+        expect(res).to.redirect;
+        done();
+      });
+  })
+
+  it('does not redirect when valid cookies are attached', function(done) {
+    directDb.Session.sync()
+      .then(() => {
+        return db.Session.createSession(1, '4um'); 
+      })
+      .then((result) => {
+        chai.request('http://localhost:3000/dashboard').
+          get('/').
+          set('Cookie', `forumNumber=${result.cookieNum}`).
+          set('user-agent', '4um').
+          end((err, res) => { 
+            expect(res).to.not.redirect;
+            done();
+          });
+      })
+
+  });
+});
+
 describe('questions: ', function() {
   var dbConnection;
   var tableNames = ['Sessions', 'Users', 'Questions'];
@@ -241,30 +268,6 @@ describe('ratings:', function() {
         db.User.createUser('exampleUser2', '')
           .then(() => {
             var counter = 0;
-            var questionsArray = [{
-              username: 'exampleUser',
-              title: 'this is an example title',
-              body: 'this is an example body',
-              price: 20
-            },
-            {
-              username: 'exampleUser',
-              title: 'this is an example title',
-              body: 'this is an example body',
-              price: 20
-            },
-            {
-              username: 'exampleUser2',
-              title: 'this is an example title',
-              body: 'this is an example body',
-              price: 20
-            },
-            {
-              username: 'exampleUser2',
-              title: 'this is an example title',
-              body: 'this is an example body',
-              price: 20
-            }];
 
             for (var i = 0; i < questionArray.length; i++) {
               chai.request('http://localhost:3000/questions').
@@ -286,7 +289,7 @@ describe('ratings:', function() {
   // NO TESTS YET
 });
 
-describe('users', function() {
+describe('users: ', function() {
   var dbConnection;
   var tableNames = ['Sessions', 'Users', 'Questions'];
   beforeEach(function(done) {
@@ -307,13 +310,11 @@ describe('users', function() {
   it('a user starts off with 100 points', function(done) {
     db.User.createUser('exampleUser', '')
       .then(() => {
-        db.User.getUserInfo('exampleUser')
-          .then((userInfo) => {
-            console.log('the user info', userInfo);
-            expect(userInfo.currentCurrency).to.equal(100);
-            expect(userInfo.totalCurrency).to.equal(100);
-            done();
-          })  
+        db.User.getUserInfo('exampleUser', (userInfo) => {
+          expect(userInfo.currentCurrency).to.equal(100);
+          expect(userInfo.totalCurrency).to.equal(100);
+          done();
+        }); 
       });
   });
 
@@ -323,13 +324,12 @@ describe('users', function() {
         return db.User.updateCurrency('exampleUser', 30);
       })
       .then(() => {
-        return db.User.getUserInfo('exampleUser');
-      })
-      .then((userInfo) => {
-        expect(userInfo.currentCurrency).to.equal(130);
-        expect(userInfo.totalCurrency).to.equal(130);
-        done();
-      })
+        db.User.getUserInfo('exampleUser', (userInfo) => {
+          expect(userInfo.currentCurrency).to.equal(130);
+          expect(userInfo.totalCurrency).to.equal(130);
+          done();
+        });
+      });
   });
 
   it('update currency updates a users currentCurrency and totalCurrency when the value is positive', function(done) {
@@ -338,13 +338,12 @@ describe('users', function() {
         return db.User.updateCurrency('exampleUser', -50);
       })
       .then(() => {
-        return db.User.getUserInfo('exampleUser');
-      })
-      .then((userInfo) => {
-        expect(userInfo.currentCurrency).to.equal(50);
-        expect(userInfo.totalCurrency).to.equal(100);
-        done();
-      })
+        db.User.getUserInfo('exampleUser', (userInfo) => {
+          expect(userInfo.currentCurrency).to.equal(50);
+          expect(userInfo.totalCurrency).to.equal(100);
+          done();
+        });
+      });
   });
 });
 

@@ -66,7 +66,6 @@ app.get('/questions', function (req, res) {
 });
 
 app.post('/questions', jsonParser, function(req, res) {
-  console.log('this is the body', req.body);
   db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags );
   console.log('USERNAME IN POST ', req.body.username)
   db.User.updateCurrency(req.body.username, Number(req.body.price));
@@ -88,16 +87,13 @@ app.use(express.static(process.env.PWD + '/client'));
 app.get('/users*', function(req, res) {
   var slashIndex = req.url.lastIndexOf('/') + 1;
   var user = req.url.substring(slashIndex);
-  console.log('USER: ',user)
-  db.User.getUserInfo(user)
-    .then((userInfo) => {
-      res.end(JSON.stringify(userInfo));
-    });
-})
+
+  db.User.getUserInfo(user, userInfo => res.end(JSON.stringify(userInfo)));
+});
 
 app.get('*', function(req, res) {
   res.redirect('/dashboard');
-})
+});
 
 
 app.listen(port, function() {

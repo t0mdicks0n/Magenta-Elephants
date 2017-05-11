@@ -9,7 +9,7 @@ module.exports = function(req, res, next, body) {
       if (userid) {
         return userid;
       } else {
-        return db.User.createUser(body.login, body.avatar_url).id;
+        return db.User.createUser(body.login, body.avatar_url, body.bio).id;
       }
     })
     .then((userid) => {

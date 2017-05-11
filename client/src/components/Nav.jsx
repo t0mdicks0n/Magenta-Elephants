@@ -1,10 +1,12 @@
 import React from 'react';
-import CurrentPoints from './CurrentPoints.jsx';
+import Currency from './Currency.jsx';
+import { Link } from 'react-router-dom';
 
 const Nav = props => (
   <section className="nav">
     <h1 className="logo">Forum</h1>
-    <CurrentPoints currentCurrency={props.currentCurrency} />
+    <Currency currency={props.currentCurrency} name="Current"/>
+    <Link to="/Ask">Ask a Question</Link>
   </section>
 );
 
