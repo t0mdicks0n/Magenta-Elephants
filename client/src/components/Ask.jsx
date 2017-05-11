@@ -13,6 +13,8 @@ class Ask extends React.Component {
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.changeProp = this.changeProp.bind(this);
+    this.chooseFilter = this.chooseFilter.bind(this);
+    this.addToProp = this.addToProp.bind(this);
   }
 
   changeProp(key, val) {
@@ -21,22 +23,30 @@ class Ask extends React.Component {
     });
   }
 
-  addToProp(e, key, val) {
+  addToProp(key, val) {
     this.setState({
       [key]: this.state[key] + ',' + val
     })
   }
 
+  chooseFilter(e) {
+    if($(e.target).hasClass('selected')){
+      $(e.target).removeClass('selected')
+    } else {
+      $(e.target).addClass('selected');
+      console.log('Value: ', e.target.value)
+      this.addToProp('askTags', e.target.value)
+    }
+  }
+
   createQuestion(e) {
     e.preventDefault();
-    props.filter();
     var currentQuestion = {
       questionTitle: this.state.askTitle,
       questionBody: this.state.askBody
     };
-
     var obj = {
-      username: this.username,
+      username: this.username || 'Aelgiadi',
       title: this.state.askTitle,
       body: this.state.askBody,
       tags: this.state.askTags,
@@ -53,6 +63,7 @@ class Ask extends React.Component {
           currentQuestion: currentQuestion,
           redirect: true
         });
+        this.changeProp('askTags', '')
       },
       error: (err) => {
         console.log('error with submitting answer', err)
@@ -76,6 +87,14 @@ class Ask extends React.Component {
           </div>
           <div className="askBody">
             <textarea className="questionDescription" placeholder="Paste Code Here" value={this.askBody} onChange={ e => this.changeProp('askBody', e.target.value) } ></textarea>
+            <h2>Choose at Least One Tag</h2>
+            <ul>
+              {this.props.filters.map( filter => 
+                <li key={filter.id}>
+                  <button onClick={this.chooseFilter} className="filter" type="button" value={filter.id} >{filter.title}</button>
+                </li>
+                )}
+            </ul>
             <button type="submit">Ask</button>
           </div>
         </form>

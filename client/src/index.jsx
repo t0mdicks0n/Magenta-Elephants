@@ -6,6 +6,7 @@ import LiveAnswer from './components/LiveAnswer.jsx';
 import Answer from './components/Answer.jsx';
 import $ from 'jquery';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import filters from '../../filters.js'
 require('!style-loader!css-loader!sass-loader!./sass/all.scss');
 
 class App extends React.Component {
@@ -22,7 +23,8 @@ class App extends React.Component {
     this.getQuestions = this.getQuestions.bind(this);
     this.getProfileInfo = this.getProfileInfo.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.filter = this.filter.bind(this)
+    this.filter = this.filter.bind(this);
+    this.filters = filters.filters;
     this.username = document.cookie.substring(document.cookie.indexOf("forumLogin=") + 11);
   }
 
@@ -61,25 +63,6 @@ class App extends React.Component {
       });
   }
 
-  filter(e) {
-    if (e.target.value === 'all') {
-      this.changeProp('filteredQuestions', this.state.questions);
-    } 
-    else {
-      var filtered = [];
-      var questions = this.state.questions;
-      for(var i = 0; i < questions.length; i++){
-        var tags = questions[i].tags.split(',');
-        if(tags.includes(e.target.value)){
-          filtered.push(questions[i]);
-        }
-        if (questions.length - 1 === i){
-          this.changeProp('filteredQuestions', filtered);
-        }
-      }
-    }
-  }
-
   getQuestions() {
     $.get('/questions', (req, res) => {})
       .then(results => {
@@ -88,6 +71,28 @@ class App extends React.Component {
       .catch(err => {
         console.log('there was an error with get ', err)
       });
+  }
+
+  filter(e) {
+    console.log('USERNAME: ',this.username)
+    if (e.target.value === 'all') {
+      this.state.questions.forEach( question => {
+        if ($('#' + question.id).hasClass('hidden')) {
+          $('#' + question.id).removeClass('hidden');
+        }
+      })
+    } 
+    else {
+      this.state.questions.forEach( question => {
+        var tags = question.tags.split(',');
+        if (!tags.includes(e.target.value)) {
+          $('#' + question.id).addClass('hidden');
+        } 
+        else {
+          $('#' + question.id).removeClass('hidden')
+        }
+      })
+    }
   }
 
   render() {
@@ -106,6 +111,7 @@ class App extends React.Component {
                 currentQuestion={this.state.currentQuestion}
                 questions={this.state.questions}
                 filter={this.filter}
+                filters={this.filters}
               />
             )} />
           </Switch>

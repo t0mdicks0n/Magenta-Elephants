@@ -86,6 +86,9 @@ main {
           }
         }
       }
+      li.hidden{
+        display: none;
+      }
     }
   }
   .ask {
@@ -107,6 +110,16 @@ main {
       .askBody {
         button {
           width: 25%;
+        }
+        li {
+          display: inline-block;
+          button {
+            width: 75px;
+            margin: 0.5rem;
+          }
+          button.filter.selected {
+            font-weight: 800;
+          }
         }
       }
     }
