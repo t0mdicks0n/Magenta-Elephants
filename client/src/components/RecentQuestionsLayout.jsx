@@ -4,7 +4,7 @@ import AskedQuestion from './AskedQuestion.jsx';
 import { Switch, Route } from 'react-router-dom';
 import Ask from './Ask.jsx';
 import Answer from './Answer.jsx';
-import Dashboard from './Dashboard.jsx';
+import Dashboard from './Dashboard/Dashboard.jsx';
 
 const RecentQuestionsLayout = props => (
   <div className="main">
@@ -17,6 +17,7 @@ const RecentQuestionsLayout = props => (
       <Route exact path="/Ask" render={innerProps => (
         <Ask 
           changeCurrency={props.changeCurrency}
+          changeIndexProp={props.changeProp}
           username={props.username}
           filter={props.filter}
           filters={props.filters}
@@ -24,7 +25,12 @@ const RecentQuestionsLayout = props => (
           redirect={props.redirect}
         />
       )} />
-      <Route exact path="/Dashboard" component={Dashboard} />
+      <Route exact path="/Dashboard" render={innerProps => (
+        <Dashboard 
+          userInfo={props.personalInfo}
+          changeProp={props.changeProp}
+        /> 
+      )} />
       <Route exact path="/Asked/Recent" render={innerProps => (
         <AskedQuestion question={props.currentQuestion} />
       )} />

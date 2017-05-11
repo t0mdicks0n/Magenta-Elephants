@@ -14,9 +14,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       questions: [],
+      personalInfo: {},
       userInfo: {},
       currentQuestion: {},
-      redirect: false
     }
     this.changeCurrency = this.changeCurrency.bind(this);
     this.changeProp = this.changeProp.bind(this);
@@ -34,7 +34,7 @@ class App extends React.Component {
 
   componentWillMount() {
     this.getQuestions();
-    this.getProfileInfo();
+    this.getProfileInfo('personal');
   }
 
   changeProp(key, val) {
@@ -44,18 +44,19 @@ class App extends React.Component {
   }
 
   changeCurrency(change) {
-    var newObj = this.state.userInfo;
+    var newObj = this.state.personalInfo;
     newObj.currentCurrency -= change;
     this.setState({
-      userInfo: newObj
+      personalInfo: newObj
     });
   }
 
-  getProfileInfo() { 
+  getProfileInfo(type) { 
     $.get('/users/' + this.username, (req, res) => {})
       .then(results => {
+        console.log('success', results);
         this.setState({
-          userInfo: JSON.parse(results)
+          [type + "Info"]: JSON.parse(results)
         });
       })
       .catch(err => {
@@ -99,13 +100,15 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <main>
-          <Nav currentCurrency={this.state.userInfo.currentCurrency} />
+          <Nav currentCurrency={this.state.personalInfo.currentCurrency} />
           <Switch>
             <Route exact path="/Answer" component={Answer} />
             <Route exact path="/LiveAnswer" component={LiveAnswer} />
             <Route render={props => (
               <RecentQuestionsLayout
+                personalInfo={this.state.personalInfo}
                 changeCurrency={this.changeCurrency}
+                changeProp={this.changeProp}
                 username={this.username}
                 redirect={this.state.redirect}
                 currentQuestion={this.state.currentQuestion}

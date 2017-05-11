@@ -1,11 +1,12 @@
 const db = require('../database/index.js');
 
-module.exports.createUser = function(username, avatar_url) {
+module.exports.createUser = function(username, avatar_url, bio) {
   return db.User.sync()
     .then(() => {
       return db.User.create({
         username: username,
         avatar_url: avatar_url,
+        bio: bio
       })
     });
 };
@@ -49,10 +50,42 @@ module.exports.updateCurrency = function(username, change) {
     });
 };
 
-module.exports.getUserInfo = function(username) {
-  var user;
-  return db.User.sync()
+var getQuestions = function(type, userid, cb) {
+  var parameter = (type === 'expert') ? 'E' : 'N';
+  db.Question.sync()
     .then(() => {
+      return db.Question.findAll({
+        where: {
+          [parameter + 'id_User']: userid
+        }
+      });   
+    })
+    .then((questions) => {
+      var standardizedQuestions = questions.map(element => element.dataValues);
+      cb(standardizedQuestions);
+    });
+};
+
+var findRatingFromQuestions = function(type, questions) {
+  var totalRatings = 0;
+  var totalScore = 0;
+  for (var i = 0; i < questions.length; i++) {
+    if (questions[i][type + 'Rating']) {
+      totalRatings++;
+      totalScore += questions[i][type + 'Rating'];
+    }
+  }
+  return (totalScore === 0 && totalRatings === 0) ? 0 : totalScore / totalRatings;
+};
+
+
+// OK I KNOW THIS FUNCTION LOOKS HELLA DIRTY, BUT THIS IS ACTUALLY THE FASTEST WAY OF DOING THIS BECAUSE IT MAKES LESS DATABASE CALLS AND PERFORMS THE TWO BIG CALLS ASYNCHRONOUSLY (HENCE THE CALLBACKS WITHIN THE PROMISE)
+
+module.exports.getUserInfo = function(username, cb) {
+  var user;
+  db.User.sync()
+    .then(() => {
+      console.log('the username', username);
       return db.User.findOne({ where: { username: username } });
     })
     .then((result) => {
@@ -61,20 +94,39 @@ module.exports.getUserInfo = function(username) {
       } else {
         throw 'user not found';
       }
-      return module.exports.getRating('novice', username);
-    })
-    .then((noviceRating) => {
-      user.noviceRating = noviceRating;
-      return module.exports.getRating('expert', username);
-    })
-    .then((expertRating) => {
-      user.expertRating = expertRating;
-      return user;
+
+      var counter = 0;
+
+      getQuestions('novice', user.id, (noviceQuestions) => {
+        noviceQuestions = noviceQuestions || [];
+        user.recentNoviceQuestions = noviceQuestions.slice(0, 10);
+        user.noviceRating = findRatingFromQuestions('novice', noviceQuestions);
+        (counter === 1) ? cb(user) : counter++;
+      });
+
+      getQuestions('expert', user.id, (expertQuestions) => {
+        expertQuestions = expertQuestions || [];
+        user.recentExpertQuestions = expertQuestions.slice(0, 10);
+        user.expertRating = findRatingFromQuestions('expert', expertQuestions);
+        (counter === 1) ? cb(user) : counter++;
+      });
+
     })
     .catch((err) => {
       console.log('err!', err);
     });
 };
+
+
+// THIS FUNCTION IS CALLED WHEN YOU WANT TO JUST GET A USERS RATING AND NOT OTHER PROFILE INFO
+// EXAMPLE USAGE OF GET RATING:
+// THE TWO TYPES ARE expert AND novice
+// IT IS CRUCIAL THAT THEY ARE NOT CAPITALIZED
+// getRating('novice', 1)
+//   .then((data) => {
+//     console.log(' the data', data);
+//   })
+
 
 module.exports.getRating = function(type, username) {
   return db.Question.sync()
@@ -103,12 +155,3 @@ module.exports.getRating = function(type, username) {
       return (totalScore === 0 && totalRatings === 0) ? 0 : totalScore / totalRatings;
     });
 };
-
-
-// EXAMPLE USAGE OF GET RATING:
-// THE TWO TYPES ARE expert AND novice
-// IT IS CRUCIAL THAT THEY ARE NOT CAPITALIZED
-// getRating('novice', 1)
-//   .then((data) => {
-//     console.log(' the data', data);
-//   })

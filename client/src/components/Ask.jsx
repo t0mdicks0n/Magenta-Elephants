@@ -10,6 +10,7 @@ class Ask extends React.Component {
       askTitle: '',
       askBody: '',
       askPrice: 20,
+      redirect: false
     };
     this.createQuestion = this.createQuestion.bind(this);
     this.changeProp = this.changeProp.bind(this);
@@ -46,7 +47,7 @@ class Ask extends React.Component {
       questionBody: this.state.askBody
     };
     var obj = {
-      username: this.username || 'Aelgiadi',
+      username: this.props.username || 'Aelgiadi',
       title: this.state.askTitle,
       body: this.state.askBody,
       tags: this.state.askTags,
@@ -61,9 +62,10 @@ class Ask extends React.Component {
         this.props.changeCurrency(this.state.askPrice);
         this.setState({
           currentQuestion: currentQuestion,
-          redirect: true
-        });
-        this.changeProp('askTags', '')
+          redirect: true,
+          askTags: ''
+        })
+        this.props.changeIndexProp('currentQuestion', currentQuestion);
       },
       error: (err) => {
         console.log('error with submitting answer', err)
@@ -72,7 +74,7 @@ class Ask extends React.Component {
   }
 
   render() {
-    if (this.props.redirect) {
+    if (this.state.redirect) {
       return <Redirect push to="/Asked/Recent" />
     }
 

@@ -6,6 +6,7 @@ var db = new Sequelize('4um', 'root', '', {
 module.exports.User = db.define('User', {
   username: Sequelize.STRING,
   avatar_url: Sequelize.STRING,
+  bio: Sequelize.TEXT,
   currentCurrency: { type: Sequelize.INTEGER, defaultValue: 100 },
   totalCurrency: { type: Sequelize.INTEGER, defaultValue: 100 }
 }, {
