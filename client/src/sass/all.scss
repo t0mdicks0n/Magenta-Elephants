@@ -167,6 +167,18 @@ main {
   }
 }
 
+.giveAnswer {
+  width: 50%;
+  margin-left: 0px;
+  border: none;
+  section {
+    border: none;
+  }
+  textarea {
+    height: 75%;
+  }
+}
+
 .headline {
   font-size: 3rem;
 }
