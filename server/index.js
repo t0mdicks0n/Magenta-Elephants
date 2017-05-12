@@ -102,9 +102,40 @@ app.get('*', function(req, res) {
 });
 
 
-app.listen(port, function() {
+const server = app.listen(port, function() {
   console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
 });
+const io = require('socket.io')(server);
+connections = [];
+users = [];
+
+var updateUsernames = function() {
+  io.emit('get users', users);
+};
+
+io.on('connection', function(socket) {
+  connections.push(socket);
+  console.log('Connected');
+
+  socket.on('disconnect', function(data) {
+    users.splice(users.indexOf(socket.username), 1);
+    updateUsernames();
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('disconnected');
+  });
+  socket.on('send message', function(data) {
+    console.log(data);
+    io.emit('new message', {msg: data, user: socket.username});
+  })
+
+  socket.on('new user', function(data, callback) {
+    callback(true);
+    socket.username = data;
+    users.push(socket.username);
+    updateUsernames();
+  });
+});
+
 
 // EXAMPLE DATA SENT FOR A POST TO /QUESTIONS
 /* {

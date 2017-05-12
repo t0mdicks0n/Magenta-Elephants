@@ -37,6 +37,7 @@
     "request": "^2.81.0",
     "sass-loader": "^6.0.3",
     "sequelize": "^3.30.4",
+    "socket.io": "^2.0.1",
     "style-loader": "^0.17.0",
     "webpack": "^2.4.1"
   },
