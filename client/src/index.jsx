@@ -24,6 +24,7 @@ class App extends React.Component {
     this.getProfileInfo = this.getProfileInfo.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.filter = this.filter.bind(this);
+    this.withProps = this.withProps.bind(this);
     this.filters = filters.filters;
     this.username = document.cookie.substring(document.cookie.indexOf("forumLogin=") + 11);
   }
@@ -54,7 +55,7 @@ class App extends React.Component {
   getProfileInfo(type) { 
     $.get('/users/' + this.username, (req, res) => {})
       .then(results => {
-        console.log('success', results);
+        console.log('success');
         this.setState({
           [type + "Info"]: JSON.parse(results)
         });
@@ -75,7 +76,6 @@ class App extends React.Component {
   }
 
   filter(e) {
-    console.log('USERNAME: ',this.username)
     if (e.target.value === 'all') {
       this.state.questions.forEach( question => {
         if ($('#' + question.id).hasClass('hidden')) {
@@ -96,13 +96,19 @@ class App extends React.Component {
     }
   }
 
+  withProps(Component, props) {
+    return function(matchProps) {
+      return <Component {...props} {...matchProps} />
+    }
+  }
+
   render() {
     return (
       <BrowserRouter>
         <main>
           <Nav currentCurrency={this.state.personalInfo.currentCurrency} />
           <Switch>
-            <Route exact path="/Answer" component={Answer} />
+            <Route path="/Answer/:number" render={this.withProps(Answer, {questions: this.state.questions})}/>
             <Route exact path="/LiveAnswer" component={LiveAnswer} />
             <Route render={props => (
               <RecentQuestionsLayout
