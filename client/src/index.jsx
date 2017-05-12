@@ -103,13 +103,6 @@ class App extends React.Component {
   }
 
   render() {
-    const AnswerPage = (props) => {
-      return (
-        <Answer 
-          questions={this.state.questions} 
-        />
-      );
-    }
     return (
       <BrowserRouter>
         <main>
