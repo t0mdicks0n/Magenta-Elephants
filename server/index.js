@@ -14,9 +14,8 @@ process.env.PWD = process.cwd();
 app.use(cookieParser());
 
 var jsonParser = bodyParser.json();
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function(req, res, next) {
   res.redirect('/dashboard');
@@ -25,8 +24,6 @@ app.get('/', function(req, res, next) {
 app.get('/dashboard', sessionParser, function(req, res, next) {
   res.sendFile(process.env.PWD + '/client/index.html');
 });
-
-// THIS IS A REDIRECT WHEN THE USER SIGNS IN WITH GITHUB
 
 app.get('/callback', function(req, res, next) { 
   var code = req.query.code;
@@ -82,15 +79,29 @@ app.post('/questions', jsonParser, function(req, res) {
 app.put('/questions', function(req, res) {
   var questionId = req.body.questionId;
   delete req.body.questionId;
-
   db.Question.updateQuestion(questionId, req.body)
   .then((result) => {
-    res.end(result);
+    res.end(JSON.stringify(result));
   });
 });
 
-app.use(express.static(process.env.PWD + '/client'));
+app.post('/messages', function(req, res) {
+  db.Message.createMessage(req.body.questionId, req.body.username, req.body.body);
+  res.end();
+});
 
+app.get('/messages/*', function(req, res) {
+  var slashIndex = req.url.lastIndexOf('/') + 1;
+  var destination = req.url.substring(slashIndex);
+
+  createNamespace(destination);
+  db.Message.getMessages(destination)
+    .then((messages) => {
+      res.end(JSON.stringify(messages));
+    });
+})
+
+app.use(express.static(process.env.PWD + '/client'));
 app.get('/users*', function(req, res) {
   var slashIndex = req.url.lastIndexOf('/') + 1;
   var user = req.url.substring(slashIndex);
@@ -102,59 +113,40 @@ app.get('*', function(req, res) {
 });
 
 
-const server = app.listen(port, function() {
+var server = app.listen(port, function() {
   console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
 });
 const io = require('socket.io')(server);
 connections = [];
 users = [];
 
-var updateUsernames = function() {
-  io.emit('get users', users);
+var createNamespace = function(destination) {
+  var nsp = io.of(`/${destination}`);
+  nsp.on('connection', function(socket) {
+    connections.push(socket);
+    console.log(`someone connected`);
+
+    socket.on('new user', function(data, callback) {
+      callback(true);
+      socket.username = data;
+      users.push(socket.username);
+      updateUsernames();
+    });
+
+    socket.on('new message', function(msg){
+      console.log('message: ' + msg);
+      nsp.emit('new message', msg);
+    });
+
+    socket.on('finish', function(msg) {
+      console.log('the destination was', destination);
+      db.Question.finishQuestion(destination);
+      console.log('it worked!');
+    });
+  });
+
+  var updateUsernames = function() {
+    nsp.emit('get users', users);
+  };
 };
 
-io.on('connection', function(socket) {
-  connections.push(socket);
-  console.log('Connected');
-
-  socket.on('disconnect', function(data) {
-    users.splice(users.indexOf(socket.username), 1);
-    updateUsernames();
-    connections.splice(connections.indexOf(socket), 1);
-    console.log('disconnected');
-  });
-  socket.on('send message', function(data) {
-    console.log(data);
-    io.emit('new message', {msg: data, user: socket.username});
-  })
-
-  socket.on('new user', function(data, callback) {
-    callback(true);
-    socket.username = data;
-    users.push(socket.username);
-    updateUsernames();
-  });
-});
-
-
-// EXAMPLE DATA SENT FOR A POST TO /QUESTIONS
-/* {
-*    username: 'Oliver',
-*    title: 'Why is Oliver so Awesome?',
-*    body: 'This is an example body' 
-*  }
-*/
-
-// EXAMPLE DATA SENT FOR A PUT TO /QUESTIONS
-/* {
-*    questionId: 2, 
-*    expertId: 1,
-*    answer: 'this is an example answer'
-*  }
-*/
-
-// EXAMPLE DATA SENT TO A GET TO /expertRating
-/* {
-*    userid: 1 
-*  }
-*/

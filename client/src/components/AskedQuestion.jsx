@@ -12,7 +12,7 @@ class AskedQuestion extends React.Component {
 
   render() {
     return (
-      <section className="answer">
+      <section className="answer giveAnswer">
         <h1 className="headline">{this.props.question.questionTitle}</h1>
         <p className="askedQuestionDescription">{this.props.question.questionBody}</p> 
       </section>

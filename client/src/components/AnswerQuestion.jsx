@@ -1,50 +1,43 @@
 import React from 'react';
 import $ from 'jquery';
+import Message from './Message.jsx';
 
 class AnswerQuestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      answerBody: ''
+      newMessage: ''
     }
-    this.updateQuestion = this.updateQuestion.bind(this);
-    this.updateAnswer = this.updateAnswer.bind(this);
+    this.changeProp = this.changeProp.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
-  updateQuestion(e) {
-    e.preventDefault();
-    var obj = {
-     questionId: 5, 
-     expertId: 1,
-     answer: this.state.answerBody
-    };
-
-    $.ajax({
-      type: 'PUT',
-      url: '/questions',
-      data: obj,
-      success: (data) => {
-        console.log('success!', data);
-      },
-      error: (err) => {
-        console.log('error with updating question', err);
-      }
-    });
-  }
-
-  updateAnswer(e) {
+  changeProp(key, value) {
     this.setState({
-      answerBody: e.target.value
+      [key]: value
     });
+  }
+
+  sendMessage(e) {
+    e.preventDefault();
+    this.setState({ newMessage: '' });
+    this.props.sendMessage(this.state.newMessage);
   }
 
   render() {
     return (
-      <form onSubmit={this.updateQuestion}>  
-        <h1 className="headline">Your Answer Here</h1>
-        <textarea value={this.answerBody} placeholder="Answer Question Here" onChange={this.updateAnswer} ></textarea>
-        <button>Submit</button>
-      </form>
+      <div>
+        {
+          this.props.messages.map((message, index) => 
+            <Message message={message} key={index} />
+          )
+        }
+        <form onSubmit={this.sendMessage} >
+          <input type="text" onChange={ e => this.changeProp('newMessage', e.target.value) } />
+          <button type="submit">Submit</button>
+        </form>
+        <button onClick={this.props.finishQuestion} >Finish Question</button>
+      </div>
     )
   }
 }

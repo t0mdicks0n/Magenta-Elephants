@@ -1,7 +1,7 @@
 const db = require('../database/index.js');
 const tagModel = require('./tag.js');
 
-// FOR UPDATE QUESTION TO WORK THE PROPERTIES NEED TO BE SPECIFIED ON THE CLIENT SIDE THE SAME WAY THE DATA IS IN THE DATABASE. THIS MAKES THE FUNCTION MORE FLEXIBLE BECAUSE YOU CAN PASS IN AS FEW OR AS MANY PROPERTIES AS POSSIBLE
+// FOR UPDATE QUESTION TO WORK THE PROPERTIES NEED TO BE SPECIFIED ON THE CLIENT SIDE THE SAME WAY THE DATA IS IN THE DATABASE. THIS MAKES THE FUNCTION FLEXIBLE BECAUSE YOU CAN PASS IN AS FEW OR AS MANY PROPERTIES AS POSSIBLE
 
 // var exampleObj = {
 //   Eid_User: 2,
@@ -23,7 +23,6 @@ module.exports.updateQuestion = function(questionId, updateObj) {
 };
 
 // THIS FUNCTION TRANSFERS CURRENCY TO THE EXPERT AND MARKS THE QUESTION AS FINISHED
-// WHEN WE IMPLEMENT LIVE CHAT WE WILL BE ABLE TO UPDATE THE EXPERT'S CURRENCY IN REAL TIME, BUT FOR NOW WE CAN'T
 
 module.exports.finishQuestion = function(questionId) {
   var questionPrice;
@@ -33,6 +32,7 @@ module.exports.finishQuestion = function(questionId) {
   })
   .then((question) => {
     if (!question.answered) {
+      console.log('the question', question);
       questionPrice = question.price;
       question.update({
         answered: true
