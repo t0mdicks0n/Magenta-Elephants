@@ -1,15 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 $titleInputHeight: 2.5rem;
 $generalPadding: 1rem;
 $generalMargin: 1rem;
 $navFlexWidth: .125;
 $mainFlexWidth: 1 - $navFlexWidth;
-$recentQuestionsFlexWidth: .55;
-$askFlexWidth: 1 - $recentQuestionsFlexWidth;
-$answerFlexWidth: 1 - $recentQuestionsFlexWidth;
-$dashboardFlexWidth: 1 - $recentQuestionsFlexWidth;
+$recentQuestionsFlexWidth: 50%;
+$askFlexWidth: 50%;
+$answerFlexWidth: 50%;
+$dashboardFlexWidth: 50%;
+$giveAnswerFlexWidth: 50%;
 
 html {
   font-size: 10px;
+  font-family: 'Quicksand', sans-serif;
 }
 
 *  {
@@ -21,8 +24,8 @@ main {
   display: flex;
   width: 100%;
   section {
-    border: 1px solid black;
-    padding: 0rem 4rem 2rem 2rem;
+    border: 10px solid #b6c8c3;
+    // padding: 0rem 4rem 2rem 2rem;
     height: 95vh;
   }
   .nav {
@@ -47,13 +50,15 @@ main {
     }
   }
   .recentQuestions {
+    background-color: #e2e9e7;
     flex: $recentQuestionsFlexWidth;
     .questionsList {
       overflow-y: scroll;
-      padding-left: 0;
+      padding: 0rem 1rem 0rem 1rem;
       .recentQuestion {
+        background-color: white;
         cursor: pointer;
-        border: 1px solid black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         padding: $generalMargin;
         margin-bottom: $generalMargin; 
         div {
@@ -107,7 +112,9 @@ main {
     }
   }
   .ask {
+    background-color: #e2e9e7;
     flex: $askFlexWidth;
+    padding: 0rem 1rem 0rem 1rem;
     form {
       .askTitle {
         display: flex;
@@ -117,7 +124,8 @@ main {
         }
         input {
           flex: 2;
-          margin-left: $generalMargin;}
+          margin-left: 0px;
+        }
         .titleInput {
           height: $titleInputHeight;
         }
@@ -153,20 +161,30 @@ main {
     }
   }
   .answer {
+    background-color: #e2e9e7;
     flex: $answerFlexWidth;
+    padding: 0rem 1rem 0rem 1rem;
     .askedQuestionDescription {
       font-size: 1.8rem;
     }
     textarea {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       min-height: 150px;
     }
   }
   .dashboard {
+    background-color: #e2e9e7;
     flex: $dashboardFlexWidth;
+    padding: 0rem 1rem 0rem 1rem;
     .row {
       display: flex;
+      background-color: white;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      display: flex;
+      padding: $generalMargin;
+      margin-bottom: $generalMargin;
     }
-    .row:first-child {
+    .row {
       .profilePicture {
         width: 12rem;
         height: 12rem;
@@ -181,19 +199,33 @@ main {
 }
 
 .giveAnswer {
-  width: 50%;
-  margin-left: 0px;
-  border: none;
+  background-color: #e2e9e7;
+  flex: $giveAnswerFlexWidth;
+  // width: 50%;
+  // margin-left: 0px;
+  // border: none;
   section {
     border: none;
   }
   textarea {
     height: 75%;
+    border: 0;
+    // height: 96%;
+    border: none;
   }
+}
+
+.searchBar {
+  // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 1rem;
+  margin: $generalMargin; 
+  width: 97%;
+  position: relative;
 }
 
 .headline {
   font-size: 3rem;
+  text-align: center;
 }
 
 textarea {

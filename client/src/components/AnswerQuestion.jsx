@@ -26,7 +26,7 @@ class AnswerQuestion extends React.Component {
 
   render() {
     return (
-      <div>
+      <section className="giveAnswer">
         {
           this.props.messages.map((message, index) => 
             <Message message={message} key={index} />
@@ -37,7 +37,7 @@ class AnswerQuestion extends React.Component {
           <button type="submit">Submit</button>
         </form>
         <button onClick={this.props.finishQuestion} >Finish Question</button>
-      </div>
+      </section>
     )
   }
 }
