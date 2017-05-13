@@ -40,15 +40,24 @@ var Tag = db.define('Tag', {
 
 var QuestionTag = db.define('QuestionTag', {}, timestampsAreFalse);
 
+var Message = db.define('Message', {
+  date: Sequelize.DATE,
+  msg: Sequelize.TEXT,
+  user: Sequelize.STRING,
+}, timestampsAreFalse);
+
 User.hasMany(Question);
 Question.belongsTo(User);
+Question.hasMany(Message);
+Question.hasMany(QuestionTag);
 Tag.hasMany(QuestionTag);
 QuestionTag.belongsTo(Tag);
-Question.hasMany(QuestionTag);
 QuestionTag.belongsTo(Question);
+Message.belongsTo(Question);
 
 module.exports.User = User;
 module.exports.Question = Question;
 module.exports.Session = Session;
 module.exports.Tag = Tag;
 module.exports.QuestionTag = QuestionTag;
+module.exports.Message = Message;

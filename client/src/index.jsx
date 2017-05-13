@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import Nav from './components/Nav.jsx';
 import SplitLayout from './components/SplitLayout.jsx';
-import LiveAnswer from './components/LiveAnswer.jsx';
 import Answer from './components/Answer.jsx';
 import $ from 'jquery';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
@@ -19,7 +18,6 @@ class App extends React.Component {
     this.changeUserCurrency = this.changeUserCurrency.bind(this);
     this.changeProp = this.changeProp.bind(this);
     this.getProfileInfo = this.getProfileInfo.bind(this);
-    this.withProps = this.withProps.bind(this);
     this.username = document.cookie.substring(document.cookie.indexOf("forumLogin=") + 11);
   }
 
@@ -53,21 +51,20 @@ class App extends React.Component {
       });
   }
 
-
-  withProps(Component, props) {
-    return function(matchProps) {
-      return <Component {...props} {...matchProps} />
-    }
-  }
-
   render() {
     return (
       <BrowserRouter>
         <main>
           <Nav currentCurrency={this.state.personalInfo.currentCurrency} />
           <Switch>
-            <Route path="/Answer" component={Answer} />
-            <Route render={props => (
+            <Route path="/Answer" render={innerProps => (
+              <Answer 
+                username={this.state.personalInfo.username} 
+                question={this.state.currentQuestion} 
+                changeUserCurrency={this.changeUserCurrency}
+              />
+            )} />
+            <Route render={innerProps => (
               <SplitLayout
                 currentQuestion={this.state.currentQuestion}
                 personalInfo={this.state.personalInfo}

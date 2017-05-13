@@ -4,7 +4,7 @@ const directDb = require('./database/index.js');
 const mysql = require('mysql');
 
 var dbConnection;
-var tableNames = ['QuestionTags', 'Tags', 'Questions', 'Users', 'Sessions'];
+var tableNames = ['QuestionTags', 'Tags', 'Messages', 'Questions', 'Users', 'Sessions'];
 
 
 var clearDB = function(connection, tablenames) {
