@@ -3,9 +3,9 @@ import ReactStars from 'react-stars';
 
 const Rating = props => (
   <div className="rating">
-    <h2>{props.name} Rating</h2>
+    <h1>{props.name} Rating</h1>
     <ReactStars
-      size={18}
+      size={21}
       edit={false}
       value={props.value}
     />  

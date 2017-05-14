@@ -1,14 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 $titleInputHeight: 2.5rem;
 $generalPadding: 1rem;
 $generalMargin: 1rem;
-$navFlexWidth: .125;
+$navFlexWidth: .14;
 $mainFlexWidth: 1 - $navFlexWidth;
-$recentQuestionsFlexWidth: 50%;
-$askFlexWidth: 50%;
-$answerFlexWidth: 50%;
-$dashboardFlexWidth: 50%;
-$giveAnswerFlexWidth: 50%;
+$recentQuestionsFlexWidth: .525;
+$askFlexWidth: 1 - $recentQuestionsFlexWidth - .01;
+$answerFlexWidth: 1 - $recentQuestionsFlexWidth - .01;
+$dashboardFlexWidth: 1 - $recentQuestionsFlexWidth - .01;
+$giveAnswerFlexWidth: 1 - $recentQuestionsFlexWidth - .01;
+$lightestGrayBackground: #f3f3f3;
+$grayText: #9b9ba2; 
+$profilePictureSize: 12rem;
 
 html {
   font-size: 10px;
@@ -17,18 +19,27 @@ html {
 
 *  {
   list-style: none;
+  font-family: lato;
   text-decoration: none !important;
+}
+
+body, main {
+  margin: 0px;
+  background-color: #e5e5e5;
 }
 
 main {
   display: flex;
   width: 100%;
   section {
-    border: 10px solid #b6c8c3;
-    // padding: 0rem 4rem 2rem 2rem;
-    height: 95vh;
+    background-color: $lightestGrayBackground;
+    border: 7px solid #e5e5e5;
+    height: 98vh;
+    padding: 1rem;
   }
   .nav {
+    border: 0;
+    height: 100vh;
     background-color: #5c5f6b;
     position: relative;
     color: white;
@@ -50,7 +61,6 @@ main {
     }
   }
   .recentQuestions {
-    background-color: #e2e9e7;
     flex: $recentQuestionsFlexWidth;
     .questionsList {
       overflow-y: scroll;
@@ -76,11 +86,14 @@ main {
               margin: 0 0 $generalMargin 0;
               font-size: 1.75rem;
               font-weight: 700;
+              color: #494949;
             }
             .questionTitle {
-              margin-top: $generalMargin;
+              margin-top: 1.3rem;
               position: absolute;
               top: 20%; 
+              margin-left: 2rem;
+              color: $grayText;
               font-size: 2rem;
               font-weight: 400;
 
@@ -89,6 +102,8 @@ main {
               position: absolute;
               right: 0%;
               top: 0%;
+              color: gray;
+              cursor: pointer;
               font-size: 1.5rem;
             }
             .fa {
@@ -112,7 +127,6 @@ main {
     }
   }
   .ask {
-    background-color: #e2e9e7;
     flex: $askFlexWidth;
     padding: 0rem 1rem 0rem 1rem;
     form {
@@ -161,7 +175,6 @@ main {
     }
   }
   .answer {
-    background-color: #e2e9e7;
     flex: $answerFlexWidth;
     padding: 0rem 1rem 0rem 1rem;
     .askedQuestionDescription {
@@ -173,33 +186,109 @@ main {
     }
   }
   .dashboard {
-    background-color: #e2e9e7;
     flex: $dashboardFlexWidth;
     padding: 0rem 1rem 0rem 1rem;
     .row {
       display: flex;
-      background-color: white;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      display: flex;
+      margin-bottom: .5rem !important;
+      padding-bottom: 0 !important;
       padding: $generalMargin;
       margin-bottom: $generalMargin;
     }
-    .row {
+    .dashSection {
+      background-color: white;
+      text-align: center;
+      h1 {
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        color: $grayText; 
+      }
+    }
+    #firstRow {
       .profilePicture {
-        width: 12rem;
-        height: 12rem;
+        width: $profilePictureSize;
+        height: $profilePictureSize;
+      }
+      .bio {
+        margin-left: 1.5rem;
+        flex: 1;
+        height: $profilePictureSize;
+        h1 {
+          margin-top: 1rem;
+        }
+        p {
+          font-size: 1.1rem;
+          color: $grayText;
+        }
+      }
+    }
+    #secondRow {
+      .askedQuestions {
+        width: 55%;
+        margin-right: 1rem;
+      }
+      .questionRatings {
+        flex: 1;
+        position: relative;
+        .rating {
+          margin-bottom: 1.35rem;
+          margin-top: 1.35rem;
+          h1 {
+            margin-bottom: .3rem;
+            margin-top: .3rem;
+          }
+          div {
+            display: inline-block;
+          }       
+        }
+        hr {
+          border-color: $lightestGrayBackground;
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+    #thirdRow {
+      .userPoints {
+        width: 34%;
+        margin-right: 1rem;
+        padding-bottom: .7rem;
+        h2 {
+          color: $grayText;
+          text-transform: uppercase;
+        }
+        h1 {
+          font-size: 3.3rem;
+          color: #5e5e5e;
+          margin-top: 0;
+          margin-bottom: .3rem;
+        }
+      }
+      .answerQuestions {
+        flex: 1;
       }
     }
     .recentQuestionsList {
+      padding-left: 0;
       li {
         cursor: pointer;
+        position: relative;
+        i {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 10%;
+        }
+        .fa-times {
+          color: maroon;
+        }
       }
     }
   }
 }
 
 .giveAnswer {
-  background-color: #e2e9e7;
   flex: $giveAnswerFlexWidth;
   // width: 50%;
   // margin-left: 0px;
@@ -226,6 +315,8 @@ main {
 .headline {
   font-size: 3rem;
   text-align: center;
+  color: $grayText;
+  letter-spacing: .27rem;
 }
 
 textarea {
