@@ -18,7 +18,13 @@ class App extends React.Component {
     this.changeUserCurrency = this.changeUserCurrency.bind(this);
     this.changeProp = this.changeProp.bind(this);
     this.getProfileInfo = this.getProfileInfo.bind(this);
-    this.username = document.cookie.substring(document.cookie.indexOf("forumLogin=") + 11);
+
+    // legacy people: I'd recommend fixing this terrible regexing
+    this.username = document.cookie.replace(/.*forumLogin=/, '');
+
+    this.userId = document.cookie.replace(/.*forumId=/, '');
+    this.userId = this.userId.match(/.+?;/)[0];
+    this.userId = this.userId.substring(0, this.userId.length - 1);
   }
 
   componentWillMount() {
@@ -59,13 +65,15 @@ class App extends React.Component {
           <Switch>
             <Route path="/Answer" render={innerProps => (
               <Answer 
-                username={this.state.personalInfo.username} 
+                username={this.state.username} 
+                userId={this.state.userId}
                 question={this.state.currentQuestion} 
                 changeUserCurrency={this.changeUserCurrency}
               />
             )} />
             <Route render={innerProps => (
               <SplitLayout
+                userId={this.userId}
                 currentQuestion={this.state.currentQuestion}
                 personalInfo={this.state.personalInfo}
                 changeUserCurrency={this.changeUserCurrency}

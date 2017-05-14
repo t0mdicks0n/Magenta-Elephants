@@ -7,7 +7,7 @@ module.exports.createUser = function(username, avatar_url, bio) {
         username: username,
         avatar_url: avatar_url,
         bio: bio
-      })
+      });
     });
 };
 
@@ -85,7 +85,6 @@ module.exports.getUserInfo = function(username, cb) {
   var user;
   db.User.sync()
     .then(() => {
-      console.log('the username', username);
       return db.User.findOne({ where: { username: username } });
     })
     .then((result) => {

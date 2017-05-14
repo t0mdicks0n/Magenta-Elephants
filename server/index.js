@@ -139,9 +139,8 @@ var createNamespace = function(destination) {
     });
 
     socket.on('finish', function(msg) {
-      console.log('the destination was', destination);
       db.Question.finishQuestion(destination);
-      console.log('it worked!');
+      nsp.emit('finish');
     });
   });
 

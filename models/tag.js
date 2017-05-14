@@ -6,6 +6,7 @@ const addTagIfNotExists = function(tag, cb) {
   var counter = 0;
   return db.Tag.findOrCreate({ where: { title: tag } })
   .then((createdTag) => {
+    console.log(createdTag[0].dataValues);
     return createdTag[0].dataValues.id;
   });
 };

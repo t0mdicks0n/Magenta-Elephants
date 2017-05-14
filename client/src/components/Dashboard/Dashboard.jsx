@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
 
   render() {
     this.props.userInfo.recentNoviceQuestions = this.props.userInfo.recentNoviceQuestions || [];
-    this.props.userInfo.recentExpertQuestions = this.props.userInfo.recentExpertQuestinos || [];
+    this.props.userInfo.recentExpertQuestions = this.props.userInfo.recentExpertQuestions || [];
 
     return (
       <section className="dashboard">
@@ -28,7 +28,7 @@ class Dashboard extends React.Component {
           <div className="askedQuestions dashSection">
             <h1>Asked Questions</h1>
             <RecentQuestionsList 
-              questions={this.props.userInfo.recentNoviceQuestions} 
+              questions={this.props.userInfo.recentNoviceQuestions}
               changeIndexProp={this.props.changeIndexProp}
             /> 
           </div>

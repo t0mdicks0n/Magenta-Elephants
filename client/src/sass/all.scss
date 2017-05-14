@@ -12,6 +12,13 @@ $lightestGrayBackground: #f3f3f3;
 $grayText: #9b9ba2; 
 $profilePictureSize: 12rem;
 
+@media(min-width: 1100px) {
+  section {
+    border-width: 14px !important;
+  }
+}
+
+
 html {
   font-size: 10px;
   font-family: 'Quicksand', sans-serif;
@@ -34,7 +41,7 @@ main {
   section {
     background-color: $lightestGrayBackground;
     border: 7px solid #e5e5e5;
-    height: 98vh;
+    height: 96vh;
     padding: 1rem;
   }
   .nav {
@@ -43,6 +50,7 @@ main {
     background-color: #5c5f6b;
     position: relative;
     color: white;
+    margin-right: 1rem;
     flex: $navFlexWidth;
     text-align: center;
     a {
@@ -243,7 +251,7 @@ main {
         }
         hr {
           border-color: $lightestGrayBackground;
-          width: 60%;
+          width: 25%;
           margin-left: auto;
           margin-right: auto;
         }

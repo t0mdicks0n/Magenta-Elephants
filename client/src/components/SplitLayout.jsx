@@ -64,8 +64,10 @@ class SplitLayout extends React.Component {
 
   answerQuestion(index) {
     clearInterval(this.getQuestionsInterval);
-    this.props.changeIndexProp('currentQuestion', this.state.questions[index]);
-    console.log(this.state.questions[index]);
+    var questions = this.state.questions;
+    questions[index].Eid_User = this.props.userId;
+    this.setState({ questions: questions });
+    this.props.changeIndexProp('currentQuestion', questions[index]);
     var obj = {
       Eid_User: this.props.personalInfo.id,
       questionId: this.state.questions[index].id

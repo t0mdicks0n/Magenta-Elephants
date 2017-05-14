@@ -20,6 +20,9 @@ class QuestionListItem extends React.Component {
 
   render() {
     var iconClass = (this.props.question.answered) ? 'fa fa-check' : 'fa fa-times';
+    var buttonDisplay = (this.props.question.answered) ? {display: 'none'} : {display: 
+      'inline-block'};
+
     if (this.state.redirect) {
       return <Redirect push to="/Answer" />
     }
@@ -32,7 +35,7 @@ class QuestionListItem extends React.Component {
             <div>
               <h3 className="username">{this.props.question.username}:</h3>
               <h3 className="questionTitle">{this.props.question.questionTitle}</h3>
-              <button className="answerQuestion" onClick={this.answerQuestion} >Answer</button>
+              <button className="answerQuestion" style={buttonDisplay} onClick={this.answerQuestion} >Answer</button>
               <i className={iconClass}></i>
             </div>
           </div>

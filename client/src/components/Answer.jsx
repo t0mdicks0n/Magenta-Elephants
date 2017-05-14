@@ -7,11 +7,15 @@ class Answer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      messages: []
+      messages: [],
+      ratingVisible: false,
+      submitAnswerDisplay: 'block'
     };
     this.recieveMessage = this.recieveMessage.bind(this);
     this.finishQuestion = this.finishQuestion.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.changeProp = this.changeProp.bind(this);
+    this.role = (this.props.question.EId_User == this.userId) ? 'expert' : 'novice';
   }
 
   componentWillMount() {
@@ -40,6 +44,18 @@ class Answer extends React.Component {
     this.socket.emit('new user', this.props.username, () => {});
     this.socket.on('new message', (e) => {
       this.recieveMessage(e);
+    });
+    this.socket.on('finish', (e) => {
+      this.setState({ 
+        ratingVisible: true,
+        submitAnswerDisplay: 'none'
+      });
+    });
+  }
+
+  changeProp(key, value) {
+    this.setState({
+      [key]: value
     });
   }
 
@@ -73,9 +89,15 @@ class Answer extends React.Component {
       <section className="main">
         <AskedQuestion question={this.props.question}/>
         <AnswerQuestion 
+          role={this.role}
+          changeProp={this.changeProp}
           sendMessage={this.sendMessage} 
           messages={this.state.messages} 
           finishQuestion={this.finishQuestion}
+          questionId={this.props.question.id}
+          userId={this.userId}
+          ratingVisible={this.state.ratingVisible}
+          submitAnswerDisplay={this.state.submitAnswerDisplay}
         /> 
       </section>
     )
