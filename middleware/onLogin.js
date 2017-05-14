@@ -9,10 +9,15 @@ module.exports = function(req, res, next, body) {
       if (userid) {
         return userid;
       } else {
-        return db.User.createUser(body.login, body.avatar_url, body.bio).id;
+        return db.User.createUser(body.login, body.avatar_url, body.bio)
+          .then((user) => {
+            return user.dataValues.id;
+          })
       }
     })
     .then((userid) => {
+      // these cookies are terrible sercurity vulnerabilities, so if you are working on this as a legacy I'd recommend fixing them
+      res.cookie('forumId', userid);
       return db.Session.createSession(userid, req.headers['user-agent']);
     })
     .then((result) => {

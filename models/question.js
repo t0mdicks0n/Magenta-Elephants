@@ -32,7 +32,6 @@ module.exports.finishQuestion = function(questionId) {
   })
   .then((question) => {
     if (!question.answered) {
-      console.log('the question', question);
       questionPrice = question.price;
       question.update({
         answered: true
