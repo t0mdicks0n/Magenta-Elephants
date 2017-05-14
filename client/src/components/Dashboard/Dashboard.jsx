@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
 
     return (
       <section className="dashboard">
-
+        <h1 className="headline">DASHBOARD</h1>
         <div className="row">
           <img src={this.props.userInfo.avatar_url} className="profilePicture" />
           <div className="bio">

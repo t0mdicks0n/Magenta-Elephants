@@ -112,7 +112,7 @@ class Ask extends React.Component {
         <h1 className="headline" >Ask a Question</h1>
         <form onSubmit={this.createQuestion} >
           <div className="askTitle">
-            <label>Title:</label>
+            
             <input className="titleInput" type="text" placeholder="Insert Question Here" value={this.askTitle} onChange={ e => this.changeProp('askTitle', e.target.value) } />
             <br/>
           </div>
