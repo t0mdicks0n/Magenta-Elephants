@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/testing', function(req, res, next) {
   res.end('this is a test');
 });
-console.log(99999);
+
 app.get('/', function(req, res, next) {
   console.log('got to index!');
   res.redirect('/dashboard');
