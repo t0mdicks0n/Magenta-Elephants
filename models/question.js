@@ -47,7 +47,8 @@ module.exports.finishQuestion = function(questionId) {
   .then((expert) => {
     var currentCurrency = expert.currentCurrency;
     return expert.update({
-      currentCurrency: currentCurrency + questionPrice
+      currentCurrency: currentCurrency - questionPrice,
+      totalCurrency: currentCurrency - questionPrice
     });
   })
   .catch((err) => {
@@ -55,13 +56,9 @@ module.exports.finishQuestion = function(questionId) {
   });
 }
 
-// EXAMPLE USAGE OF CREATE NEW QUESTION
-// createNewQuestion('heliu', 'is the sky blue?', 'yes it is blue.');
-
 module.exports.createNewQuestion = function(username, title, body, price, tags, minExpertRating) {
   return db.Question.sync()
   .then(() => {
-    console.log('this is the username', username);
     return db.User.findAll({
       where: { username: username }
     });
@@ -111,17 +108,20 @@ module.exports.formatQuestions = function(questions, cb) {
         });
     }); 
   }
-}
+};
 
 module.exports.getQuestions = function (query, cb) {
   db.Question.sync()
     .then(() => {
       if (query) {
         return db.Question.find({
-          where: query
+          where: query,
+          include: db.Message
         });
       } else {
-        return db.Question.findAll();
+        return db.Question.findAll({
+          include: db.Message
+        });
       }
     })
     .then(questions => { 

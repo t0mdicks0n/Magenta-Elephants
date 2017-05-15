@@ -27,14 +27,14 @@ class AnswerQuestion extends React.Component {
 
   render() {
     return (
-      <section className="giveAnswer">
+      <div className="giveAnswer">
         {
           this.props.messages.map((message, index) => 
             <Message message={message} key={index} />
           )
         }
         <form onSubmit={this.sendMessage} style={{"display": this.props.submitAnswerDisplay }}>
-          <input type="text" onChange={ e => this.changeProp('newMessage', e.target.value) } />
+          <input type="text" value={this.state.newMessage} onChange={ e => this.changeProp('newMessage', e.target.value) } />
           <button type="submit">Submit</button>
         </form>
         <button style={{"display": this.props.submitAnswerDisplay }} onClick={this.props.finishQuestion} >Finish Question</button>
@@ -45,7 +45,7 @@ class AnswerQuestion extends React.Component {
           role={this.props.role} 
           ratingVisible={this.props.ratingVisible} 
         />
-      </section>
+      </div>
     )
   }
 }
