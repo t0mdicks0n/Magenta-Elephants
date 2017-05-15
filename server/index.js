@@ -21,138 +21,138 @@ app.get('/testing', function(req, res, next) {
   res.end('this is a test');
 });
 
-app.get('/', function(req, res, next) {
-  console.log('got to index!');
-  res.redirect('/dashboard');
-});
+// app.get('/', function(req, res, next) {
+//   console.log('got to index!');
+//   res.redirect('/dashboard');
+// });
 
-app.get('/dashboard', sessionParser, function(req, res, next) {
-  res.sendFile(process.env.PWD + '/client/index.html');
-});
+// app.get('/dashboard', sessionParser, function(req, res, next) {
+//   res.sendFile(process.env.PWD + '/client/index.html');
+// });
 
-app.get('/callback', function(req, res, next) { 
-  var code = req.query.code;
-  var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=http://localhost:3000/callback&client_secret=${config.clientSecret}&code=${code}`;
+// app.get('/callback', function(req, res, next) { 
+//   var code = req.query.code;
+//   var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=http://localhost:3000/callback&client_secret=${config.clientSecret}&code=${code}`;
 
-  request.post(url, function(err, httpResponse, body) {
-    var accessToken = body.substring(13);
-    var options = {
-      url: `https://api.github.com/user?access_token=${accessToken}`,
-      headers: {
-        'User-Agent': '4um'
-      }
-    };
+//   request.post(url, function(err, httpResponse, body) {
+//     var accessToken = body.substring(13);
+//     var options = {
+//       url: `https://api.github.com/user?access_token=${accessToken}`,
+//       headers: {
+//         'User-Agent': '4um'
+//       }
+//     };
 
-    request.get(options, function(err, httpResponse, body) {
-      login(req, res, next, body);
-    });
-  });
-});
+//     request.get(options, function(err, httpResponse, body) {
+//       login(req, res, next, body);
+//     });
+//   });
+// });
 
-app.get('/expertRating', function(req, res) {
-  db.User.getRating('expert', req.body.username)
-  .then((result) => {
-    res.end(result);
-  });
-});
+// app.get('/expertRating', function(req, res) {
+//   db.User.getRating('expert', req.body.username)
+//   .then((result) => {
+//     res.end(result);
+//   });
+// });
 
-app.get('/noviceRating', function(req, res) {
-  db.User.getRating('novice', req.body.username)
-  .then((result) => {
-    res.end(result);
-  })
-});
+// app.get('/noviceRating', function(req, res) {
+//   db.User.getRating('novice', req.body.username)
+//   .then((result) => {
+//     res.end(result);
+//   })
+// });
 
-app.get('/questions/*', function(req, res) {
-  var slashIndex = req.url.lastIndexOf('/') + 1;
-  var tag = req.url.substring(slashIndex).toLowerCase();
+// app.get('/questions/*', function(req, res) {
+//   var slashIndex = req.url.lastIndexOf('/') + 1;
+//   var tag = req.url.substring(slashIndex).toLowerCase();
 
-  db.Tag.getQuestionsFromTag(tag, questions => res.end(JSON.stringify(questions)));
-});
+//   db.Tag.getQuestionsFromTag(tag, questions => res.end(JSON.stringify(questions)));
+// });
 
-app.get('/questions', function (req, res) {
-  db.Question.getQuestions('', arr => res.send(arr));
-});
+// app.get('/questions', function (req, res) {
+//   db.Question.getQuestions('', arr => res.send(arr));
+// });
 
-app.post('/questions', jsonParser, function(req, res) {
-  req.body.tags = JSON.parse(req.body.tags);
-  db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags, req.body.minExpertRating );
-  db.User.updateCurrency(req.body.username, Number(req.body.price));
-  res.end();
-});
+// app.post('/questions', jsonParser, function(req, res) {
+//   req.body.tags = JSON.parse(req.body.tags);
+//   db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags, req.body.minExpertRating );
+//   db.User.updateCurrency(req.body.username, Number(req.body.price));
+//   res.end();
+// });
 
-app.put('/questions', function(req, res) {
-  var questionId = req.body.questionId;
-  delete req.body.questionId;
-  db.Question.updateQuestion(questionId, req.body)
-  .then((result) => {
-    res.end(JSON.stringify(result));
-  });
-});
+// app.put('/questions', function(req, res) {
+//   var questionId = req.body.questionId;
+//   delete req.body.questionId;
+//   db.Question.updateQuestion(questionId, req.body)
+//   .then((result) => {
+//     res.end(JSON.stringify(result));
+//   });
+// });
 
-app.post('/messages', function(req, res) {
-  db.Message.createMessage(req.body.questionId, req.body.userId, req.body.body);
-  res.end();
-});
+// app.post('/messages', function(req, res) {
+//   db.Message.createMessage(req.body.questionId, req.body.userId, req.body.body);
+//   res.end();
+// });
 
-app.post('/messages/*', function(req, res) {
-  var slashIndex = req.url.lastIndexOf('/') + 1;
-  var destination = req.url.substring(slashIndex);
-  if (!namespaces.includes(destination)) {
-    namespaces.push(destination);
-    createNamespace(destination);
-  }
-})
+// app.post('/messages/*', function(req, res) {
+//   var slashIndex = req.url.lastIndexOf('/') + 1;
+//   var destination = req.url.substring(slashIndex);
+//   if (!namespaces.includes(destination)) {
+//     namespaces.push(destination);
+//     createNamespace(destination);
+//   }
+// })
 
-app.use(express.static(process.env.PWD + '/client'));
-app.get('/users*', function(req, res) {
-  var slashIndex = req.url.lastIndexOf('/') + 1;
-  var user = req.url.substring(slashIndex);
-  db.User.getUserInfo(user, userInfo => res.end(JSON.stringify(userInfo)));
-});
+// app.use(express.static(process.env.PWD + '/client'));
+// app.get('/users*', function(req, res) {
+//   var slashIndex = req.url.lastIndexOf('/') + 1;
+//   var user = req.url.substring(slashIndex);
+//   db.User.getUserInfo(user, userInfo => res.end(JSON.stringify(userInfo)));
+// });
 
-app.get('*', function(req, res) {
-  res.redirect('/dashboard');
-});
+// app.get('*', function(req, res) {
+//   res.redirect('/dashboard');
+// });
 
 
-var server = app.listen(port, function() {
-  console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
-});
-const io = require('socket.io')(server);
-var namespaces = [] 
-connections = [];
-users = [];
+// var server = app.listen(port, function() {
+//   console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
+// });
+// const io = require('socket.io')(server);
+// var namespaces = [] 
+// connections = [];
+// users = [];
 
-var createNamespace = function(destination) {
-  var nsp = io.of(`/${destination}`);
-  nsp.on('connection', function(socket) {
-    connections.push(socket);
-    console.log(`someone connected`);
-    socket.on('disconnect', function() {
-      console.log('user disconnected');
-    })
+// var createNamespace = function(destination) {
+//   var nsp = io.of(`/${destination}`);
+//   nsp.on('connection', function(socket) {
+//     connections.push(socket);
+//     console.log(`someone connected`);
+//     socket.on('disconnect', function() {
+//       console.log('user disconnected');
+//     })
 
-    socket.on('new user', function(data, callback) {
-      callback(true);
-      socket.username = data;
-      users.push(socket.username);
-      updateUsernames();
-    });
+//     socket.on('new user', function(data, callback) {
+//       callback(true);
+//       socket.username = data;
+//       users.push(socket.username);
+//       updateUsernames();
+//     });
 
-    socket.on('new message', function(msg){
-      console.log('message: ' + msg);
-      nsp.emit('new message', msg);
-    });
+//     socket.on('new message', function(msg){
+//       console.log('message: ' + msg);
+//       nsp.emit('new message', msg);
+//     });
 
-    socket.on('finish', function(msg) {
-      db.Question.finishQuestion(destination);
-      nsp.emit('finish');
-    });
-  });
+//     socket.on('finish', function(msg) {
+//       db.Question.finishQuestion(destination);
+//       nsp.emit('finish');
+//     });
+//   });
 
-  var updateUsernames = function() {
-    nsp.emit('get users', users);
-  };
-};
+//   var updateUsernames = function() {
+//     nsp.emit('get users', users);
+//   };
+// };
 
