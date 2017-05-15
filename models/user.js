@@ -14,6 +14,13 @@ module.exports.createUser = function(username, avatar_url, bio) {
 module.exports.checkIfUserExists = function(username) {
   return db.User.sync()
     .then(() => {
+      console.log('hello!');
+      return db.User.findAll();
+    })
+    .then((temp) => {
+      console.log(temp);
+    })
+    .then(() => {
       return db.User.findAll({
         where: {
           username: username

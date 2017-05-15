@@ -119,40 +119,40 @@ app.get('*', function(req, res) {
 var server = app.listen(port, function() {
   console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
 });
-// const io = require('socket.io')(server);
-// var namespaces = [] 
-// connections = [];
-// users = [];
+const io = require('socket.io')(server);
+var namespaces = [] 
+connections = [];
+users = [];
 
-// var createNamespace = function(destination) {
-//   var nsp = io.of(`/${destination}`);
-//   nsp.on('connection', function(socket) {
-//     connections.push(socket);
-//     console.log(`someone connected`);
-//     socket.on('disconnect', function() {
-//       console.log('user disconnected');
-//     })
+var createNamespace = function(destination) {
+  var nsp = io.of(`/${destination}`);
+  nsp.on('connection', function(socket) {
+    connections.push(socket);
+    console.log(`someone connected`);
+    socket.on('disconnect', function() {
+      console.log('user disconnected');
+    })
 
-//     socket.on('new user', function(data, callback) {
-//       callback(true);
-//       socket.username = data;
-//       users.push(socket.username);
-//       updateUsernames();
-//     });
+    socket.on('new user', function(data, callback) {
+      callback(true);
+      socket.username = data;
+      users.push(socket.username);
+      updateUsernames();
+    });
 
-//     socket.on('new message', function(msg){
-//       console.log('message: ' + msg);
-//       nsp.emit('new message', msg);
-//     });
+    socket.on('new message', function(msg){
+      console.log('message: ' + msg);
+      nsp.emit('new message', msg);
+    });
 
-//     socket.on('finish', function(msg) {
-//       db.Question.finishQuestion(destination);
-//       nsp.emit('finish');
-//     });
-//   });
+    socket.on('finish', function(msg) {
+      db.Question.finishQuestion(destination);
+      nsp.emit('finish');
+    });
+  });
 
-//   var updateUsernames = function() {
-//     nsp.emit('get users', users);
-//   };
-// };
+  var updateUsernames = function() {
+    nsp.emit('get users', users);
+  };
+};
 
