@@ -108,6 +108,7 @@ app.use(express.static(process.env.PWD + '/client'));
 app.get('/users*', function(req, res) {
   var slashIndex = req.url.lastIndexOf('/') + 1;
   var user = req.url.substring(slashIndex);
+  console.log('this is the user', user);
   db.User.getUserInfo(user, userInfo => res.end(JSON.stringify(userInfo)));
 });
 
