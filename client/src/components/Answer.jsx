@@ -66,7 +66,7 @@ class Answer extends React.Component {
   sendMessage(value) {
     this.socket.emit('new message', {msg: value, user: this.props.username});
     var newMessage = {
-      userId: this.props.username,
+      userId: this.props.userId,
       body: value,
       questionId: this.props.question.id
     };

@@ -4,7 +4,8 @@ const directDb = require('../database/index.js');
 const mysql = require('mysql');
 
 var dbConnection;
-var tableNames = ['QuestionTags', 'Tags', 'Messages', 'Questions', 'Users', 'Sessions'];
+var tableNames = ['QuestionTags', 'Tags', 'Messages'];
+var tableNames2 = ['Questions', 'Users', 'Sessions'];
 var clearDB = function(connection, tablenames) {
   tablenames.forEach(function(tablename) {
     connection.query('DROP TABLE IF EXISTS ' + tablename);
@@ -37,6 +38,9 @@ module.exports = function() {
       });
       setTimeout(function() {
         clearDB(dbConnection, tableNames);
+        setTimeout(function() {
+          clearDB(dbConnection, tableNames2);
+        }, 200);
       }, 300);
     }
   })
