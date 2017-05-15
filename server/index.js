@@ -42,6 +42,7 @@ app.get('/callback', function(req, res, next) {
         'User-Agent': '4um'
       }
     };
+    console.log('this is the access token', accessToken);
 
     request.get(options, function(err, httpResponse, body) {
       login(req, res, next, body);
