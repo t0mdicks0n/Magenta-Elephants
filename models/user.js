@@ -86,12 +86,7 @@ module.exports.getUserInfo = function(username, cb) {
   var user;
   db.User.sync()
     .then(() => {
-      return db.User.findAll();
-    })
-    .then((test) => {
-      console.log('this is the test', test);
-    })
-    .then(() => {
+      console.log('\n\n\n\n\n\n\n\n\n\n this is the username', username);
       return db.User.findOne({ where: { username: username } });
     })
     .then((result) => {
