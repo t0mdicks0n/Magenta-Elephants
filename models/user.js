@@ -14,13 +14,6 @@ module.exports.createUser = function(username, avatar_url, bio) {
 module.exports.checkIfUserExists = function(username) {
   return db.User.sync()
     .then(() => {
-      console.log('hello!');
-      return db.User.findAll();
-    })
-    .then((temp) => {
-      console.log(temp);
-    })
-    .then(() => {
       return db.User.findAll({
         where: {
           username: username
@@ -28,6 +21,7 @@ module.exports.checkIfUserExists = function(username) {
       });
     })
     .then((data) => {
+      console.log('this is the result', data);
       if (data[0]) {
         return data[0].id;
       } else {
@@ -98,6 +92,7 @@ module.exports.getUserInfo = function(username, cb) {
       if (result) {
         user = result.dataValues;
       } else {
+        console.log('this is where it happens', result);
         throw 'user not found';
       }
 
