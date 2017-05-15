@@ -24,9 +24,9 @@ module.exports = function() {
     if (err) {
       return err ;
     } else {
-      dbConnection.query('SELECT * FROM Messages;', function(err, result) {
-        console.log(result);
-      })
+      // dbConnection.query('SELECT * FROM Users;', function(err, result) {
+      //   console.log(result);
+      // })
       dbConnection.query('SHOW PROCESSLIST;', function(err, result) {
         if (result.length > 8) {
           for (var i = 0; i < result.length - 1; i++) {
@@ -37,12 +37,51 @@ module.exports = function() {
       });
       setTimeout(function() {
         clearDB(dbConnection, tableNames);
-      }, 200);
+      }, 300);
     }
   })
 
   setTimeout(() => {
-    
+    var questionId;
+    db.User.createUser('exampleUser', '', '')
+      .then(() => {
+        db.Question.createNewQuestion('exampleUser', 'firstQuestion', '', 20, [], 0)
+      })
+      .then(() => {
+        return db.Question.createNewQuestion('exampleUser', 'secondQuestion', '', 20, [], 0);
+      })
+      .then((question) => {
+        questionId = question.id;
+        console.log(questionId, '\n\n\n\n\n');
+        var tags = ['react'];
+        directDb.Tag.sync()
+        .then(() => {
+          tags.forEach((tag) => {
+            return directDb.Tag.create({
+              title: tag
+            }).then((createdTag) => {
+              directDb.QuestionTag.sync()
+              .then(() => {
+                directDb.QuestionTag.create({
+                  QuestionId: question.id,
+                  TagId: createdTag.id
+                })
+              })
+            })
+          });
+        });
+      })
+      .then(() => {
+        return db.Message.createMessage(questionId, 1, '');
+      })
+      .then((result) => {
+        dbConnection.end();
+        return result;
+      })
+      .catch((err) => {
+        dbConnection.end();
+        console.log('err! \n\n\n\n\n\n', err);
+      })
   }, 1250);
 };
 if (process.env.RUN) {

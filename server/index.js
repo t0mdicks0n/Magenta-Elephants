@@ -92,6 +92,7 @@ app.put('/questions', function(req, res) {
 });
 
 app.post('/messages', function(req, res) {
+  console.log('this is happening');
   db.Message.createMessage(req.body.questionId, req.body.userId, req.body.body);
   res.end();
 });
