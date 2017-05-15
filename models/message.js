@@ -2,6 +2,7 @@ const db = require('../database/index.js');
 const question = require('./question.js');
 
 module.exports.createMessage = function(questionId, userId, body) {
+  console.log(questionId, userId, body);
   return db.Message.sync()
     .then(() => {
       return db.Message.create({
