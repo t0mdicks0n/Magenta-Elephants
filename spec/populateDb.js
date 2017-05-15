@@ -35,7 +35,9 @@ module.exports = function() {
           }
         }
       });
-      clearDB(dbConnection, tableNames);
+      setTimeout(function() {
+        clearDB(dbConnection, tableNames);
+      }, 200);
     }
   })
 

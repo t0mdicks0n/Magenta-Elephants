@@ -32,7 +32,7 @@ app.get('/dashboard', sessionParser, function(req, res, next) {
 
 app.get('/callback', function(req, res, next) { 
   var code = req.query.code;
-  var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=http://localhost:3000/callback&client_secret=${config.clientSecret}&code=${code}`;
+  var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=https://fast-forest-86732.herokuapp.com.callback&client_secret=${config.clientSecret}&code=${code}`;
   console.log('do we at least get here????\n\n\n\n\n\n\n\n\n\n\n');
   request.post(url, function(err, httpResponse, body) {
     var accessToken = body.substring(13);
