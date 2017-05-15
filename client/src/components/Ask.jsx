@@ -67,7 +67,8 @@ class Ask extends React.Component {
         questionBody: this.state.askBody,
         username: this.props.username,
         tags: this.state.tags,
-        avatar: this.props.personalInfo.avatar_url
+        avatar: this.props.personalInfo.avatar_url,
+        Messages: []
       });
 
       var obj = {
