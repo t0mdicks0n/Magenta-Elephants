@@ -56,9 +56,6 @@ module.exports.finishQuestion = function(questionId) {
   });
 }
 
-// EXAMPLE USAGE OF CREATE NEW QUESTION
-// createNewQuestion('heliu', 'is the sky blue?', 'yes it is blue.');
-
 module.exports.createNewQuestion = function(username, title, body, price, tags, minExpertRating) {
   return db.Question.sync()
   .then(() => {
@@ -111,7 +108,7 @@ module.exports.formatQuestions = function(questions, cb) {
         });
     }); 
   }
-}
+};
 
 module.exports.getQuestions = function (query, cb) {
   db.Question.sync()

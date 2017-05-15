@@ -1,5 +1,5 @@
 import React from 'react';
-import TinyMCE from 'react-tinymce';
+import tinymce from 'react-tinymce';
 
 
 class Editor extends React.Component {
