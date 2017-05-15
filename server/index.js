@@ -17,7 +17,12 @@ var jsonParser = bodyParser.json();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get('/testing', function(req, res, next) {
+  res.end('this is a test');
+});
+console.log(99999);
 app.get('/', function(req, res, next) {
+  console.log('got to index!');
   res.redirect('/dashboard');
 });
 
@@ -27,8 +32,8 @@ app.get('/dashboard', sessionParser, function(req, res, next) {
 
 app.get('/callback', function(req, res, next) { 
   var code = req.query.code;
-  var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=http://localhost:3000/callback&client_secret=${config.clientSecret}&code=${code}`;
-
+  var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=https://fast-forest-86732.herokuapp.com/callback&client_secret=${config.clientSecret}&code=${code}`;
+  console.log('do we at least get here????\n\n\n\n\n\n\n\n\n\n\n');
   request.post(url, function(err, httpResponse, body) {
     var accessToken = body.substring(13);
     var options = {
@@ -37,6 +42,7 @@ app.get('/callback', function(req, res, next) {
         'User-Agent': '4um'
       }
     };
+    console.log('this is the access token', accessToken);
 
     request.get(options, function(err, httpResponse, body) {
       login(req, res, next, body);
@@ -103,6 +109,8 @@ app.use(express.static(process.env.PWD + '/client'));
 app.get('/users*', function(req, res) {
   var slashIndex = req.url.lastIndexOf('/') + 1;
   var user = req.url.substring(slashIndex);
+  console.log('this is the user', user);
+  console.log('this is the url', req.url);
   db.User.getUserInfo(user, userInfo => res.end(JSON.stringify(userInfo)));
 });
 

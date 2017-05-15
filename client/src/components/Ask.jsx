@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import ReactStars from 'react-stars';
 import $ from 'jquery';
-import Editor from './Editor.jsx';
 
 class Ask extends React.Component {
   constructor(props) {

@@ -14,19 +14,35 @@ var clearDB = function(connection, tablenames) {
 module.exports = function() {
 
   dbConnection = mysql.createConnection({
-    user: 'root',
-    password: '',
-    database: '4um'
+    user: 'b12eb2bede6b4d',
+    password: 'ad517216',
+    database: 'heroku_689621e8f649711',
+    host: 'us-cdbr-iron-east-03.cleardb.net'
   });
+
   dbConnection.connect(function(err) {
     if (err) {
-      return done(err);
+      return err ;
     } else {
-      clearDB(dbConnection, tableNames);
+      dbConnection.query('SELECT * FROM USERS;', function(err, result) {
+        console.log(result);
+      })
+      dbConnection.query('SHOW PROCESSLIST;', function(err, result) {
+        if (result.length > 8) {
+          for (var i = 0; i < result.length - 1; i++) {
+            dbConnection.query(`KILL ${result[i].Id}`);
+            console.log(result[i].Id);
+          }
+        }
+      });
+      setTimeout(function() {
+        clearDB(dbConnection, tableNames);
+      }, 200);
     }
   })
 
   setTimeout(() => {
+    var questionId;
     db.User.createUser('exampleUser', '', '')
       .then(() => {
         db.Question.createNewQuestion('exampleUser', 'firstQuestion', '', 20, [], 0)
@@ -35,6 +51,8 @@ module.exports = function() {
         return db.Question.createNewQuestion('exampleUser', 'secondQuestion', '', 20, [], 0);
       })
       .then((question) => {
+        questionId = question.id;
+        console.log(questionId, '\n\n\n\n\n');
         var tags = ['react'];
         directDb.Tag.sync()
         .then(() => {
@@ -54,13 +72,19 @@ module.exports = function() {
         });
       })
       .then(() => {
-        return directDb.Message.sync()
-          .then(() => {
-            return db.Message.createMessage(1, 1, '');
-          });
-      });
-  }, 250);
+        return db.Message.createMessage(questionId, 1, '');
+      })
+      .then((result) => {
+        dbConnection.end();
+        return result;
+      })
+      .catch((err) => {
+        dbConnection.end();
+        console.log('err! \n\n\n\n\n\n', err);
+      })
+  }, 1250);
 };
-
-
+if (process.env.RUN) {
+  module.exports();
+}
 

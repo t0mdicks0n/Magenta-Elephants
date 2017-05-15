@@ -21,6 +21,7 @@ module.exports.checkIfUserExists = function(username) {
       });
     })
     .then((data) => {
+      console.log('this is the result', data);
       if (data[0]) {
         return data[0].id;
       } else {
@@ -85,6 +86,7 @@ module.exports.getUserInfo = function(username, cb) {
   var user;
   db.User.sync()
     .then(() => {
+      console.log('\n\n\n\n\n\n\n\n\n\n this is the username', username);
       return db.User.findOne({ where: { username: username } });
     })
     .then((result) => {
