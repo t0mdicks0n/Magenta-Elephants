@@ -14,7 +14,6 @@ class AskedQuestion extends React.Component {
   }
 
   render() {
-    console.log(this.props.question);
     return (
       <section className="askedQuestion">
         <h1 className="headline">{this.props.question.questionTitle}</h1>
