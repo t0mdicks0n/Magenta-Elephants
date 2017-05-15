@@ -4,11 +4,13 @@ const db = Promise.promisifyAll(require('../models/index'));
 
 module.exports = function(req, res, next, body) {
   body = JSON.parse(body);
+  console.log('this has to happen');
   return db.User.checkIfUserExists(body.login)
     .then((userid) => {
       if (userid) {
         return userid;
       } else {
+        console.log('we got here', body);
         return db.User.createUser(body.login, body.avatar_url, body.bio)
           .then((user) => {
             return user.dataValues.id;
