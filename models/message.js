@@ -16,7 +16,6 @@ module.exports.createMessage = function(questionId, userId, body) {
 module.exports.getMessages = function(questionId) {
   return db.Message.sync()
     .then(() => {
-      console.log(questionId);
       return db.Message.findAll({
         where: { QuestionId: questionId },
         limit: 10,

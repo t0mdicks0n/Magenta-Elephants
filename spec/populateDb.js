@@ -24,7 +24,7 @@ module.exports = function() {
     if (err) {
       return err ;
     } else {
-      dbConnection.query('SELECT * FROM USERS;', function(err, result) {
+      dbConnection.query('SELECT * FROM Users;', function(err, result) {
         console.log(result);
       })
       dbConnection.query('SHOW PROCESSLIST;', function(err, result) {

@@ -125,6 +125,7 @@ module.exports.getQuestions = function (query, cb) {
       }
     })
     .then(questions => { 
+      console.log('this is the result', questions);
       module.exports.formatQuestions(questions, cb);
     })
     .catch(err => {
