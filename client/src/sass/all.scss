@@ -72,6 +72,7 @@ main {
     flex: $recentQuestionsFlexWidth;
     .questionsList {
       overflow-y: scroll;
+      height: 80%;
       padding: 0rem 1rem 0rem 1rem;
       .recentQuestion {
         background-color: white;
@@ -188,10 +189,6 @@ main {
     .askedQuestionDescription {
       font-size: 1.8rem;
     }
-    textarea {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-      min-height: 150px;
-    }
   }
   .dashboard {
     flex: $dashboardFlexWidth;
@@ -296,6 +293,15 @@ main {
   }
 }
 
+pre.codeDisplay {
+  background-color: #fff;
+  font-size: 1.5rem;
+  border: 1px solid #5c5f6b;
+  padding: 1rem;
+  overflow: scroll;
+  width: 95%;
+  height: 84%;
+}
 .giveAnswer {
   flex: $giveAnswerFlexWidth;
   // width: 50%;
