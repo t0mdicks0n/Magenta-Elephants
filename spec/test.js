@@ -59,10 +59,12 @@ describe('Successfully authenticating through github', function() {
   var tableNames = ['Messages', 'QuestionTags', 'Tags', 'Sessions', 'Questions', 'Users'];
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
-      user: 'root',
-      password: '',
-      database: '4um'
+      user: 'b12eb2bede6b4d',
+      password: 'ad517216',
+      database: 'heroku_689621e8f649711',
+      host: 'us-cdbr-iron-east-03.cleardb.net'
     });
+
     dbConnection.connect(function(err) {
       if (err) {
         return done(err);
@@ -71,6 +73,10 @@ describe('Successfully authenticating through github', function() {
       }
     });
   })
+
+  afterEach(function() {
+    dbConnection.end();
+  });
 
   it('creates a new user record', function(done) {
     var dummyUser = 'exampleUser';
@@ -189,9 +195,10 @@ describe('questions: ', function() {
   var tableNames = ['Sessions', 'Users', 'Questions'];
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
-      user: 'root',
-      password: '',
-      database: '4um'
+      user: 'b12eb2bede6b4d',
+      password: 'ad517216',
+      database: 'heroku_689621e8f649711',
+      host: 'us-cdbr-iron-east-03.cleardb.net'
     });
     dbConnection.connect(function(err) {
       if (err) {
@@ -200,7 +207,11 @@ describe('questions: ', function() {
         clearDB(dbConnection, tableNames, done);
       }
     });
-  })
+  });
+
+  afterEach(function() {
+    dbConnection.end();
+  });
 
   it('a post to questions creates a new question', function(done) {
     var dummyUser = 'exampleUser';
@@ -255,9 +266,10 @@ describe('users: ', function() {
   var tableNames = ['Messages', 'Sessions', 'Questions', 'Users'];
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
-      user: 'root',
-      password: '',
-      database: '4um'
+      user: 'b12eb2bede6b4d',
+      password: 'ad517216',
+      database: 'heroku_689621e8f649711',
+      host: 'us-cdbr-iron-east-03.cleardb.net'
     });
     dbConnection.connect(function(err) {
       if (err) {
@@ -266,6 +278,10 @@ describe('users: ', function() {
         clearDB(dbConnection, tableNames, done);
       }
     });
+  });
+
+  afterEach(function() {
+    dbConnection.end();
   });
 
   it('a user starts off with 100 points', function(done) {
