@@ -17,6 +17,10 @@ var jsonParser = bodyParser.json();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get('/testing', function(req, res, next) {
+  res.end('this is a test');
+});
+
 app.get('/', function(req, res, next) {
   res.redirect('/dashboard');
 });
