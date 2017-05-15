@@ -20,6 +20,7 @@ class Ask extends React.Component {
     this.changeTag = this.changeTag.bind(this);
     this.createQuestion = this.createQuestion.bind(this);
     this.changeProp = this.changeProp.bind(this);
+    this.htmlEncode = this.htmlEncode.bind(this);
   }
 
   changeProp(key, val) {
@@ -101,6 +102,10 @@ class Ask extends React.Component {
     }
   }
 
+  htmlEncode(value) {
+      return $('<div />').text(value).html();
+  }
+
   render() {
     if (this.state.redirect) {
       return <Redirect push to="/Asked/Recent" />
@@ -132,10 +137,7 @@ class Ask extends React.Component {
             </div>
           </div>
           <div className="askBody">
-            <Editor
-                id="editor"
-                onEditorChange={content => this.changeProp('askBody', content)}
-            />
+            <textarea onChange={e => this.changeProp('askBody', this.htmlEncode(e.target.value))}/>
             <div>
               <h2>Tags: Press tab to add more</h2>
               { this.state.tags.map((tag, index) => 
