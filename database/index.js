@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('4um', 'root', '', {
+const db = new Sequelize('heroku_689621e8f649711', 'b12eb2bede6b4d', 'ad517216', {
+  host: 'us-cdbr-iron-east-03.cleardb.net',
   logging: false
 });
 
