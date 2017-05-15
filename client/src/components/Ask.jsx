@@ -133,7 +133,10 @@ class Ask extends React.Component {
             </div>
           </div>
           <div className="askBody">
-            <textarea className="questionDescription" placeholder="Paste Code Here" value={this.askBody} onChange={ e => this.changeProp('askBody', e.target.value) } ></textarea>
+            <Editor
+                id="editor"
+                onEditorChange={content => this.changeProp('askBody', content)}
+            />
             <div>
               <h2>Tags: Press tab to add more</h2>
               { this.state.tags.map((tag, index) => 
