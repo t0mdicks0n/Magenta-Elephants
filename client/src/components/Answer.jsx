@@ -70,17 +70,17 @@ class Answer extends React.Component {
       body: value,
       questionId: this.props.question.id
     };
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/messages',
-    //   data: newMessage,
-    //   success: (data) => {
-    //     console.log('success!', data);
-    //   },
-    //   error: (err) => {
-    //     console.log('error with sending message', err);
-    //   }
-    // });
+    $.ajax({
+      type: 'POST',
+      url: '/messages',
+      data: newMessage,
+      success: (data) => {
+        console.log('success!', data);
+      },
+      error: (err) => {
+        console.log('error with sending message', err);
+      }
+    });
   }
 
   render() {
