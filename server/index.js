@@ -116,9 +116,9 @@ console.log(99999);
 // });
 
 
-// var server = app.listen(port, function() {
-//   console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
-// });
+var server = app.listen(port, function() {
+  console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
+});
 // const io = require('socket.io')(server);
 // var namespaces = [] 
 // connections = [];
