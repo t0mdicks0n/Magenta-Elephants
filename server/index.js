@@ -22,6 +22,7 @@ app.get('/testing', function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
+  console.log('got to index!');
   res.redirect('/dashboard');
 });
 
