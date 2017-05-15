@@ -86,13 +86,18 @@ module.exports.getUserInfo = function(username, cb) {
   var user;
   db.User.sync()
     .then(() => {
+      return db.User.findAll();
+    })
+    .then((test) => {
+      console.log('this is the test', test);
+    })
+    .then(() => {
       return db.User.findOne({ where: { username: username } });
     })
     .then((result) => {
       if (result) {
         user = result.dataValues;
       } else {
-        console.log('this is where it happens', result);
         throw 'user not found';
       }
 
