@@ -1,10 +1,36 @@
 import React from 'react';
+import {
+  // apis
+  Animated,
+  AppState,
+  AsyncStorage,
+  Clipboard,
+  Dimensions,
+  I18nManager,
+  NetInfo,
+  PanResponder,
+  PixelRatio,
+  StyleSheet,
+  // components
+  ActivityIndicator,
+  Button,
+  Image,
+  ProgressBar,
+  ScollView,
+  Switch,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native-web';
 
-const Currency = props => (
-  <div className="currentPoints">
-    <h2>{props.name} Currency</h2>
-    <h1>{props.currency}</h1>
-  </div>
-);
+
+const Currency = (props) => (
+  <View>
+    <Text></Text>
+  </View>
+)
 
 export default Currency;
