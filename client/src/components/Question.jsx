@@ -35,6 +35,7 @@ const Question = (props) => {
     <View>
       <Text></Text>
       <Image source={pic} style={{width: 193, height: 110}}/>
+      <Currency />
     </View>
   )
 }
