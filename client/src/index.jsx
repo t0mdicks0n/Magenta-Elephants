@@ -19,12 +19,13 @@ class App extends React.Component {
     this.changeProp = this.changeProp.bind(this);
     this.getProfileInfo = this.getProfileInfo.bind(this);
 
+    // Oliver and the group to Ninjas: 
     // legacy people: I'd recommend fixing this terrible regexing
-    this.username = document.cookie.replace(/.*forumLogin=/, '');
 
-    this.userId = document.cookie.replace(/.*forumId=/, '');
-    this.userId = this.userId.match(/.+?;/)[0];
-    this.userId = this.userId.substring(0, this.userId.length - 1);
+    // this.username = document.cookie.replace(/.*forumLogin=/, '');
+    // this.userId = document.cookie.replace(/.*forumId=/, '');
+    // this.userId = this.userId.match(/.+?;/)[0];
+    // this.userId = this.userId.substring(0, this.userId.length - 1);
   }
 
   componentWillMount() {
@@ -91,12 +92,3 @@ class App extends React.Component {
 }
 
 render(<App/>, document.getElementById('app'));
-
-
-
-
-
-
-
-
-
