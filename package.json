@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --port 9001 --config web/webpack.config.dev.js --inline --hot --colors --quiet",
+    "dev": "webpack-dev-server --port 9001 --config ./webpack.config.js --inline --hot --colors --quiet",
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "react-dev": "./node_modules/.bin/webpack -d --watch",
     "server-dev": "nodemon ./server/index.js",
