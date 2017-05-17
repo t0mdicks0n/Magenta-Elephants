@@ -1,24 +1,50 @@
-var webpack = require('webpack');
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
+var BUILD_DIR = path.resolve(__dirname, 'web/src');
 
-var BUILD_DIR = path.resolve(__dirname, 'client/dist');
-var APP_DIR = path.resolve(__dirname, 'client/src');
-
-var config = {
-  entry: APP_DIR + '/index.jsx',
+module.exports = {
+  devServer: {
+    contentBase: path.join(__dirname, 'web/src')
+  },
+  entry: [
+    path.join(__dirname, './index.web.js')
+  ],
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: [
+          'react-hot-loader',
+          'babel-loader?cacheDirectory=true'
+        ]
+      },
+      {
+        // Most react-native libraries include uncompiled ES6 JS.
+        test: /\.js$/,
+        include: /node_modules\/react-native-/,
+        loader: 'babel-loader',
+        query: { cacheDirectory: true }
+      },
+      {
+        test: /\.(gif|jpe?g|png|svg)$/,
+        loader: 'url-loader',
+        query: { name: '[name].[hash:16].[ext]' }
+      }
+    ]
+  },
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
   },
-  module: {
-    loaders: [
-      {
-        test: /\.jsx/,
-        include: APP_DIR,
-        loader: 'babel-loader'
-      }
-    ]
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    })
+  ],
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    }
   }
 };
-
-module.exports = config;
