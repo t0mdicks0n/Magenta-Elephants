@@ -3,6 +3,7 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 import Currency from './Currency.js';
 import AnsweredStatus from './AnsweredStatus.js';
 
+<<<<<<< HEAD
 class Question extends React.Component{
   constructor(props) {
     super(props);
@@ -60,11 +61,14 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     flex: 1,
     flexWrap: 'wrap'
+<<<<<<< HEAD
   },
   answeredStatusBox: {
     flex: 1,
     flexDirection: 'row',
     bottom: 0,
+=======
+>>>>>>> 0175df8dde0f1ccfe0f5ad4f1dc09136c405324a
   }
 });
 
