@@ -37,3 +37,6 @@ bower_components/
 # Error logs
 npm-debug.log
 yarn-error.log
+
+# IOS build
+IOS_client/ios/build/
