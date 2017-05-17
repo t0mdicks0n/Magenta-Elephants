@@ -27,7 +27,7 @@ export default class App extends Component {
     
     return (
       <View style={styles.container} >
-        <Text>This is a test motherfucker</Text>
+        <Text>This is a test</Text>
         <Stream questions={this.state.questions} />
       </View>
     )

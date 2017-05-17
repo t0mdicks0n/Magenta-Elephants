@@ -1,29 +1,26 @@
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet
-} from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import Question from './Question.js';
 
-const Stream = (props) => {
-  console.log('Stream', props.questions.testData);
-  // const _scrollView: ScrollView;
-  return (
-    <View>
-      <ScrollView ref={(scrollView) => { _scrollView = scrollView; }}
-        automaticallyAdjustContentInsets={false}
-        onScroll={() => { console.log('onScroll!'); }}
-        scrollEventThrottle={200}
-        style={styles.scrollView}>
-        {props.questions.testData.map((question, index) => 
+class Stream extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    return (
+      <ScrollView style={styles.container} >
+        {this.props.questions.testData.map((question, index) => 
           <Question q={question} key={index} />)}
       </ScrollView>
-    </View>
-  )
+    )
+  }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   scrollView: {
     backgroundColor: '#eeeeee',
     height: 300,
