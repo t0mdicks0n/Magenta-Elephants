@@ -25,7 +25,7 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native-web';
-import Currency from './Currency.jsx';
+import Currency from './Currency.js';
 
 const Question = (props) => {
   let pic = {

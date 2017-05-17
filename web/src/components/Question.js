@@ -25,17 +25,20 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native-web';
-import Question from './Question.jsx';
+import Currency from './Currency.js';
 
-
-const Stream = (props) => {
-  console.log('Stream', props.questions.testData);
+const Question = (props) => {
+  let pic = {
+    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+  };
+  console.log('Question', props);
   return (
     <View>
-      {props.questions.testData.map((question, index) => 
-        <Question q={question} key={index} />)}
+      <Image source={props.q.avatar} style={{width: 193, height: 110}}/>
+      <Text>{props.q.questionTitle}</Text>
+      <Currency />
     </View>
   )
 }
 
-export default Stream;
+export default Question;

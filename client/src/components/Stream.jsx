@@ -25,7 +25,7 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native-web';
-import Question from './Question.jsx';
+import Question from './Question.js';
 
 
 const Stream = (props) => {

@@ -25,7 +25,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native-web';
-import Stream from './Stream.jsx';
+import Stream from './Stream.js';
 import testData from './TestData.js';
 
 
