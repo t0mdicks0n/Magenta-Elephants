@@ -25,24 +25,42 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native-web';
-import Stream from 'stream';
+import Stream from './Stream.jsx';
+import testData from './TestData.js';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: ['1', '2']
+      questions: []
     }
   }
 
+  componentWillMount () {
+    this.setState({
+      questions: testData
+    });
+  }
+
   render() {
+    
     return (
-      <View>
+      <View styles={styles.container} >
+        <Text>This is a test</Text>
         <Stream questions={this.state.questions} />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
+  }
+});
 
 export default App;

@@ -31,10 +31,11 @@ const Question = (props) => {
   let pic = {
     uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
   };
+  console.log('Question', props);
   return (
     <View>
-      <Text></Text>
-      <Image source={pic} style={{width: 193, height: 110}}/>
+      <Text>{props.q.questionTitle}</Text>
+      <Image source={props.q.avatar} style={{width: 193, height: 110}}/>
       <Currency />
     </View>
   )
