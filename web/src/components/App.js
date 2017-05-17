@@ -64,3 +64,6 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+AppRegistry.registerComponent('MyApp', () => App)
+AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-root') });
