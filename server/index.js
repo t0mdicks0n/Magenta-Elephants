@@ -21,10 +21,10 @@ app.get('/testing', function(req, res, next) {
   res.end('this is a test');
 });
 
-app.get('/', function(req, res, next) {
-  console.log('got to index!');
-  res.redirect('/dashboard');
-});
+// app.get('/', function(req, res, next) {
+//   console.log('got to index!');
+//   // res.redirect('/dashboard');
+// });
 
 app.get('/dashboard', sessionParser, function(req, res, next) {
   res.sendFile(process.env.PWD + '/client/index.html');
@@ -116,7 +116,7 @@ app.get('/users*', function(req, res) {
 });
 
 app.get('*', function(req, res) {
-  res.redirect('/dashboard');
+  // res.redirect('/dashboard');
 });
 
 

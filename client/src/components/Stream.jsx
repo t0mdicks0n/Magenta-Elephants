@@ -25,12 +25,17 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native-web';
+import Question from './Question.js';
 
 
-const Currency = (props) => (
-  <View>
-    <Text></Text>
-  </View>
-)
+const Stream = (props) => {
+  console.log('Stream', props.questions.testData);
+  return (
+    <View>
+      {props.questions.testData.map((question, index) => 
+        <Question q={question} key={index} />)}
+    </View>
+  )
+}
 
-export default Currency;
+export default Stream;

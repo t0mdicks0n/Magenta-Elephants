@@ -25,12 +25,20 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native-web';
+import Currency from './Currency.js';
 
+const Question = (props) => {
+  let pic = {
+    uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+  };
+  console.log('Question', props);
+  return (
+    <View>
+      <Image source={props.q.avatar} style={{width: 193, height: 110}}/>
+      <Text>{props.q.questionTitle}</Text>
+      <Currency />
+    </View>
+  )
+}
 
-const Currency = (props) => (
-  <View>
-    <Text></Text>
-  </View>
-)
-
-export default Currency;
+export default Question;
