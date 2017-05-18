@@ -23,9 +23,17 @@ export default class App extends Component {
   }
 
   componentWillMount () {
-    this.setState({
-      questions: testData
-    });
+    // Get feed from server using http GET request.
+    axios.get('http://localhost:3000/questions')
+    .then(questions => {
+      console.log('Received question from server.', questions)
+      this.setState({
+        questions: questions
+      });
+    })
+    .catch(error => {
+      console.error('Unable to receive response from server GET /questions.');
+    })
   }
 
   handleInput (text) {
