@@ -1,13 +1,5 @@
-import React, { Component } from 'react';
-import {AppRegistry} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-
-import App from './components/App.js'
-import Chat from './components/Chat.js'
-
-const forumApp = StackNavigator({
-  Home: { screen: App },
-  Chat: { screen: Chat },
-});
+import React from 'react'
+import { AppRegistry } from 'react-native'
+import forumApp from './main'
 
 AppRegistry.registerComponent('AwesomeProject', () => forumApp);
