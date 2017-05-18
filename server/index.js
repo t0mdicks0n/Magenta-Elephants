@@ -76,6 +76,7 @@ app.get('/questions', function (req, res) {
 });
 
 app.post('/questions', jsonParser, function(req, res) {
+  console.log('client request from IOS!!');
   req.body.tags = JSON.parse(req.body.tags);
   db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags, req.body.minExpertRating );
   db.User.updateCurrency(req.body.username, Number(req.body.price));

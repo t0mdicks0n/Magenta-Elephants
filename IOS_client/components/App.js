@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 
 import Stream from './Stream.js';
 import testData from './TestData.js';
+import QuestionInput from './QuestionInput.js';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: []
+      questions: [],
+      questionInput: ''
     }
+    this.onButtonPress = this.onButtonPress.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   componentWillMount () {
@@ -23,11 +29,42 @@ export default class App extends Component {
     });
   }
 
+  handleInput (text) {
+    this.setState({
+      questionInput: text
+    });
+  }
+
+  onButtonPress () {
+    console.log('The user asked for: ' + this.state.questionInput);
+
+    var headers = {
+      tags: 'ios',
+      username: 'Preda',
+      title: 'Question from IOS',
+      body: this.state.questionInput,
+      price: '10',
+      minExpertRating: '10'
+    }
+
+    axios.post('/questions', headers)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log('error with posting question to server')
+    });
+  }
+
   render() {
-    
     return (
       <View style={styles.container} >
-        <Text>This is a test</Text>
+        <QuestionInput handleInput={this.handleInput}/>
+        <Button
+          onPress={this.onButtonPress}
+          title="Post"
+          color="#000066"
+        />
         <Stream questions={this.state.questions} />
       </View>
     )
