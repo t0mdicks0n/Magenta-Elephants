@@ -7,7 +7,6 @@ import {
   View,
   Button
 } from 'react-native';
-
 import Stream from './Stream.js';
 import testData from './TestData.js';
 import QuestionInput from './QuestionInput.js';
@@ -47,12 +46,12 @@ export default class App extends Component {
       minExpertRating: '10'
     }
 
-    axios.post('/questions', headers)
+    axios.post('http://localhost:3000/questions',  headers)
     .then(response => {
       console.log(response);
     })
     .catch(error => {
-      console.log('error with posting question to server')
+      console.log('error: ', error)
     });
   }
 
@@ -65,7 +64,7 @@ export default class App extends Component {
           title="Post"
           color="#000066"
         />
-        <Stream questions={this.state.questions} />
+        <Stream questions={this.state.questions} navigation={this.props.navigation}/>
       </View>
     )
   }

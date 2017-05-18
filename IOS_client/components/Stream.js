@@ -11,7 +11,7 @@ class Stream extends React.Component {
     return (
       <ScrollView style={styles.container} >
         {this.props.questions.testData.map((question, index) => 
-          <Question q={question} key={index} />)}
+          <Question q={question} key={index} navigation={this.props.navigation}/>)}
       </ScrollView>
     )
   }

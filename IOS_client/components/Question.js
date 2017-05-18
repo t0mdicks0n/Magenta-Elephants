@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, Button, TouchableHighlight } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import Currency from './Currency.js';
 import AnsweredStatus from './AnsweredStatus.js';
-
 
 class Question extends React.Component{
   constructor(props) {
@@ -13,16 +13,19 @@ class Question extends React.Component{
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     if (this.props.q.avatar) {
       return (
-        <View style={styles.questionBox}>
-          <Image 
-            source={{uri: this.props.q.avatar}} 
-            style={styles.image}/>
-          <Text style={styles.textArea}>{this.props.q.questionTitle}</Text>
-          <Currency />
-          <AnsweredStatus style={styles.answeredStatusBox} answeredStatus={this.state.answered} />
-        </View>
+        <TouchableHighlight onPress={() => navigate('Chat', {test: 'Testing'})}>
+          <View style={styles.questionBox}>
+            <Image 
+              source={{uri: this.props.q.avatar}} 
+              style={styles.image}/>
+            <Text style={styles.textArea}>{this.props.q.questionTitle}</Text>
+            <Currency />
+            <AnsweredStatus style={styles.answeredStatusBox} answeredStatus={this.state.answered} />
+          </View>
+        </TouchableHighlight>
       )
     } else {
       return (
