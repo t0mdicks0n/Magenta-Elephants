@@ -26,9 +26,9 @@ export default class App extends Component {
     // Get feed from server using http GET request.
     axios.get('http://localhost:3000/questions')
     .then(questions => {
-      console.log('Received question from server.', questions)
+      console.log('Received question from server.', questions);
       this.setState({
-        questions: questions
+        questions: questions.data
       });
     })
     .catch(error => {
