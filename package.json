@@ -19,6 +19,7 @@
     "test-ios": "jest"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
@@ -40,8 +41,8 @@
     "npm": "3.10.10",
     "octonode": "^0.7.12",
     "react": "16.0.0-alpha.6",
-    "react-native": "0.44.0",
     "react-dom": "^15.5.4",
+    "react-native": "0.44.0",
     "react-router-dom": "^4.1.1",
     "react-stars": "^2.1.0",
     "request": "^2.81.0",
