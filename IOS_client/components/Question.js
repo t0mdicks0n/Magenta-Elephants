@@ -13,10 +13,12 @@ class Question extends React.Component{
   }
 
   render() {
+    console.log('props inside the question       ', this.props.q);
+
     const { navigate } = this.props.navigation;
     if (this.props.q.avatar) {
       return (
-        <TouchableHighlight onPress={() => navigate('Chat', {test: 'Testing'})}>
+        <TouchableHighlight onPress={() => navigate('Chat', {question: this.props.q})}>
           <View style={styles.questionBox}>
             <Image 
               source={{uri: this.props.q.avatar}} 
