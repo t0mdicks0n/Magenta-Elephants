@@ -8,6 +8,7 @@ import {
   Button
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+// import SocketIOClient from 'socket.io-client';
 
 export default class Chat extends Component {
 
@@ -17,6 +18,9 @@ export default class Chat extends Component {
       messages: []
     }
     this.onSend = this.onSend.bind(this);
+
+    // Socket connection
+    // this.socket = SocketIOClient('http://localhost:3000');
   }
 
   componentWillMount() {
