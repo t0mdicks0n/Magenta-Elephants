@@ -7,7 +7,7 @@ class Logout extends React.Component {
   render() {
     this.props.logout();
     return (
-        <Text />
+      <Text />
     )
   }
 }

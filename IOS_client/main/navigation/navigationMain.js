@@ -7,7 +7,7 @@ const MainNavigator = DrawerNavigator({
     Forum: { screen: Overview },
     Settings: { screen: Overview },
     Logout: { screen: Logout },
-}, {
+  }, {
     initialRouteName: 'Forum'
 })
 
