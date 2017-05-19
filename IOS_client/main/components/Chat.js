@@ -27,18 +27,11 @@ export default class Chat extends Component {
     this.ws = new WebSocket('http://localhost:8080/');
 
     this.ws.onopen = () => {
-      // connection opened
-
-      // this.ws.send('something'); // send a message
       console.log('Connection open');
     };
-    // const socket = io('http://chat.feathersjs.com', {
-    //   transports: ['websocket'] // you need to explicitly tell it to use websockets
-    // });
 
     this.ws.onmessage = (e) => {
-      // a message was received
-      console.log(e.data);
+      console.log('message from the socket-integration was received! ', e.data);
     };
   }
 
@@ -72,52 +65,6 @@ export default class Chat extends Component {
 
     this.ws.send(JSON.stringify({msg: messages, questionId: this.props.navigation.state.params.question.id}));
   }
-
-  // sendMessage(value) {
-  //   this.socket.emit('new message', {msg: value, user: this.props.username});
-  //   var newMessage = {
-  //     userId: this.props.userId,
-  //     body: value,
-  //     questionId: this.props.question.id
-  //   };
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/messages',
-  //     data: newMessage,
-  //     success: (data) => {
-  //       console.log('success!', data);
-  //     },
-  //     error: (err) => {
-  //       console.log('error with sending message', err);
-  //     }
-  //   });
-  // }
-
-  // componentWillUnmount() {
-  //   this.socket.disconnect();
-  // }
-
-  // recieveMessage(data) {
-  //   var question = this.props.question;
-  //   question.Messages.push({ user: data.user, msg: data.msg });
-  //   this.props.changeIndexProp('currentQuestion', question);
-  // }
-
-  // componentDidMount() {
-  //   this.socket = io('/' + this.props.question.id);
-  //   this.socket.emit('new user', this.props.username, () => {});
-  //   this.socket.on('new message', (e) => {
-  //     console.log('message recieved');
-  //     this.recieveMessage(e);
-  //   });
-  //   this.socket.on('finish', (e) => {
-  //     this.setState({ 
-  //       ratingVisible: true,
-  //       submitAnswerDisplay: 'none'
-  //     });
-  //   });
-  // }   
-    
 
   render() {
     return (
