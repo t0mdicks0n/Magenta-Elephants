@@ -40,3 +40,6 @@ yarn-error.log
 
 # IOS build
 IOS_client/ios/build/
+
+# config.js
+config.js
