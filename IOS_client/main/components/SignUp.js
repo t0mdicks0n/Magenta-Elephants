@@ -16,38 +16,39 @@ const Form = t.form.Form;
 const Person = t.struct({
   email: t.String,
   password: t.String,
-  rememberMe: t.Boolean
+  verifyPassword: t.String,
 });
 
 const options = {};
 
 
-class Login extends React.Component {
+class SignUp extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       value: {
         email: '',
-        password: ''
+        password: '',
+        verifyPassword: ''
       }
     }
     this.onChange = this.onChange.bind(this);
-    this.login = this.login.bind(this);
+    this.createUser = this.createUser.bind(this);
   }
 
   onChange(value) {
     this.setState({value});
   }
 
-  login() {
+  createUser() {
     let value = this.refs.form.getValue();
-    if (value) {
-      firebaseApp.auth().signInWithEmailAndPassword(this.state.value.email, this.state.value.password)
+    if (value && value.password === value.verifyPassword) {
+      firebaseApp.auth().createUserWithEmailAndPassword(this.state.value.email, this.state.value.password)
       .then(response => {
-        console.log('User authenticated!');
+        console.log('User created!');
       })
       .catch(error => {
-        console.error('Unable to authenticate.', error.message, error.code);
+        console.error('Unable to create user.', error.message, error.code);
       })
     }
   }
@@ -62,8 +63,8 @@ class Login extends React.Component {
           onChange={this.onChange}
           options={options}
         />
-        <TouchableHighlight style={styles.button} onPress={this.login} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableHighlight style={styles.button} onPress={this.createUser} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableHighlight>
       </View>
     );
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 36,
-    backgroundColor: '#6495ED',
+    backgroundColor: '#228B22',
     borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
 
 function bindActions(dispatch) {
     return {
-        login: () => dispatch({type:'LOGIN'}),
+        createUser: () => dispatch({type:'CREATEUSER'}),
     }
 }
 const mapStateToProps = state => ({})
