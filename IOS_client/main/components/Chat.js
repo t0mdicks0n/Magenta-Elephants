@@ -8,7 +8,9 @@ import {
   Button
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
-import SocketIOClient from 'socket.io-client';
+
+// import SocketIOClient from 'socket.io-client';
+// import SocketIO from 'react-native-socketio';
 
 export default class Chat extends Component {
 
@@ -21,14 +23,23 @@ export default class Chat extends Component {
 
     console.log('!!!!!!!!!!! QUESTION ID ', this.props.navigation.state.params.question.id);
 
-    // Socket connection
-    this.socket = SocketIOClient('http://localhost:3000/' + this.props.navigation.state.params.question.id, {
-      transports: ['websocket']
-    });
+    // var ws = new WebSocket('http://localhost:8080/' + this.props.navigation.state.params.question.id);
+    this.ws = new WebSocket('http://localhost:8080/');
 
+    this.ws.onopen = () => {
+      // connection opened
+
+      // this.ws.send('something'); // send a message
+      console.log('Connection open');
+    };
     // const socket = io('http://chat.feathersjs.com', {
     //   transports: ['websocket'] // you need to explicitly tell it to use websockets
     // });
+
+    this.ws.onmessage = (e) => {
+      // a message was received
+      console.log(e.data);
+    };
   }
 
   componentWillMount() {
@@ -59,6 +70,7 @@ export default class Chat extends Component {
       };
     });
 
+    this.ws.send(JSON.stringify({msg: messages, questionId: this.props.navigation.state.params.question.id}));
   }
 
   // sendMessage(value) {
