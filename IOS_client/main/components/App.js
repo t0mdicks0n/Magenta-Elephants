@@ -10,10 +10,8 @@ import {
 import Stream from './Stream.js';
 import testData from './TestData.js';
 import QuestionInput from './QuestionInput.js';
-import * as firebase from 'firebase';
-import firebaseConfig from './config/config.js';
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 
 export default class App extends Component {
   constructor(props) {
