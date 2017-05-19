@@ -4,9 +4,9 @@ import OnboardingNavigator from './navigationOnboarding'
 import MainNavigator from './navigationMain'
 
 class Navigator extends Component {
-    render() {
-        return this.props.login ? <MainNavigator/> : <OnboardingNavigator/>
-    }
+  render() {
+    return this.props.login ? <MainNavigator/> : <OnboardingNavigator/>
+  }
 }
 
 const mapStateToProps = state => ({ login: state })

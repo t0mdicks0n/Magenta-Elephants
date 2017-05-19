@@ -8,9 +8,7 @@ import Login from '../components/Login.js'
 
 const OnboardingNavigator = StackNavigator({
     Login: { screen: Login }
-    // Register: { screen: Register },
-    // PwdForgot: { screen: PwdForgot },
-}, {
+  }, {
     initialRouteName: 'Login'
 })
 
