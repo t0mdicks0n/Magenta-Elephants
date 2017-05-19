@@ -30,7 +30,7 @@ app.get('/dashboard', sessionParser, function(req, res, next) {
   res.sendFile(process.env.PWD + '/client/index.html');
 });
 
-app.get('/callback', function(req, res, next) { 
+app.get('/callback', function(req, res, next) {
   var code = req.query.code;
   var url = `https://github.com/login/oauth/access_token?client_id=${config.clientID}&redirect_uri=https://fast-forest-86732.herokuapp.com/callback&client_secret=${config.clientSecret}&code=${code}`;
   console.log('do we at least get here????\n\n\n\n\n\n\n\n\n\n\n');
@@ -143,11 +143,12 @@ ChatRoom.prototype.addUser = function (chatClient) {
   }
 };
 
-ChatRoom.prototype.broadCast = function (data, questionID) {
+ChatRoom.prototype.broadCast = function (data, broadcastingUser) {
   this.users.forEach(function(user, index, array) {
-    // This is where it is breaking:
-    user.send(JSON.stringify(data));
-    console.log('I did not crash while sending the message ;) ');
+    // The message should not be broadcasted to the user who sent it:
+    if (user !== broadcastingUser) {
+      user.send(JSON.stringify(data));
+    }
   });
 };
 
@@ -155,12 +156,12 @@ wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     console.log('received: ', JSON.parse(message).msg[0].text);
     var newMessage = JSON.parse(message);
-  
+
     // Set the user id to the actual user id when you have it
     var tempUserID = Math.random();
 
     db.Message.createMessage(newMessage.questionId, tempUserID, newMessage.msg[0].text);
-    
+
     // Create Room if it doesn't exist:
     if (!(newMessage.questionId in chats)) {
       var createdRoom = new ChatRoom();
@@ -169,8 +170,8 @@ wss.on('connection', function connection(ws) {
       chats[newMessage.questionId] = createdRoom;
     // Broadcast message if there are other users in the same room:
     } else {
-      chats[newMessage.questionId].broadCast(newMessage);
-      // Add user/client to room
+      chats[newMessage.questionId].broadCast(newMessage, ws);
+      // Add user/client to room:
       chats[newMessage.questionId].addUser(ws);
     }
   });
@@ -179,7 +180,7 @@ wss.on('connection', function connection(ws) {
 // End of Socket-support for React Native Apps
 
 const io = require('socket.io')(server);
-var namespaces = [] 
+var namespaces = []
 connections = [];
 users = [];
 
