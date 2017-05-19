@@ -107,6 +107,28 @@ app.post('/messages/*', function(req, res) {
   }
 })
 
+app.get('/github', (req, res) => {
+  const githubusername = req.headers.githubusername;
+  var options = {
+    method: 'GET',
+    url: `https://api.github.com/users/${githubusername}`,
+    headers: {
+      'User-Agent': 'pa87901',
+      'authorization': 'Basic cGE4NzkwMTp2bkljZSM3Njk=',
+    },
+  };
+  request(options, (error, response, fields) => {
+    if(error) {
+      console.error('Error getting Github profile.');
+    } else {
+      console.log('github profile', response.body);
+      // Save this in database.
+    }
+  });
+
+  res.sendStatus(200);
+});
+
 app.use(express.static(process.env.PWD + '/client'));
 app.get('/users*', function(req, res) {
   var slashIndex = req.url.lastIndexOf('/') + 1;
