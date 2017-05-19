@@ -124,6 +124,59 @@ app.get('*', function(req, res) {
 var server = app.listen(port, function() {
   console.log('Listening on port 3000 the dirname is', process.env.PWD + '/../client');
 });
+
+// Socket-support for React Native Apps:
+
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
+
+var chats = {};
+
+var ChatRoom = function () {
+  this.users = [];
+}
+
+ChatRoom.prototype.addUser = function (chatClient) {
+  this.users.push(chatClient);
+};
+
+ChatRoom.prototype.broadCast = function (message, questionID) {
+  this.users.forEach(function(user, index, array) {
+    console.log('the user !!', user);
+    user.send({'message': message});
+  });
+};
+
+wss.on('connection', function connection(ws) {
+  
+  ws.on('message', function incoming(message) {
+    console.log('received: ', JSON.parse(message));
+    var newMessage = JSON.parse(message);
+  
+    // Set the user id to the actual user id when you have it
+    var tempUserID = Math.random();
+
+    db.Message.createMessage(newMessage.questionId, tempUserID, newMessage.text);
+    
+    // Create Room if it doesn't exist:
+    if (!(newMessage.questionId in chats)) {
+      var createdRoom = new ChatRoom();
+
+      // change to actual userId when u have it:
+      createdRoom.addUser(ws);
+      chats[newMessage.questionId] = createdRoom;
+    // Broadcast message if there are other users in the same room:
+    } else {
+      chats[newMessage.questionId].broadCast(newMessage[0]);
+      // Add user/client to room
+      chats[newMessage.questionId].addUser(ws);
+    }
+  });
+});
+
+
+// End of Socket-support for React Native Apps
+
 const io = require('socket.io')(server);
 var namespaces = [] 
 connections = [];
