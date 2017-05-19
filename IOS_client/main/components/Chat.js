@@ -8,7 +8,9 @@ import {
   Button
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+
 // import SocketIOClient from 'socket.io-client';
+// import SocketIO from 'react-native-socketio';
 
 export default class Chat extends Component {
 
@@ -19,12 +21,23 @@ export default class Chat extends Component {
     }
     this.onSend = this.onSend.bind(this);
 
-    // Socket connection
-    // this.socket = SocketIOClient('http://localhost:3000');
+    console.log('!!!!!!!!!!! QUESTION ID ', this.props.navigation.state.params.question.id);
+
+    // var ws = new WebSocket('http://localhost:8080/' + this.props.navigation.state.params.question.id);
+    this.ws = new WebSocket('http://localhost:8080/');
+
+    this.ws.onopen = () => {
+      console.log('Connection open');
+    };
+
+    this.ws.onmessage = (e) => {
+      console.log('message from the socket-integration was received! ', e.data);
+    };
   }
 
   componentWillMount() {
     var questionData = this.props.navigation.state.params.question;
+
     var originalQuestion = parseData(
       questionData.Nid_User,
       questionData.questionTitle,
@@ -50,53 +63,8 @@ export default class Chat extends Component {
       };
     });
 
+    this.ws.send(JSON.stringify({msg: messages, questionId: this.props.navigation.state.params.question.id}));
   }
-
-  // sendMessage(value) {
-  //   this.socket.emit('new message', {msg: value, user: this.props.username});
-  //   var newMessage = {
-  //     userId: this.props.userId,
-  //     body: value,
-  //     questionId: this.props.question.id
-  //   };
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/messages',
-  //     data: newMessage,
-  //     success: (data) => {
-  //       console.log('success!', data);
-  //     },
-  //     error: (err) => {
-  //       console.log('error with sending message', err);
-  //     }
-  //   });
-  // }
-
-  // componentWillUnmount() {
-  //   this.socket.disconnect();
-  // }
-
-  // recieveMessage(data) {
-  //   var question = this.props.question;
-  //   question.Messages.push({ user: data.user, msg: data.msg });
-  //   this.props.changeIndexProp('currentQuestion', question);
-  // }
-
-  // componentDidMount() {
-  //   this.socket = io('/' + this.props.question.id);
-  //   this.socket.emit('new user', this.props.username, () => {});
-  //   this.socket.on('new message', (e) => {
-  //     console.log('message recieved');
-  //     this.recieveMessage(e);
-  //   });
-  //   this.socket.on('finish', (e) => {
-  //     this.setState({ 
-  //       ratingVisible: true,
-  //       submitAnswerDisplay: 'none'
-  //     });
-  //   });
-  // }   
-    
 
   render() {
     return (
