@@ -137,7 +137,10 @@ var ChatRoom = function () {
 }
 
 ChatRoom.prototype.addUser = function (chatClient) {
-  this.users.push(chatClient);
+  if(this.users.indexOf(chatClient) === -1) {
+    this.users.push(chatClient);
+    console.log('new user');
+  }
 };
 
 ChatRoom.prototype.broadCast = function (message, questionID) {
@@ -149,7 +152,6 @@ ChatRoom.prototype.broadCast = function (message, questionID) {
 };
 
 wss.on('connection', function connection(ws) {
-  
   ws.on('message', function incoming(message) {
     console.log('received: ', JSON.parse(message).msg[0].text);
     var newMessage = JSON.parse(message);
@@ -162,7 +164,6 @@ wss.on('connection', function connection(ws) {
     // Create Room if it doesn't exist:
     if (!(newMessage.questionId in chats)) {
       var createdRoom = new ChatRoom();
-
       // change to actual userId when u have it:
       createdRoom.addUser(ws);
       chats[newMessage.questionId] = createdRoom;

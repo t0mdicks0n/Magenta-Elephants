@@ -23,7 +23,6 @@ export default class Chat extends Component {
 
     console.log('!!!!!!!!!!! QUESTION ID ', this.props.navigation.state.params.question.id);
 
-    // var ws = new WebSocket('http://localhost:8080/' + this.props.navigation.state.params.question.id);
     this.ws = new WebSocket('http://localhost:8080/');
 
     this.ws.onopen = () => {
