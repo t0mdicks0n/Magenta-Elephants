@@ -10,11 +10,13 @@ import {
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
 import { firebaseApp } from './config/config.js';
+import axios from 'axios';
 
 const Form = t.form.Form;
 
 const Person = t.struct({
   email: t.String,
+  githubUsername: t.String,
   password: t.String,
   rememberMe: t.Boolean
 });
@@ -28,6 +30,7 @@ class Login extends React.Component {
     this.state = {
       value: {
         email: '',
+        githubUsername: '',
         password: ''
       }
     }
@@ -45,10 +48,24 @@ class Login extends React.Component {
       firebaseApp.auth().signInWithEmailAndPassword(this.state.value.email, this.state.value.password)
       .then(response => {
         console.log('User authenticated!');
+        // Get GitHub profile with the entered GitHub username.
+        const config = {
+          headers: {'githubusername': this.state.value.githubUsername}
+        };
+        // const data = {
+        //   ghun: this.state.value.githubUsername
+        // }
+        axios.get('http://localhost:3000/github', config)
+        .then(res => {
+          console.log('GitHub profile obtained!');
+        })
+        .catch(error => {
+          console.log('Error obtaining GitHub profile.');
+        });
       })
       .catch(error => {
         console.error('Unable to authenticate.', error.message, error.code);
-      })
+      });
     }
   }
 
@@ -62,7 +79,7 @@ class Login extends React.Component {
           onChange={this.onChange}
           options={options}
         />
-        <TouchableHighlight style={styles.button} onPress={this.login} underlayColor='#99d9f4'>
+        <TouchableHighlight style={styles.button} onPress={this.props.login} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
       </View>
