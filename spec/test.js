@@ -58,19 +58,19 @@ describe('Successfully authenticating through github', function() {
   var dbConnection;
   var tableNames = ['Messages', 'QuestionTags', 'Tags', 'Sessions', 'Questions', 'Users'];
   beforeEach(function(done) {
-    // dbConnection = mysql.createConnection({
-    //   user: 'b12eb2bede6b4d',
-    //   password: 'ad517216',
-    //   database: 'heroku_689621e8f649711',
-    //   host: 'us-cdbr-iron-east-03.cleardb.net'
-    // });
+    dbConnection = mysql.createConnection({
+      user: 'b1cc648dbe1276',
+      password: '414d26a1',
+      database: 'heroku_7cf61d1bce6c506',
+      host: 'us-cdbr-iron-east-03.cleardb.net'
+    });
 
-  dbConnection = mysql.createConnection({
-    user: 'root',
-    password: '',
-    database: 'test',
-    host: 'localhost'
-  });
+  // dbConnection = mysql.createConnection({
+  //   user: 'root',
+  //   password: '',
+  //   database: 'test',
+  //   host: 'localhost'
+  // });
 
     dbConnection.connect(function(err) {
       if (err) {
@@ -201,19 +201,19 @@ describe('questions: ', function() {
   var dbConnection;
   var tableNames = ['Sessions', 'Users', 'Questions'];
   beforeEach(function(done) {
-    // dbConnection = mysql.createConnection({
-    //   user: 'b12eb2bede6b4d',
-    //   password: 'ad517216',
-    //   database: 'heroku_689621e8f649711',
-    //   host: 'us-cdbr-iron-east-03.cleardb.net'
-    // });
-
     dbConnection = mysql.createConnection({
-      user: 'root',
-      password: '',
-      database: 'test',
-      host: 'localhost'
+      user: 'b1cc648dbe1276',
+      password: '414d26a1',
+      database: 'heroku_7cf61d1bce6c506',
+      host: 'us-cdbr-iron-east-03.cleardb.net'
     });
+
+    // dbConnection = mysql.createConnection({
+    //   user: 'root',
+    //   password: '',
+    //   database: 'test',
+    //   host: 'localhost'
+    // });
     dbConnection.connect(function(err) {
       if (err) {
         return done(err);
@@ -279,19 +279,19 @@ describe('users: ', function() {
   var dbConnection;
   var tableNames = ['Messages', 'Sessions', 'Questions', 'Users'];
   beforeEach(function(done) {
-    // dbConnection = mysql.createConnection({
-    //   user: 'b12eb2bede6b4d',
-    //   password: 'ad517216',
-    //   database: 'heroku_689621e8f649711',
-    //   host: 'us-cdbr-iron-east-03.cleardb.net'
-    // });
-
     dbConnection = mysql.createConnection({
-      user: 'root',
-      password: '',
-      database: 'test',
-      host: 'localhost'
+      user: 'b1cc648dbe1276',
+      password: '414d26a1',
+      database: 'heroku_7cf61d1bce6c506',
+      host: 'us-cdbr-iron-east-03.cleardb.net'
     });
+
+    // dbConnection = mysql.createConnection({
+    //   user: 'root',
+    //   password: '',
+    //   database: 'test',
+    //   host: 'localhost'
+    // });
     dbConnection.connect(function(err) {
       if (err) {
         return done(err);
