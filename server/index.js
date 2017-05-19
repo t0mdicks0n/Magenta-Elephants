@@ -137,19 +137,21 @@ var ChatRoom = function () {
 }
 
 ChatRoom.prototype.addUser = function (chatClient) {
-  this.users.push(chatClient);
+  if(this.users.indexOf(chatClient) === -1) {
+    this.users.push(chatClient);
+    console.log('new user');
+  }
 };
 
-ChatRoom.prototype.broadCast = function (message, questionID) {
+ChatRoom.prototype.broadCast = function (data, questionID) {
   this.users.forEach(function(user, index, array) {
     // This is where it is breaking:
-    user.send(JSON.stringify({'message': message}));
+    user.send(JSON.stringify(data));
     console.log('I did not crash while sending the message ;) ');
   });
 };
 
 wss.on('connection', function connection(ws) {
-  
   ws.on('message', function incoming(message) {
     console.log('received: ', JSON.parse(message).msg[0].text);
     var newMessage = JSON.parse(message);
@@ -162,13 +164,12 @@ wss.on('connection', function connection(ws) {
     // Create Room if it doesn't exist:
     if (!(newMessage.questionId in chats)) {
       var createdRoom = new ChatRoom();
-
       // change to actual userId when u have it:
       createdRoom.addUser(ws);
       chats[newMessage.questionId] = createdRoom;
     // Broadcast message if there are other users in the same room:
     } else {
-      chats[newMessage.questionId].broadCast(newMessage.msg[0].text);
+      chats[newMessage.questionId].broadCast(newMessage);
       // Add user/client to room
       chats[newMessage.questionId].addUser(ws);
     }
@@ -213,4 +214,3 @@ var createNamespace = function(destination) {
     nsp.emit('get users', users);
   };
 };
-

@@ -9,9 +9,6 @@ import {
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 
-// import SocketIOClient from 'socket.io-client';
-// import SocketIO from 'react-native-socketio';
-
 export default class Chat extends Component {
 
   constructor(props) {
@@ -20,10 +17,10 @@ export default class Chat extends Component {
       messages: []
     }
     this.onSend = this.onSend.bind(this);
+    this.onReceive = this.onReceive.bind(this);
 
     console.log('!!!!!!!!!!! QUESTION ID ', this.props.navigation.state.params.question.id);
 
-    // var ws = new WebSocket('http://localhost:8080/' + this.props.navigation.state.params.question.id);
     this.ws = new WebSocket('http://localhost:8080/');
 
     this.ws.onopen = () => {
@@ -31,7 +28,7 @@ export default class Chat extends Component {
     };
 
     this.ws.onmessage = (e) => {
-      console.log('message from the socket-integration was received! ', e.data);
+      this.onReceive(e.data);
     };
   }
 
@@ -56,12 +53,16 @@ export default class Chat extends Component {
     this.setState({messages: inputMessages});
   }
 
+  onReceive(msg) {
+    console.log('incoming message ', msg);
+  }
+
   onSend(messages = []) {
-    this.setState((previousState) => {
-      return {
-        messages: GiftedChat.append(previousState.messages, messages),
-      };
-    });
+    // this.setState((previousState) => {
+    //   return {
+    //     messages: GiftedChat.append(previousState.messages, messages),
+    //   };
+    // });
 
     this.ws.send(JSON.stringify({msg: messages, questionId: this.props.navigation.state.params.question.id}));
   }
