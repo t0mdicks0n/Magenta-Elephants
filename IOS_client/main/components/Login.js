@@ -79,7 +79,7 @@ class Login extends React.Component {
           onChange={this.onChange}
           options={options}
         />
-        <TouchableHighlight style={styles.button} onPress={this.login} underlayColor='#99d9f4'>
+        <TouchableHighlight style={styles.button} onPress={this.props.login} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
       </View>

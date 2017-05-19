@@ -15,6 +15,7 @@ const Form = t.form.Form;
 
 const Person = t.struct({
   email: t.String,
+  githubUsername: t.String,
   password: t.String,
   verifyPassword: t.String,
 });
