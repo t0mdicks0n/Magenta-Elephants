@@ -306,7 +306,7 @@ describe('users: ', function() {
   });
 
   it('a user starts off with 100 points', function(done) {
-    db.User.createUser('exampleUser', '', '', 100, 100)
+    db.User.createUser('exampleUser', '123abc@example.com', '', '', 100, 100)
       .then(() => {
         db.User.getUserInfo('exampleUser', (userInfo) => {
           expect(userInfo.currentCurrency).to.equal(100);

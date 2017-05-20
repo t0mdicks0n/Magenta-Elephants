@@ -1,12 +1,15 @@
 const db = require('../database/index.js');
 
-module.exports.createUser = function(username, avatar_url, bio) {
+module.exports.createUser = function(username, email, avatar_url, bio, name) {
   return db.User.sync()
     .then(() => {
+      console.log('EMAIL', email);
       return db.User.create({
         username: username,
         avatar_url: avatar_url,
-        bio: bio
+        bio: bio,
+        email: email,
+        name: name
       });
     });
 };
@@ -117,6 +120,18 @@ module.exports.getUserInfo = function(username, cb) {
       console.log('err!', err);
     });
 };
+
+module.exports.getUserInfoByEmail = function(email, callback) {
+  return db.User.sync()
+  .then(() => {
+    return db.User.findOne({
+      where: { email: email }
+    });
+  })
+  .catch(error => {
+    console.error('Unable to retrieve user by email from db.');
+  });
+}
 
 
 // THIS FUNCTION IS CALLED WHEN YOU WANT TO JUST GET A USERS RATING AND NOT OTHER PROFILE INFO

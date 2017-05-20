@@ -107,6 +107,41 @@ app.post('/messages/*', function(req, res) {
   }
 })
 
+app.get('/github', (req, res) => {
+  console.log(req.headers);
+  const githubusername = req.headers.githubusername;
+  const email = req.headers.email;
+  var options = {
+    method: 'GET',
+    url: `https://api.github.com/users/${githubusername}`,
+    headers: {
+      'User-Agent': 'pa87901',
+      'authorization': 'Basic cGE4NzkwMTp2bkljZSM3Njk=',
+      'email': email
+    },
+  };
+  request(options, (error, response, fields) => {
+    if(error) {
+      console.error('Error getting Github profile.');
+    } else {
+      console.log('github profile', response.body, 'options', options);
+      let JSONresponse = JSON.parse(response.body)
+      // Save this in database.
+      let username = githubusername;
+      let email = options.headers.email;
+      let avatar_url = JSONresponse.avatar_url;
+      let bio = JSONresponse.bio;
+      let name = JSONresponse.name;
+      // console.log('EMAIL', email);
+      db.User.createUser(username, email, avatar_url, bio, name)
+      .then(response => {
+        console.log('User saved in db!', response.dataValues);
+        res.json(response.dataValues);
+      });
+    }
+  });
+});
+
 app.use(express.static(process.env.PWD + '/client'));
 app.get('/users*', function(req, res) {
   var slashIndex = req.url.lastIndexOf('/') + 1;
@@ -114,6 +149,18 @@ app.get('/users*', function(req, res) {
   console.log('this is the user', user);
   console.log('this is the url', req.url);
   db.User.getUserInfo(user, userInfo => res.end(JSON.stringify(userInfo)));
+});
+
+app.get('/user', (req, res) => {
+  console.log('email', req.headers.email);
+  db.User.getUserInfoByEmail(req.headers.email)
+  .then(response => {
+    console.log('userinfo', response);
+    res.json(response);
+  })
+  .catch(error => {
+    res.sendStatus(500);
+  });
 });
 
 app.get('*', function(req, res) {

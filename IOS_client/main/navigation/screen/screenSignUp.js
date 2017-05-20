@@ -10,6 +10,7 @@ import {
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
 import { firebaseApp } from './config/config.js';
+import axios from 'axios';
 
 const Form = t.form.Form;
 
@@ -29,6 +30,7 @@ class SignUp extends React.Component {
     this.state = {
       value: {
         email: '',
+        githubusername: '',
         password: '',
         verifyPassword: ''
       }
@@ -47,6 +49,20 @@ class SignUp extends React.Component {
       firebaseApp.auth().createUserWithEmailAndPassword(this.state.value.email, this.state.value.password)
       .then(response => {
         console.log('User created!');
+       // Get GitHub profile with the entered GitHub username.
+        const config = {
+          headers: {
+            'githubusername': this.state.value.githubUsername,
+            'email': this.state.value.email
+          }
+        };
+        axios.get('http://localhost:3000/github', config)
+        .then(res => {
+          console.log('GitHub profile obtained!');
+        })
+        .catch(error => {
+          console.log('Error obtaining GitHub profile.');
+        });
       })
       .catch(error => {
         console.error('Unable to create user.', error.message, error.code);
@@ -103,10 +119,10 @@ const styles = StyleSheet.create({
 });
 
 function bindActions(dispatch) {
-    return {
-        createUser: () => dispatch({type:'CREATEUSER'}),
-    }
+  return {
+    createUser: () => dispatch({type:'CREATEUSER'}),
+  }
 }
 const mapStateToProps = state => ({})
 
-export default connect(mapStateToProps, bindActions)(Login)
+export default connect(mapStateToProps, bindActions)(SignUp)

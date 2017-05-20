@@ -3,7 +3,6 @@ import { Text, View, Button } from 'react-native'
 import { connect } from 'react-redux'
 
 class Logout extends React.Component {
-
   render() {
     this.props.logout();
     return (
