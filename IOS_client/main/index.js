@@ -9,7 +9,7 @@ function loginReducer(state, action) {
   switch (action.type) {
     case 'LOGIN': return {...state, login: action.payload}
     case 'SIGNUP': return {...state, login: false, signUp: action.payload}
-    case 'LOGOUT': return {...state, login: false, signUp: false, logout: action.payload}
+    case 'LOGOUT': return {...state, login: false, signUp: false}
     default: return state
   }
 }

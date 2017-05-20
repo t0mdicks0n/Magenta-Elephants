@@ -58,12 +58,13 @@ class Login extends React.Component {
           this.props.login();
         })
         .catch(error => {
-          this.props.relogin();  
+          this.props.relogin();
+          window.alert('We are sorry but there are issues with fetching your Github profile. Please try again later.')
         })
       })
       .catch(error => {
         this.props.relogin();
-
+        window.alert('Incorrect username or password. Please retry.')
       });
     }
   }
