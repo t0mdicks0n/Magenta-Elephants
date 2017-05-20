@@ -23,7 +23,15 @@ const Person = t.struct({
   rememberMe: t.Boolean
 });
 
-const options = {};
+// These options are to make the password hidden when you type.
+const options = {
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 
 
 class Login extends React.Component {

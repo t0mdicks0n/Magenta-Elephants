@@ -23,7 +23,19 @@ const Person = t.struct({
   verifyPassword: t.String,
 });
 
-const options = {};
+// These options are to make the password hidden when you type.
+const options = {
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    },
+    verifyPassword: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 
 
 class SignUp extends React.Component {
