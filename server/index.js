@@ -209,15 +209,11 @@ wss.on('connection', function connection(ws) {
     console.log('received: ', JSON.parse(message).msg[0].text);
     var newMessage = JSON.parse(message);
 
-    // Set the user id to the actual user id when you have it
-    var tempUserID = Math.random();
-
-    db.Message.createMessage(newMessage.questionId, tempUserID, newMessage.msg[0].text);
+    db.Message.createMessage(newMessage.questionId, newMessage.msg[0].user._id, newMessage.msg[0].text);
 
     // Create Room if it doesn't exist:
     if (!(newMessage.questionId in chats)) {
       var createdRoom = new ChatRoom();
-      // change to actual userId when u have it:
       createdRoom.addUser(ws);
       chats[newMessage.questionId] = createdRoom;
     // Broadcast message if there are other users in the same room:

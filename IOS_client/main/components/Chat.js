@@ -36,7 +36,7 @@ class Chat extends Component {
   }
 
   componentWillMount() {
-    console.log('THIS.PROPS IN CHAT', this.props)
+    console.log('THIS.PROPS IN CHAT', this.props.userInfo)
     var questionData = this.props.navigation.state.params.question;
     var originalQuestion = parseData(
       questionData.Nid_User,
@@ -78,8 +78,7 @@ class Chat extends Component {
     incMessage = JSON.parse(incMessage);
     var message = incMessage.msg[0];
 
-    var formatedMessage = parseData(message._id, message.text, message.createdAt, message.user._id, undefined);
-    console.log('A formated message: ', formatedMessage)
+    var formatedMessage = parseData(message._id, message.text, message.createdAt, message.user._id, message.user.avatar);
 
     var newMessages = this.state.messages.slice();
     newMessages.unshift(formatedMessage);
@@ -105,7 +104,9 @@ class Chat extends Component {
         messages={this.state.messages}
         onSend={this.onSend}
         user={{
-          _id: 100,
+          _id: this.props.userInfo.id,
+          name: this.props.userInfo.username,
+          avatar: this.props.userInfo.avatar_url
         }}
       />
     )
