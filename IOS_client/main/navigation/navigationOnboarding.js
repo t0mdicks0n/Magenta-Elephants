@@ -9,7 +9,6 @@ import SignUp from './screen/screenSignUp';
 
 
 const OnboardingNavigator = StackNavigator({
-
     Login: { screen: Login },
     SignUp: { screen: SignUp },
     // PwdForgot: { screen: PwdForgot },
