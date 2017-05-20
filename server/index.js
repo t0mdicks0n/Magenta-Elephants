@@ -7,7 +7,7 @@ const sessionParser = require('../middleware/sessionParser.js');
 const request = require('request');
 const config = require('../config/vars.js');
 const login = require('../middleware/onLogin.js');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 const app = express();
 
 process.env.PWD = process.cwd();
