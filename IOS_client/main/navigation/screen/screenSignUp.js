@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 import { firebaseApp } from './config/config.js';
 import axios from 'axios';
 
+var serverURL = 'http://107.170.233.12';
+
 const Form = t.form.Form;
 
 const Person = t.struct({
@@ -53,8 +55,8 @@ class SignUp extends React.Component {
           'email': this.state.value.email
         }
       };
-      // axios.get('https://magenta-elephants.herokuapp.com/github', config)
-      axios.get('http://localhost:3000/github')
+      axios.get(`${serverURL}/github`, config)
+      // axios.get('http://localhost:3000/github')
         .then(res => {
           console.log('GitHub profile obtained!', res.status);
           console.log('res.statusCode', res.statusCode);
