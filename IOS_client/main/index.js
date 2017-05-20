@@ -4,7 +4,7 @@ import Navigator from './navigation'
 import { createStore } from 'redux'
 
 
-function loginReducer(state = { login: true, signUp: false }, action) {
+function loginReducer(state = false, action) {
   switch (action.type) {
     case 'LOGIN': return true
     case 'SIGNUP': return false
@@ -12,7 +12,7 @@ function loginReducer(state = { login: true, signUp: false }, action) {
     default: return state
   }
 }
-const store = createStore(loginReducer);
+const store = createStore(loginReducer, { login: false, signUp: false });
 
 export default class Root extends Component {
   constructor() {
