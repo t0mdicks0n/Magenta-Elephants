@@ -1,15 +1,20 @@
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator } from 'react-navigation';
 
 // import Register from './screenRegister'
 // import Login from './screen/screenLogin'
-import Login from '../components/Login.js'
+import Login from '../components/Login.js';
 // import PwdForget from './screenPwdforget'
 // import Tour from './screenTour'
+import SignUp from '../components/SignUp.js';
 
 const OnboardingNavigator = StackNavigator({
-    Login: { screen: Login }
-  }, {
+
+    Login: { screen: Login },
+    SignUp: { screen: SignUp },
+    // PwdForgot: { screen: PwdForgot },
+}, {
     initialRouteName: 'Login'
+    // initialRouteName: 'SignUp'
 })
 
 export default OnboardingNavigator;

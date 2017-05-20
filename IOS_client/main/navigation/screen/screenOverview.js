@@ -19,7 +19,6 @@ class Overview extends React.Component {
           <Button onPress={() => navigate('DrawerOpen')} title="Menu" />
         </View>
       </View>
-
     );
   }
 }

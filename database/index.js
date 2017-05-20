@@ -23,7 +23,9 @@ var User = db.define('User', {
   avatar_url: Sequelize.STRING,
   bio: Sequelize.TEXT,
   currentCurrency: { type: Sequelize.INTEGER, defaultValue: 100 },
-  totalCurrency: { type: Sequelize.INTEGER, defaultValue: 100 }
+  totalCurrency: { type: Sequelize.INTEGER, defaultValue: 100 },
+  email: Sequelize.STRING,
+  name: Sequelize.STRING
 }, timestampsAreFalse);
 
 var Question = db.define('Question', {
