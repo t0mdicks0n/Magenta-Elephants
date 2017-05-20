@@ -26,7 +26,7 @@ export default class App extends Component {
 
   componentWillMount () {
     // Get feed from server using http GET request.
-    axios.get('http://localhost:3000/questions')
+    axios.get('https://magenta-elephants.herokuapp.com/questions')
     .then(questions => {
       console.log('Received question from server.', questions);
       this.setState({
@@ -56,7 +56,7 @@ export default class App extends Component {
       minExpertRating: '10'
     }
 
-    axios.post('http://localhost:3000/questions',  headers)
+    axios.post('https://magenta-elephants.herokuapp.com/questions',  headers)
     .then(response => {
       console.log(response);
     })

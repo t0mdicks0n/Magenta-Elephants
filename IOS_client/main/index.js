@@ -4,15 +4,15 @@ import Navigator from './navigation'
 import { createStore } from 'redux'
 
 
-function loginReducer(state = false, action) {
+function loginReducer(state, action) {
   switch (action.type) {
-    case 'LOGIN': return true
-    case 'SIGNUP': return false
+    case 'LOGIN': return Object.assign({}, {login: action.payload})
+    case 'SIGNUP': return Object.assign({}, {signUp: action.payload})
     case 'LOGOUT': return false
     default: return state
   }
 }
-const store = createStore(loginReducer, { login: false, signUp: false });
+const store = createStore(loginReducer, false);
 
 export default class Root extends Component {
   constructor() {

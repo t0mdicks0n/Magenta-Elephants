@@ -52,9 +52,10 @@ class Login extends React.Component {
             'email': this.state.value.email
           }
         };
-        axios.get('http://localhost:3000/user', config)
+        axios.get('https://magenta-elephants.herokuapp.com/user', config)
         .then(response => {
           console.log('User info retrieved!', response.data);
+          // () => navigate('Home');
         })
       })
       .catch(error => {
@@ -126,8 +127,8 @@ const styles = StyleSheet.create({
 
 function bindActions(dispatch) {
   return {
-    login: () => dispatch({type:'LOGIN'}),
-    signUp: () => dispatch({type: 'SIGNUP'})
+    login: () => dispatch({type:'LOGIN', payload: true}),
+    signUp: () => dispatch({type: 'SIGNUP', payload: true})
   }
 };
 
