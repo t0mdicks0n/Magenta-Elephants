@@ -16,7 +16,7 @@ class Question extends React.Component{
     console.log('props inside the question       ', this.props.q);
 
     const { navigate } = this.props.navigation;
-    if (!this.props.q.avatar) {
+    if (this.props.q.avatar) {
       return (
         <TouchableHighlight onPress={() => navigate('Chat', {question: this.props.q})}>
           <View style={styles.questionBox}>
