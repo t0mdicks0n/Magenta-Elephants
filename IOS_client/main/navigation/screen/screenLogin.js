@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 import { firebaseApp } from './config/config.js';
 import axios from 'axios';
 
+var serverURL = 'http://107.170.233.12';
+
 const Form = t.form.Form;
 
 const Person = t.struct({
@@ -52,7 +54,7 @@ class Login extends React.Component {
             'email': this.state.value.email
           }
         };
-        axios.get('https://magenta-elephants.herokuapp.com/user', config)
+        axios.get(`${serverURL}/user`, config)
         .then(response => {
           console.log('User info retrieved!', response.data);
           this.props.login();
