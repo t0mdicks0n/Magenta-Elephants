@@ -11,7 +11,7 @@ const Sequelize = require('sequelize');
 //   define: {freezeTableName: true}
 // });
 
-const db = new Sequelize('heroku_7cf61d1bce6c506', 'b1cc648dbe1276', '414d26a1', {
+const db = new Sequelize('heroku_7035e0b04024753', 'b56863d3b98636', '74a11b90', {
   host: 'us-cdbr-iron-east-03.cleardb.net',
   logging: false
 });

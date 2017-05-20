@@ -15,9 +15,9 @@ var clearDB = function(connection, tablenames) {
 module.exports = function() {
 
   dbConnection = mysql.createConnection({
-    user: 'b1cc648dbe1276',
-    password: '414d26a1',
-    database: 'heroku_7cf61d1bce6c506',
+    user: 'b56863d3b98636',
+    password: '74a11b90',
+    database: 'heroku_7035e0b04024753',
     host: 'us-cdbr-iron-east-03.cleardb.net'
   });
 

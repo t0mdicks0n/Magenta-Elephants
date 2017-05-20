@@ -59,9 +59,9 @@ describe('Successfully authenticating through github', function() {
   var tableNames = ['Messages', 'QuestionTags', 'Tags', 'Sessions', 'Questions', 'Users'];
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
-      user: 'b1cc648dbe1276',
-      password: '414d26a1',
-      database: 'heroku_7cf61d1bce6c506',
+      user: 'b56863d3b98636',
+      password: '74a11b90',
+      database: 'heroku_7035e0b04024753',
       host: 'us-cdbr-iron-east-03.cleardb.net'
     });
 
@@ -202,9 +202,9 @@ describe('questions: ', function() {
   var tableNames = ['Sessions', 'Users', 'Questions'];
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
-      user: 'b1cc648dbe1276',
-      password: '414d26a1',
-      database: 'heroku_7cf61d1bce6c506',
+      user: 'b56863d3b98636',
+      password: '74a11b90',
+      database: 'heroku_7035e0b04024753',
       host: 'us-cdbr-iron-east-03.cleardb.net'
     });
 
@@ -280,9 +280,9 @@ describe('users: ', function() {
   var tableNames = ['Messages', 'Sessions', 'Questions', 'Users'];
   beforeEach(function(done) {
     dbConnection = mysql.createConnection({
-      user: 'b1cc648dbe1276',
-      password: '414d26a1',
-      database: 'heroku_7cf61d1bce6c506',
+      user: 'b56863d3b98636',
+      password: '74a11b90',
+      database: 'heroku_7035e0b04024753',
       host: 'us-cdbr-iron-east-03.cleardb.net'
     });
 
