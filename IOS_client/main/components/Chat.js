@@ -8,10 +8,11 @@ import {
   Button
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { connect } from 'react-redux';
 
 var serverURL = 'http://107.170.233.12';
 
-export default class Chat extends Component {
+class Chat extends Component {
 
   constructor(props) {
     super(props);
@@ -137,3 +138,7 @@ function parseData(messageID, message, createdAt, userID, userName, userAvatar) 
     }
   };
 }
+
+const mapStateToProps = state => state
+
+export default connect(mapStateToProps, bindAction)(Chat)
