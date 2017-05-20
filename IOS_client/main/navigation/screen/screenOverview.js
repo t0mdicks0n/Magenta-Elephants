@@ -18,7 +18,6 @@ class Overview extends React.Component {
         <View style={styles.footerContainer}>
           <Button onPress={() => navigate('DrawerOpen')} title="Menu" />
         </View>
-
       </View>
     );
   }

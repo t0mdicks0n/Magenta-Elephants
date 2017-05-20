@@ -6,7 +6,6 @@ import SigningUpNavigator from './navigationSigning'
 
 class Navigator extends Component {
   render() {
-
     console.log('GIVE ME THE PROPS', this.props);
     if (this.props.login) {
       return <MainNavigator/>

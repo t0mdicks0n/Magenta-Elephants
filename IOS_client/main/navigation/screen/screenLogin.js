@@ -130,7 +130,8 @@ function bindActions(dispatch) {
     login: () => dispatch({type:'LOGIN'}),
     signUp: () => dispatch({type: 'SIGNUP'})
   }
-}
+};
+
 const mapStateToProps = state => ({})
 
 export default connect(mapStateToProps, bindActions)(Login)
