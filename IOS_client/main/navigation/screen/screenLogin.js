@@ -30,7 +30,6 @@ class Login extends React.Component {
     this.state = {
       value: {
         email: '',
-        // githubUsername: '',
         password: ''
       }
     }
