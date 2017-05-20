@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   componentWillMount () {
-    console.log('this.props in App', this.props);
+    // console.log('this.props in App', this.props);
     // Get feed from server using http GET request.
     axios.get(serverURL + '/questions')
     .then(questions => {

@@ -36,6 +36,7 @@ class Chat extends Component {
   }
 
   componentWillMount() {
+    console.log('THIS.PROPS IN CHAT', this.props)
     var questionData = this.props.navigation.state.params.question;
     var originalQuestion = parseData(
       questionData.Nid_User,
@@ -139,6 +140,6 @@ function parseData(messageID, message, createdAt, userID, userName, userAvatar) 
   };
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, bindAction)(Chat)
+export default connect(mapStateToProps)(Chat)
