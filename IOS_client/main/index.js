@@ -1,18 +1,35 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import Navigator from './navigation'
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 
 
-function loginReducer(state = { login: true, signUp: false }, action) {
+function loginReducer(state, action) {
+  console.log('initial state', state);
   switch (action.type) {
-    case 'LOGIN': return true
-    case 'SIGNUP': return false
-    case 'LOGOUT': return false
+    case 'LOGIN': return {...state, login: action.payload}
+    case 'SIGNUP': return {...state, login: false, signUp: action.payload}
+    case 'LOGOUT': return {...state, login: false, signUp: false, logout: action.payload}
     default: return state
   }
 }
-const store = createStore(loginReducer);
+
+
+const middleware = applyMiddleware(logger);
+
+const logger = (store) => (next) => (action) =>  {
+  console.log('action fired', action);
+  next(action);
+};
+
+
+const store = createStore(loginReducer, {
+  login: false
+});
+
+store.subscribe(()=> {
+  console.log('store changed', store.getState());
+});
 
 export default class Root extends Component {
   constructor() {
