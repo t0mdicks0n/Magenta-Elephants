@@ -10,10 +10,11 @@ import {
 import Stream from './Stream.js';
 import testData from './TestData.js';
 import QuestionInput from './QuestionInput.js';
+import { connect } from 'react-redux'
 
 var serverURL = 'http://107.170.233.12';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +26,7 @@ export default class App extends Component {
   }
 
   componentWillMount () {
+    console.log('this.props in App', this.props);
     // Get feed from server using http GET request.
     axios.get(serverURL + '/questions')
     .then(questions => {
@@ -88,3 +90,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   }
 });
+
+// No dispatch methods for App component for now so return empty dispatch.
+function bindActions(dispatch) {
+  return {
+    dispatch
+  }
+}
+
+const mapStateToProps = state => (state);
+
+export default connect(mapStateToProps, bindActions)(App);
