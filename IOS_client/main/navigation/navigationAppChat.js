@@ -7,6 +7,7 @@ const AppChatNavigator = StackNavigator({
     Chat: { screen: Chat },
   }, {
     initialRouteName: 'Home'
-})
+});
+
 
 export default AppChatNavigator

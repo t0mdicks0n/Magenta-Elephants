@@ -57,7 +57,7 @@ class Login extends React.Component {
         axios.get(`${serverURL}/user`, config)
         .then(response => {
           console.log('User info retrieved!', response.data);
-          this.props.login();
+          this.props.login(response.data);
         })
         .catch(error => {
           this.props.relogin();
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
 
 function bindActions(dispatch) {
   return {
-    login: () => dispatch({type:'LOGIN', payload: true}),
+    login: (data) => dispatch({type:'LOGIN', payload: true, userInfo: data}),
     signUp: () => dispatch({type: 'SIGNUP', payload: true}),
     relogin: () => dispatch({type: 'LOGIN', payload: false})
   }

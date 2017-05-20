@@ -7,7 +7,7 @@ import { applyMiddleware, createStore } from 'redux'
 function loginReducer(state, action) {
   console.log('initial state', state);
   switch (action.type) {
-    case 'LOGIN': return {...state, login: action.payload}
+    case 'LOGIN': return {...state, login: action.payload, userInfo: action.userInfo}
     case 'SIGNUP': return {...state, login: false, signUp: action.payload}
     case 'LOGOUT': return {...state, login: false, signUp: false}
     default: return state

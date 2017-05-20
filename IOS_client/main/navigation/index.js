@@ -16,7 +16,6 @@ class Navigator extends Component {
     else {
       return <OnboardingNavigator/>
     }
-    {/*return this.props.login ? <MainNavigator/> : <OnboardingNavigator/>*/}
   }
 }
 
