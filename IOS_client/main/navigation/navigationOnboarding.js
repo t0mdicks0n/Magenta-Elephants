@@ -1,11 +1,12 @@
 import { StackNavigator } from 'react-navigation';
 
 // import Register from './screenRegister'
-// import Login from './screen/screenLogin'
-import Login from '../components/Login.js';
+import Login from './screen/screenLogin';
+// import Login from '../components/Login.js';
 // import PwdForget from './screenPwdforget'
 // import Tour from './screenTour'
-import SignUp from '../components/SignUp.js';
+import SignUp from './screen/screenSignUp';
+
 
 const OnboardingNavigator = StackNavigator({
 
