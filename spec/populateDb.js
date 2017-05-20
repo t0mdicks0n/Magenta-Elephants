@@ -54,7 +54,7 @@ module.exports = function() {
 
   setTimeout(() => {
     var questionId;
-    db.User.createUser('exampleUser', '', '')
+    db.User.createUser('exampleUser', '', 'https://facebook.github.io/react/img/logo_og.png')
       .then(() => {
         db.Question.createNewQuestion('exampleUser', 'firstQuestion', '', 20, [], 0)
       })
