@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 
+var serverURL = 'http://107.170.233.12';
+
 export default class Chat extends Component {
 
   constructor(props) {
@@ -21,7 +23,7 @@ export default class Chat extends Component {
 
     console.log('!!!!!!!!!!! QUESTION ID ', this.props.navigation.state.params.question.id);
 
-    this.ws = new WebSocket('https://magenta-elephants.herokuapp.com:8080/');
+    this.ws = new WebSocket(serverURL + ':8080');
 
     this.ws.onopen = () => {
       console.log('Connection open');
