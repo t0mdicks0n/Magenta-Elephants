@@ -123,6 +123,7 @@ app.get('/github', (req, res) => {
   request(options, (error, response, fields) => {
     if(error) {
       console.error('Error getting Github profile.');
+      res.sendStatus(500);
     } else {
       console.log('github profile', response.body, 'options', options);
       let JSONresponse = JSON.parse(response.body)

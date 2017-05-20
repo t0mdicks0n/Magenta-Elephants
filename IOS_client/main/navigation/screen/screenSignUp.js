@@ -56,7 +56,7 @@ class SignUp extends React.Component {
             'email': this.state.value.email
           }
         };
-        axios.get('http://localhost:3000/github', config)
+        axios.get('https://magenta-elephants.herokuapp.com/user', config)
         .then(res => {
           console.log('GitHub profile obtained!');
           this.props.createUser();
@@ -66,7 +66,9 @@ class SignUp extends React.Component {
         });
       })
       .catch(error => {
-        console.error('Unable to create user.', error.message, error.code);
+        // console.error('Unable to create user.', error.message, error.code);
+        this.props.relogin();
+        window.alert('Email address already taken. Please try again with different address.');
       })
     }
   }
@@ -122,6 +124,7 @@ const styles = StyleSheet.create({
 function bindActions(dispatch) {
   return {
     createUser: () => dispatch({type:'LOGIN', payload: true}),
+    relogin: () => dispatch({type: 'LOGIN', payload: false})
   }
 }
 const mapStateToProps = state => ({})
