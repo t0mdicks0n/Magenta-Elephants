@@ -36,7 +36,6 @@ export default class Chat extends Component {
 
   componentWillMount() {
     var questionData = this.props.navigation.state.params.question;
-
     var originalQuestion = parseData(
       questionData.Nid_User,
       questionData.questionTitle,
@@ -47,12 +46,28 @@ export default class Chat extends Component {
     );
 
     var inputMessages = [originalQuestion];
-    questionData.Messages.forEach(function(message, index, array) {
-      var currentMessage = parseData(message.id, message.msg, message.date, message.userId, message.userId, undefined);
-      return inputMessages.unshift(currentMessage);
-    });
 
-    this.setState({messages: inputMessages});
+    axios.get(serverURL + '/questions')
+    .then(questions => {
+      var messagesFromDb = '';
+      
+      for (var i = 0; i < questions.data.length; i++) {
+        if (questions.data[i].id === this.props.navigation.state.params.question.id) {
+          messagesFromDb = questions.data[i].Messages;
+        }
+      }
+
+      messagesFromDb.forEach(function(message, index, array) {
+        var currentMessage = parseData(message.id, message.msg, message.date, message.userId, message.userId, undefined);
+        return inputMessages.unshift(currentMessage);
+      });
+
+      this.setState({messages: inputMessages});
+
+    })
+    .catch(error => {
+      console.error('There was an error with GET. Error: ', error);
+    })
   }
 
   onReceive(incMessage) {
