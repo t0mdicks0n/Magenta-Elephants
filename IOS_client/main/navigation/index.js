@@ -7,11 +7,11 @@ import SigningUpNavigator from './navigationSigning'
 class Navigator extends Component {
   render() {
     console.log('GIVE ME THE PROPS', this.props);
-    if (this.props.signUp) {
-      return <SigningUpNavigator/>
-    }
-    else if (this.props.login) {
+    if (this.props.login) {
       return <MainNavigator/>
+    }
+    else if (this.props.signUp) {
+      return <SigningUpNavigator/>
     }
     else {
       return <OnboardingNavigator/>
@@ -20,6 +20,6 @@ class Navigator extends Component {
   }
 }
 
-const mapStateToProps = state => ({ login: state, signUp: state })
+const mapStateToProps = state => (state)
 
 export default connect(mapStateToProps, {})(Navigator)

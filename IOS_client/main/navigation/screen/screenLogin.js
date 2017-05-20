@@ -55,6 +55,7 @@ class Login extends React.Component {
         axios.get('https://magenta-elephants.herokuapp.com/user', config)
         .then(response => {
           console.log('User info retrieved!', response.data);
+          this.props.login();
           // () => navigate('Home');
         })
       })
@@ -74,7 +75,7 @@ class Login extends React.Component {
           onChange={this.onChange}
           options={options}
         />
-        <TouchableHighlight style={styles.loginButton} onPress={this.props.login} underlayColor='#99d9f4'>
+        <TouchableHighlight style={styles.loginButton} onPress={this.login} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
         <TouchableHighlight style={styles.signUpButton} onPress={this.props.signUp}>

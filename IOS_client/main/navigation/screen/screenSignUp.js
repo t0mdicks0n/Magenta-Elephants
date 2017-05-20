@@ -59,6 +59,7 @@ class SignUp extends React.Component {
         axios.get('http://localhost:3000/github', config)
         .then(res => {
           console.log('GitHub profile obtained!');
+          this.props.createUser();
         })
         .catch(error => {
           console.log('Error obtaining GitHub profile.');
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
 
 function bindActions(dispatch) {
   return {
-    createUser: () => dispatch({type:'CREATEUSER'}),
+    createUser: () => dispatch({type:'LOGIN', payload: true}),
   }
 }
 const mapStateToProps = state => ({})
