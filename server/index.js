@@ -118,6 +118,7 @@ app.get('/github', (req, res) => {
       'User-Agent': 'pa87901',
       'authorization': 'Basic cGE4NzkwMTp2bkljZSM3Njk=',
       'email': email
+
     },
   };
   request(options, (error, response, fields) => {
@@ -140,6 +141,7 @@ app.get('/github', (req, res) => {
       });
     }
   });
+
 });
 
 app.use(express.static(process.env.PWD + '/client'));
