@@ -127,18 +127,22 @@ app.get('/github', (req, res) => {
     } else {
       console.log('github profile', response.body, 'options', options);
       let JSONresponse = JSON.parse(response.body)
-      // Save this in database.
-      let username = githubusername;
-      let email = options.headers.email;
-      let avatar_url = JSONresponse.avatar_url;
-      let bio = JSONresponse.bio;
-      let name = JSONresponse.name;
-      // console.log('EMAIL', email);
-      db.User.createUser(username, email, avatar_url, bio, name)
-      .then(response => {
-        console.log('User saved in db!', response.dataValues);
-        res.json(response.dataValues);
-      });
+      if (JSONresponse.login === 'undefined') {
+        res.sendStatus(500);
+      } else {
+        // Save this in database.
+        let username = githubusername;
+        let email = options.headers.email;
+        let avatar_url = JSONresponse.avatar_url;
+        let bio = JSONresponse.bio;
+        let name = JSONresponse.name;
+        // console.log('EMAIL', email);
+        db.User.createUser(username, email, avatar_url, bio, name)
+        .then(response => {
+          console.log('User saved in db!', response.dataValues);
+          res.json(response.dataValues);
+        });
+      }
     }
   });
 });

@@ -46,30 +46,61 @@ class SignUp extends React.Component {
   createUser() {
     let value = this.refs.form.getValue();
     if (value && value.password === value.verifyPassword) {
-      firebaseApp.auth().createUserWithEmailAndPassword(this.state.value.email, this.state.value.password)
-      .then(response => {
-        console.log('User created!');
-       // Get GitHub profile with the entered GitHub username.
-        const config = {
-          headers: {
-            'githubusername': this.state.value.githubUsername,
-            'email': this.state.value.email
-          }
-        };
-        axios.get('https://magenta-elephants.herokuapp.com/user', config)
+      // Try to fetch Github profile first.
+      const config = {
+        headers: {
+          'githubusername': this.state.value.githubUsername,
+          'email': this.state.value.email
+        }
+      };
+      // axios.get('https://magenta-elephants.herokuapp.com/github', config)
+      axios.get('http://localhost:3000/github')
         .then(res => {
-          console.log('GitHub profile obtained!');
-          this.props.createUser();
+          console.log('GitHub profile obtained!', res.status);
+          console.log('res.statusCode', res.statusCode);
+          if (res.status === 500) {
+            throw error;
+          } else {
+            // Then try to create user in Firebase.
+            firebaseApp.auth().createUserWithEmailAndPassword(this.state.value.email, this.state.value.password)
+            .then(response => {
+              this.props.createUser();
+            })
+            .catch(error => {
+              window.alert('Email address already taken. Please try again with different address.');
+            });
+          }
         })
         .catch(error => {
-          console.log('Error obtaining GitHub profile.');
+          window.alert('Error obtaining GitHub profile. Please check that you have entered the correct Github username. User not created.');
         });
-      })
-      .catch(error => {
-        // console.error('Unable to create user.', error.message, error.code);
-        this.props.relogin();
-        window.alert('Email address already taken. Please try again with different address.');
-      })
+
+
+
+      // firebaseApp.auth().createUserWithEmailAndPassword(this.state.value.email, this.state.value.password)
+      // .then(response => {
+      //   console.log('User created!');
+      //  // Get GitHub profile with the entered GitHub username.
+      //   const config = {
+      //     headers: {
+      //       'githubusername': this.state.value.githubUsername,
+      //       'email': this.state.value.email
+      //     }
+      //   };
+      //   axios.get('https://magenta-elephants.herokuapp.com/user', config)
+      //   .then(res => {
+      //     console.log('GitHub profile obtained!');
+      //     this.props.createUser();
+      //   })
+      //   .catch(error => {
+      //     window.alert('Error obtaining GitHub profile.');
+      //   });
+      // })
+      // .catch(error => {
+      //   // console.error('Unable to create user.', error.message, error.code);
+      //   this.props.relogin();
+      //   window.alert('Email address already taken. Please try again with different address.');
+      // })
     }
   }
 
