@@ -21,7 +21,7 @@ export default class Chat extends Component {
 
     console.log('!!!!!!!!!!! QUESTION ID ', this.props.navigation.state.params.question.id);
 
-    this.ws = new WebSocket('http://localhost:8080/');
+    this.ws = new WebSocket('https://magenta-elephants.herokuapp.com:8080/');
 
     this.ws.onopen = () => {
       console.log('Connection open');
@@ -53,16 +53,29 @@ export default class Chat extends Component {
     this.setState({messages: inputMessages});
   }
 
-  onReceive(msg) {
-    console.log('incoming message ', msg);
+  onReceive(incMessage) {
+    console.log('incoming message ', incMessage);
+
+    incMessage = JSON.parse(incMessage);
+    var message = incMessage.msg[0];
+
+    var formatedMessage = parseData(message._id, message.text, message.createdAt, message.user._id, undefined);
+    console.log('A formated message: ', formatedMessage)
+
+    var newMessages = this.state.messages.slice();
+    newMessages.unshift(formatedMessage);
+    
+    this.setState({
+      messages: newMessages
+    });
   }
 
   onSend(messages = []) {
-    // this.setState((previousState) => {
-    //   return {
-    //     messages: GiftedChat.append(previousState.messages, messages),
-    //   };
-    // });
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+      };
+    });
 
     this.ws.send(JSON.stringify({msg: messages, questionId: this.props.navigation.state.params.question.id}));
   }
