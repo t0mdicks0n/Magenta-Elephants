@@ -56,11 +56,14 @@ class Login extends React.Component {
         .then(response => {
           console.log('User info retrieved!', response.data);
           this.props.login();
-          // () => navigate('Home');
+        })
+        .catch(error => {
+          this.props.relogin();  
         })
       })
       .catch(error => {
-        console.error('Unable to authenticate.', error.message, error.code);
+        this.props.relogin();
+
       });
     }
   }
@@ -129,7 +132,8 @@ const styles = StyleSheet.create({
 function bindActions(dispatch) {
   return {
     login: () => dispatch({type:'LOGIN', payload: true}),
-    signUp: () => dispatch({type: 'SIGNUP', payload: true})
+    signUp: () => dispatch({type: 'SIGNUP', payload: true}),
+    relogin: () => dispatch({type: 'LOGIN', payload: false})
   }
 };
 
