@@ -209,7 +209,7 @@ wss.on('connection', function connection(ws) {
     console.log('received: ', JSON.parse(message).msg[0].text);
     var newMessage = JSON.parse(message);
 
-    db.Message.createMessage(newMessage.questionId, newMessage.msg[0].user._id, newMessage.msg[0].text);
+    db.Message.createMessage(newMessage.questionId, newMessage.msg[0].user._id, newMessage.msg[0].text, newMessage.msg[0].user.avatar);
 
     // Create Room if it doesn't exist:
     if (!(newMessage.questionId in chats)) {

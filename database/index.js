@@ -58,7 +58,8 @@ var QuestionTag = db.define('QuestionTag', {}, timestampsAreFalse);
 var Message = db.define('Message', {
   userId: Sequelize.INTEGER,
   date: Sequelize.DATE,
-  msg: Sequelize.TEXT
+  msg: Sequelize.TEXT,
+  avatar: Sequelize.TEXT
 }, timestampsAreFalse);
 
 User.hasMany(Question);
