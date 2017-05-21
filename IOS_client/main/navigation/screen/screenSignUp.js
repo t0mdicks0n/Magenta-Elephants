@@ -78,7 +78,7 @@ class SignUp extends React.Component {
             // Then try to create user in Firebase.
             firebaseApp.auth().createUserWithEmailAndPassword(this.state.value.email, this.state.value.password)
             .then(response => {
-              this.props.createUser();
+              this.props.relogin();
             })
             .catch(error => {
               window.alert('Email address already taken. Please try again with different address.');
@@ -128,8 +128,11 @@ class SignUp extends React.Component {
           onChange={this.onChange}
           options={options}
         />
-        <TouchableHighlight style={styles.button} onPress={this.createUser} underlayColor='#99d9f4'>
+        <TouchableHighlight style={styles.signUpButton} onPress={this.createUser} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.reLoginButton} onPress={this.props.relogin} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>I actually signed up already</Text>
         </TouchableHighlight>
       </View>
     );
@@ -154,9 +157,19 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center'
   },
-  button: {
+  signUpButton: {
     height: 36,
     backgroundColor: '#228B22',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  reLoginButton: {
+    height: 36,
+    backgroundColor: '#F08080',
     borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
@@ -169,7 +182,7 @@ const styles = StyleSheet.create({
 function bindActions(dispatch) {
   return {
     createUser: () => dispatch({type:'LOGIN', payload: true}),
-    relogin: () => dispatch({type: 'LOGIN', payload: false})
+    relogin: () => dispatch({type: 'SIGNUP', payload: false})
   }
 }
 const mapStateToProps = state => ({})
