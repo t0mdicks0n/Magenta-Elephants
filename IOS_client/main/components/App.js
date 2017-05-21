@@ -48,17 +48,17 @@ class App extends Component {
 
   onButtonPress () {
     console.log('The user asked for: ' + this.state.questionInput);
-
+    console.log('this.props in App.js', this.props.userInfo);
     var headers = {
       tags: 'ios',
-      username: 'Preda',
-      title: 'Question from IOS',
-      body: this.state.questionInput,
+      username: this.props.userInfo.username,
+      title: this.state.questionInput,
+      body: '',
       price: '10',
       minExpertRating: '10'
     }
 
-    axios.post(serverURL + '/questions',  headers)
+    axios.post(serverURL + '/questions', headers)
     .then(response => {
       console.log(response);
     })
