@@ -10,9 +10,19 @@ import {
 import Stream from './Stream.js';
 import testData from './TestData.js';
 import QuestionInput from './QuestionInput.js';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import t from 'tcomb-form-native';
+
 
 var serverURL = 'http://107.170.233.12';
+
+const Form = t.form.Form;
+
+const Question = t.struct({
+  question: t.String
+});
+
+const options = {};
 
 class App extends Component {
   constructor(props) {
@@ -61,6 +71,7 @@ class App extends Component {
     axios.post(serverURL + '/questions', headers)
     .then(response => {
       console.log(response);
+      this.componentWillMount();
     })
     .catch(error => {
       console.log('error: ', error)
@@ -80,6 +91,24 @@ class App extends Component {
       </View>
     )
   }
+
+  // render() {
+  //   return (
+  //     <View style={styles.container} >
+  //       <Form
+  //         ref="qform"
+  //         type={Question}
+  //         value={{questionInput: this.state.questionInput}}
+  //         onChange={this.handleInput}
+  //         options={options}
+  //       />
+  //       <TouchableHighlight style={styles.postButton} onPress={this.onButtonPress}  >
+  //         <Text style={styles.postButtonText}>Post</Text>
+  //       </TouchableHighlight>
+  //       <Stream questions={this.state.questions} navigation={this.props.navigation}/>
+  //     </View>
+  //   )
+  // }
 }
 
 const styles = StyleSheet.create({
@@ -88,6 +117,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
+  },
+  quesitonInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20
+  },
+  postButtonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  postButton: {
+    height: 20,
+    backgroundColor: '#228B22',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   }
 });
 
