@@ -60,6 +60,7 @@ class Chat extends Component {
       }
 
       messagesFromDb.forEach(function(message, index, array) {
+        console.log('HOW DOES THE MESSAGE LOOK: ', message)
         var currentMessage = parseData(message.id, message.msg, message.date, message.userId, message.userId, undefined);
         return inputMessages.unshift(currentMessage);
       });
@@ -78,7 +79,7 @@ class Chat extends Component {
     incMessage = JSON.parse(incMessage);
     var message = incMessage.msg[0];
 
-    var formatedMessage = parseData(message._id, message.text, message.createdAt, message.user._id, message.user.avatar);
+    var formatedMessage = parseData(message._id, message.text, message.createdAt, message.user._id, message.user.name, message.user.avatar);
 
     var newMessages = this.state.messages.slice();
     newMessages.unshift(formatedMessage);
