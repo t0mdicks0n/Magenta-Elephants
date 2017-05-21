@@ -4,24 +4,21 @@
 
 ## Team
 
-  - Ali Elgiadi
-  - He Liu
-  - Michael Sermersheim
-  - Oliver Ullman
+  - Nick Anderson
+  - Preda Wen
+  - Tom Dickson
 
 ## Table of Contents
 
-1. [Usage](#Usage)
+1. [Git Workflow](#git-workflow)
+1. [Usage](#usage)
 1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
+1. [Development](#getting-started)
 1. [Contributing](#contributing)
 
 ## Git Workflow
 
-1. Type: git remote add upstream https://github.com/Magenta-Elephants/Magenta-Elephants
+1. Type: git remote add upstream https://github.com/skooled/Magenta-Elephants
 2. (ensure you are on master branch) type: git checkout master
 3. (Sync local master with org’s master) type: git pull --rebase upstream master
 4. Create a feature branch, type: git checkout -b <name_of_branch>
@@ -44,24 +41,22 @@
 
 ## Requirements
 
-- React
+- React Native
+- Redux
 - Express
 - MySql
 - Socket
+- Android/iOS
 
-### Getting Started 
+### Getting Started
 
-- NPM install
-- NPM run react-dev
-- NPM run server-dev
-- From the root directory run node populateDB.js
-- If necessary also run npm run test to clear and repopulate databases
-- Go to localhost:3000
-
-### Roadmap
-
-View the project roadmap [here](https://docs.google.com/spreadsheets/d/11bYC2KRd66zInBLLcNDz3N_pXp-PYVqoKgE5KwQhAaE/edit#gid=0)
-
+- From the root directory run 'npm install'
+- Open a new terminal and run 'npm run server-dev'
+- Open a new terminal from the spec directory run 'RUN=true node populateDB.js'
+- Open a new terminal from the IOS_client directory run 'npm install'
+- Launch emulator/simulator for the respective device you wish to emulate
+- From the IOS_client directory run either 'react-native run-ios' or 'react-native run-android'
+- Use a Mac or Linux computer to do this (no bat file included for Windows)
 
 ## Contributing
 
