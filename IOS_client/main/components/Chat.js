@@ -61,7 +61,7 @@ class Chat extends Component {
 
       messagesFromDb.forEach(function(message, index, array) {
         console.log('HOW DOES THE MESSAGE LOOK: ', message)
-        var currentMessage = parseData(message.id, message.msg, message.date, message.userId, message.userId, undefined);
+        var currentMessage = parseData(message.id, message.msg, message.date, message.userId, 'Username', message.avatar);
         return inputMessages.unshift(currentMessage);
       });
 
