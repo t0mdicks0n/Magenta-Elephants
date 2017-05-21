@@ -1,7 +1,7 @@
 const db = require('../database/index.js');
 const question = require('./question.js');
 
-module.exports.createMessage = function(questionId, userId, body) {
+module.exports.createMessage = function(questionId, userId, body, avatar) {
   console.log(questionId, userId, body);
   return db.Message.sync()
     .then(() => {
@@ -9,7 +9,8 @@ module.exports.createMessage = function(questionId, userId, body) {
         QuestionId: questionId,
         date: new Date(),
         userId: userId,
-        msg: body
+        msg: body,
+        avatar: avatar
       });
     });
 };
