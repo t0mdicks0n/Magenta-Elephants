@@ -14,6 +14,7 @@ process.env.PWD = process.cwd();
 app.use(cookieParser());
 
 var jsonParser = bodyParser.json();
+app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -75,11 +76,13 @@ app.get('/questions', function (req, res) {
   db.Question.getQuestions('', arr => res.send(arr));
 });
 
-app.post('/questions', jsonParser, function(req, res) {
-  console.log('client request from IOS!!');
-  req.body.tags = JSON.parse(req.body.tags);
+
+// { '{"tags":"ios","username":"Pa87901","title":"Why is Tom so cheap?","body":"","price":"10","minExpertRating":"10"}': '' }
+app.post('/questions', function(req, res) {
+  console.log('client request from IOS!!', req.headers);
+  // req.body.tags = JSON.parse(req.body.tags);
   db.Question.createNewQuestion(req.body.username, req.body.title, req.body.body, Number(req.body.price), req.body.tags, req.body.minExpertRating );
-  db.User.updateCurrency(req.body.username, Number(req.body.price));
+  // db.User.updateCurrency(req.body.username, Number(req.body.price));
   res.end();
 });
 
@@ -93,7 +96,6 @@ app.put('/questions', function(req, res) {
 });
 
 app.post('/messages', function(req, res) {
-  console.log('this is happening');
   db.Message.createMessage(req.body.questionId, req.body.userId, req.body.body);
   res.end();
 });
