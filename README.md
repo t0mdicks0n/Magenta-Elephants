@@ -13,7 +13,6 @@
 1. [Git Workflow](#git-workflow)
 1. [Usage](#usage)
 1. [Requirements](#requirements)
-1. [Development](#getting-started)
 1. [Contributing](#contributing)
 
 ## Git Workflow
@@ -41,12 +40,13 @@
 
 ## Requirements
 
+- Android/iOS
+- Express
+- Firebase
+- MySql
 - React Native
 - Redux
-- Express
-- MySql
 - Socket
-- Android/iOS
 
 ### Getting Started
 
@@ -56,7 +56,7 @@
 - Open a new terminal from the IOS_client directory run 'npm install'
 - Launch emulator/simulator for the respective device you wish to emulate
 - From the IOS_client directory run either 'react-native run-ios' or 'react-native run-android'
-- Use a Mac or Linux computer to do this (no bat file included for Windows)
+- Use a Mac/Linux to implement this repository (no bat file included for Windows)
 
 ## Contributing
 
