@@ -201,7 +201,9 @@ ChatRoom.prototype.broadCast = function (data, broadcastingUser) {
   this.users.forEach(function(user, index, array) {
     // The message should not be broadcasted to the user who sent it:
     if (user !== broadcastingUser) {
-      user.send(JSON.stringify(data));
+      user.send(JSON.stringify(data), function(error) {
+        console.log(error);
+      });
     }
   });
 };
